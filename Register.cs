@@ -40,5 +40,10 @@ namespace _291CarProject
 
             mainMenuForm.Show();
         }
+
+        private void Register_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace _291CarProject
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Register));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.register_username_text = new System.Windows.Forms.TextBox();
             this.password_text = new System.Windows.Forms.TextBox();
             this.confirm_password_text = new System.Windows.Forms.TextBox();
@@ -111,6 +111,7 @@ namespace _291CarProject
             this.Controls.Add(this.register_username_text);
             this.Name = "Register";
             this.Text = "Project 291";
+            this.Load += new System.EventHandler(this.Register_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
