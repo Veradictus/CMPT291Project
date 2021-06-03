@@ -39,6 +39,7 @@ namespace _291CarProject
             this.date_label = new System.Windows.Forms.Label();
             this.cust_id_label = new System.Windows.Forms.Label();
             this.cust_tbox = new System.Windows.Forms.TextBox();
+            this.BackButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rental_label
@@ -138,11 +139,22 @@ namespace _291CarProject
             this.cust_tbox.Size = new System.Drawing.Size(264, 23);
             this.cust_tbox.TabIndex = 9;
             // 
-            // Form1
+            // BackButton
+            // 
+            this.BackButton.Location = new System.Drawing.Point(586, 292);
+            this.BackButton.Name = "BackButton";
+            this.BackButton.Size = new System.Drawing.Size(75, 23);
+            this.BackButton.TabIndex = 10;
+            this.BackButton.Text = "Back";
+            this.BackButton.UseVisualStyleBackColor = true;
+            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
+            // 
+            // Borrow_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 322);
+            this.Controls.Add(this.BackButton);
             this.Controls.Add(this.cust_tbox);
             this.Controls.Add(this.cust_id_label);
             this.Controls.Add(this.date_label);
@@ -153,7 +165,7 @@ namespace _291CarProject
             this.Controls.Add(this.start_label);
             this.Controls.Add(this.veh_label);
             this.Controls.Add(this.rental_label);
-            this.Name = "Form1";
+            this.Name = "Borrow_Form";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -172,5 +184,6 @@ namespace _291CarProject
         private System.Windows.Forms.Label date_label;
         private System.Windows.Forms.Label cust_id_label;
         private System.Windows.Forms.TextBox cust_tbox;
+        private System.Windows.Forms.Button BackButton;
     }
 }

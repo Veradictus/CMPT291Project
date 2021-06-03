@@ -36,6 +36,7 @@ namespace _291CarProject
             this.veh_tbox = new System.Windows.Forms.TextBox();
             this.cust_tbox = new System.Windows.Forms.TextBox();
             this.date_tbox = new System.Windows.Forms.TextBox();
+            this.BackButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // return_label
@@ -100,11 +101,22 @@ namespace _291CarProject
             this.date_tbox.Size = new System.Drawing.Size(238, 23);
             this.date_tbox.TabIndex = 6;
             // 
+            // BackButton
+            // 
+            this.BackButton.Location = new System.Drawing.Point(584, 297);
+            this.BackButton.Name = "BackButton";
+            this.BackButton.Size = new System.Drawing.Size(75, 23);
+            this.BackButton.TabIndex = 7;
+            this.BackButton.Text = "Back";
+            this.BackButton.UseVisualStyleBackColor = true;
+            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
+            // 
             // Return_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 332);
+            this.Controls.Add(this.BackButton);
             this.Controls.Add(this.date_tbox);
             this.Controls.Add(this.cust_tbox);
             this.Controls.Add(this.veh_tbox);
@@ -128,5 +140,6 @@ namespace _291CarProject
         private System.Windows.Forms.TextBox veh_tbox;
         private System.Windows.Forms.TextBox cust_tbox;
         private System.Windows.Forms.TextBox date_tbox;
+        private System.Windows.Forms.Button BackButton;
     }
 }

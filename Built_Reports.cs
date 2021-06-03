@@ -14,5 +14,14 @@ namespace _291CarProject
         {
             InitializeComponent();
         }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            MainMenu mainMenuForm = new MainMenu();
+
+            mainMenuForm.Show();
+        }
     }
 }

@@ -50,11 +50,31 @@ namespace _291CarProject
 
         private void VControlButton_Click(object sender, EventArgs e)
         {
+           
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {//This the update records button. Name needs to be changed
+
             this.Hide();
 
             AURScreen aURScreen = new AURScreen();
 
             aURScreen.Show();
+        }
+
+        private void reports_button_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Built_Reports reportScreen = new Built_Reports();
+            reportScreen.Show();
+        }
+
+        private void rental_button_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 temp_screen = new Form1();
+            temp_screen.Show();
         }
     }
 }
