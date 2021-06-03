@@ -32,9 +32,12 @@ namespace _291CarProject
             this.logout_button = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ListingsMenu = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
+            this.VControlButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // logout_button
@@ -59,13 +62,26 @@ namespace _291CarProject
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.VControlButton);
+            this.tabPage1.Controls.Add(this.ListingsMenu);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(192, 72);
+            this.tabPage1.Size = new System.Drawing.Size(194, 398);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // ListingsMenu
+            // 
+            this.ListingsMenu.Location = new System.Drawing.Point(22, 165);
+            this.ListingsMenu.Name = "ListingsMenu";
+            this.ListingsMenu.Size = new System.Drawing.Size(95, 23);
+            this.ListingsMenu.TabIndex = 3;
+            this.ListingsMenu.Text = "Vehicle Listings";
+            this.ListingsMenu.UseVisualStyleBackColor = true;
+            this.ListingsMenu.Click += new System.EventHandler(this.ListingsMenu_Click);
             // 
             // tabPage2
             // 
@@ -88,6 +104,16 @@ namespace _291CarProject
             this.label1.Text = "Main Menu";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
+            // VControlButton
+            // 
+            this.VControlButton.Location = new System.Drawing.Point(22, 194);
+            this.VControlButton.Name = "VControlButton";
+            this.VControlButton.Size = new System.Drawing.Size(95, 23);
+            this.VControlButton.TabIndex = 4;
+            this.VControlButton.Text = "Vehicle Control";
+            this.VControlButton.UseVisualStyleBackColor = true;
+            this.VControlButton.Click += new System.EventHandler(this.VControlButton_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -100,6 +126,7 @@ namespace _291CarProject
             this.Text = "MainMenu";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,5 +139,7 @@ namespace _291CarProject
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ListingsMenu;
+        private System.Windows.Forms.Button VControlButton;
     }
 }

@@ -33,5 +33,28 @@ namespace _291CarProject
         {
 
         }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ListingsMenu_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            BranchSearch branchSearch = new BranchSearch();
+
+            branchSearch.Show();
+        }
+
+        private void VControlButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            AURScreen aURScreen = new AURScreen();
+
+            aURScreen.Show();
+        }
     }
 }
