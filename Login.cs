@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _291CarProject
@@ -15,6 +8,7 @@ namespace _291CarProject
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void username_field_TextChanged(object sender, EventArgs e)
@@ -44,6 +38,11 @@ namespace _291CarProject
             MainMenu mainMenuForm = new MainMenu();
 
             mainMenuForm.Show();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            _291CarProject.Static.Database.CreateConnection();
         }
     }
 }

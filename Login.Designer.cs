@@ -90,6 +90,7 @@ namespace _291CarProject
             this.Controls.Add(this.login_button);
             this.Name = "Login";
             this.Text = "Project 291";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
