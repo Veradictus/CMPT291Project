@@ -53,5 +53,46 @@ namespace _291CarProject
 
             mainMenuForm.Show();
         }
+
+        private void updateSearchButton_Click(object sender, EventArgs e)
+        {
+            // search query message
+            string searchMessage;
+
+            // If there is no branch selected, let the user know
+            if (branchSelector.Text == "-")
+            {
+                searchMessage = "Please select a branch.";
+                MessageBox.Show(searchMessage);
+                return;
+            }
+
+            // The basic query
+            searchMessage = "Searching for vehicle matching the following query: " +
+                "\r\nBranch: " + branchSelector.Text + 
+                "\r\nFrom: " + dateFrom.Text + " to " + dateTo.Text;
+
+            // Check for search query options
+            // Size, Milage, Model, Year
+            if (sizeSelector.Text != "-")
+            {
+                searchMessage += "\r\nSize: " + sizeSelector.Text;
+            }
+            if (milageSelector.Text != "-")
+            {
+                searchMessage += "\r\nMilage: " + milageSelector.Text;
+            }
+            if (modelSelector.Text != "-")
+            {
+                searchMessage += "\r\nModel: " + modelSelector.Text;
+            }
+            if (yearSelector.Text != "-")
+            {
+                searchMessage += "\r\nYear: " + yearSelector.Text;
+            }
+
+            // Show the search query
+            MessageBox.Show(searchMessage);
+        }
     }
 }
