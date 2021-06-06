@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.Data.SqlClient;
 
 namespace _291CarProject.Static
@@ -27,9 +21,6 @@ namespace _291CarProject.Static
 
         public static void CreateConnection()
         {
-            MessageBox.Show("Creating connection", "Error");
-            MessageBox.Show(getConnectionString(), "Error");
-
             connection = new SqlConnection(getConnectionString());
 
             try
@@ -40,7 +31,7 @@ namespace _291CarProject.Static
 
             } catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Error");
+                Debug.WriteLine(e.ToString(), "Error");
             }
         }
 
