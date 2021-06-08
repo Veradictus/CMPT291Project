@@ -35,6 +35,25 @@ namespace _291CarProject.Static
             }
         }
 
+        public static bool VerifyPassword(string username, string password)
+        {
+            commandStream.CommandText = "SELECT * FROM Employee WHERE Employee.username=" + username;
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                Debug.WriteLine(dataStream.Read());
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine("An error has occurred");
+                Debug.WriteLine(e.ToString());
+            }
+
+            return false;
+        }
+
         private static string getConnectionString()
         {
             StringBuilder connectionString = new StringBuilder("user id=");

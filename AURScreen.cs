@@ -386,5 +386,10 @@ namespace _291CarProject
             // We have to return something out here
             return false;
         }
+
+        private void AURScreen_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
