@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace _291CarProject
@@ -27,11 +28,21 @@ namespace _291CarProject
 
         private void login_button_Click(object sender, EventArgs e)
         {
+
+
             /**
              * get_user_from database
              * verify user_password == database_user_password -> if fails display error
              * else -> show main menu
              */
+
+            bool status = _291CarProject.Static.Database.VerifyPassword(username_field.Text.ToLower(), password_field.Text);
+
+            if (!status)
+            {
+                MessageBox.Show("You have entered an invalid username or password.");
+                return;
+            }
 
             this.Hide();
 
