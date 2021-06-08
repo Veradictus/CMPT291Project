@@ -1,14 +1,16 @@
 use [291proDatabase];
-drop table RentalTransaction;
-drop table Vehicle;
-drop table Employee;
-drop table Customer;
-drop table Branch;
-drop table VehicleType;
+drop table if exists RentalTransaction;
+drop table if exists Vehicle;
+drop table if exists Employee;
+drop table if exists Customer;
+drop table if exists Branch;
+drop table if exists VehicleType;
 
 ---Create tables for car rental agency---
 CREATE TABLE Customer(
 	customerID	INT	IDENTITY(1,1) PRIMARY KEY,
+	username	CHAR(15)	NOT NULL,
+	password	CHAR(15)	NOT NULL,
 	firstName	CHAR(15)	NOT NULL,
 	lastName	CHAR(20)	NOT NULL,
 	street		CHAR(30)	NULL,
@@ -29,6 +31,8 @@ CREATE TABLE Branch(
 
 CREATE TABLE Employee(
 	employID INT IDENTITY(1,1) PRIMARY KEY,
+	username	CHAR(15)	NOT NULL,
+	password	CHAR(15)	NOT NULL,
 	firstName	CHAR(15)	NOT NULL,
 	lastName	CHAR(20)	NOT NULL,
 	salary		FLOAT		NOT NULL,
@@ -70,4 +74,5 @@ CREATE TABLE RentalTransaction(
 	vehTypeID VARCHAR(10) FOREIGN KEY REFERENCES	VehicleType(vehTypeID)
 );
 
-
+INSERT INTO Branch VALUES ('elmwood street', 'edmontonia', 'alberto', '7804206969');
+INSERT INTO Employee VALUES ('admin', 'adminpass', 'John', 'Chevrolet', 219.402, 'male', 1);
