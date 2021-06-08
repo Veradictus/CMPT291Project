@@ -46,6 +46,9 @@ namespace _291CarProject
             this.labelDateFrom = new System.Windows.Forms.Label();
             this.labelDateTo = new System.Windows.Forms.Label();
             this.updateSearchButton = new System.Windows.Forms.Button();
+            this.GridView = new System.Windows.Forms.DataGridView();
+            this.vehicleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.GridView)).BeginInit();
             this.SuspendLayout();
             // 
             // branchSelector
@@ -263,12 +266,29 @@ namespace _291CarProject
             this.updateSearchButton.UseVisualStyleBackColor = true;
             this.updateSearchButton.Click += new System.EventHandler(this.updateSearchButton_Click);
             // 
+            // GridView
+            // 
+            this.GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.vehicleID});
+            this.GridView.Location = new System.Drawing.Point(264, 77);
+            this.GridView.Name = "GridView";
+            this.GridView.RowTemplate.Height = 25;
+            this.GridView.Size = new System.Drawing.Size(435, 237);
+            this.GridView.TabIndex = 26;
+            // 
+            // vehicleID
+            // 
+            this.vehicleID.HeaderText = "Vehicle ID";
+            this.vehicleID.Name = "vehicleID";
+            // 
             // BranchSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.GridView);
             this.Controls.Add(this.updateSearchButton);
             this.Controls.Add(this.labelDateTo);
             this.Controls.Add(this.labelDateFrom);
@@ -289,6 +309,7 @@ namespace _291CarProject
             this.Name = "BranchSearch";
             this.Text = "BranchSearch1";
             this.Load += new System.EventHandler(this.BranchSearch_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,5 +339,7 @@ namespace _291CarProject
         private System.Windows.Forms.Label labelDateFrom;
         private System.Windows.Forms.Label labelDateTo;
         private System.Windows.Forms.Button updateSearchButton;
+        private System.Windows.Forms.DataGridView GridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vehicleID;
     }
 }

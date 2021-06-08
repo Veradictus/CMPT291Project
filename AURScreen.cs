@@ -13,6 +13,53 @@ namespace _291CarProject
         public AURScreen()
         {
             InitializeComponent();
+
+            // Clear the drop downs
+            DD_AddBranch.Items.Clear();
+            DD_AddSize.Items.Clear();
+            DD_UpdateBranch.Items.Clear();
+            DD_UpdateSize.Items.Clear();
+
+            // Adding branchIDs into our drop down
+            _291CarProject.Static.Database.commandStream.CommandText = "select branchID from Branch";
+            try
+            {
+                // Run and grab the result from the dataStream
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+
+                while (_291CarProject.Static.Database.dataStream.Read())
+                {
+                    DD_AddBranch.Items.Add(_291CarProject.Static.Database.dataStream["branchID"].ToString());
+                    DD_UpdateBranch.Items.Add(_291CarProject.Static.Database.dataStream["branchID"].ToString());
+                }
+                _291CarProject.Static.Database.dataStream.Close();
+            }
+            // Error catching
+            catch (Exception e2)
+            {
+                MessageBox.Show(e2.ToString(), "Error");
+            }
+
+            // Adding Sizes/Types into our drop down
+            _291CarProject.Static.Database.commandStream.CommandText = "select vehTypeID from VehicleType";
+            try
+            {
+                // Run and grab the result from the dataStream
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+
+                while (_291CarProject.Static.Database.dataStream.Read())
+                {
+                    DD_AddSize.Items.Add(_291CarProject.Static.Database.dataStream["vehTypeID"].ToString());
+                    DD_UpdateSize.Items.Add(_291CarProject.Static.Database.dataStream["vehTypeID"].ToString());
+                }
+                _291CarProject.Static.Database.dataStream.Close();
+            }
+            // Error catching
+            catch (Exception e2)
+            {
+                MessageBox.Show(e2.ToString(), "Error");
+            }
+
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -35,15 +82,18 @@ namespace _291CarProject
             // If any of our inputs are illegal, end the function immediately
             if (!InputCheck_Add()) { return; }
 
-            int newID = FindNewID(); // Create an ID for our new vehicle
-            int newYear = int.Parse(TB_AddYear.Text);
-            int newMilage = int.Parse(TB_AddMilage.Text);
+            //int newID = FindNewID(); // Create an ID for our new vehicle
+            //int newYear = int.Parse(TB_AddYear.Text);
+            //int newMilage = int.Parse(TB_AddMilage.Text);
+            //int branchID = int.Parse(DD_AddBranch.Text);
 
             try
             {
                 // Build the command text here
-                _291CarProject.Static.Database.commandStream.CommandText = "insert into Vehicle values " + 
-                    "(" + newID + ",'" + TB_AddModel.Text + ",'" + DD_AddSize.Text + "'," + newYear + "'," + newMilage + ")";
+                _291CarProject.Static.Database.commandStream.CommandText = "insert into Vehicle (vehTypeID, milage, brand, model, [year], branchID) values " +
+                    "('" + DD_AddSize.Text + "'," + TB_AddMilage.Text + ",'" + TB_AddBrand.Text + "','" + TB_AddModel.Text + "'," + TB_AddYear.Text + "," + DD_AddBranch.Text + ")";
+                // Message box feat. our query
+                MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
                 // Send it along to the server
                 _291CarProject.Static.Database.commandStream.ExecuteNonQuery();
             }
@@ -58,8 +108,10 @@ namespace _291CarProject
         {
             string message;
             // Check to see if any of our fields are empty.
-            if (TB_AddModel.Text == "" ||
+            if (TB_AddBrand.Text == "" ||
+                TB_AddModel.Text == "" ||
                 DD_AddSize.Text == "" ||
+                DD_AddBranch.Text == "" ||
                 TB_AddYear.Text == "" ||
                 TB_AddMilage.Text == "")
             {
@@ -94,15 +146,17 @@ namespace _291CarProject
             int latestVID; // the last VID we've given out
 
             // Build the command text here
-            _291CarProject.Static.Database.commandStream.CommandText = "select max(vehicleID) from Vehicle";
+            _291CarProject.Static.Database.commandStream.CommandText = "select max(vehicleID) as latest from Vehicle";
 
             try
             {
                 // Run and grab the result from the dataStream
-                _291CarProject.Static.Database.commandStream.ExecuteNonQuery();
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
                 _291CarProject.Static.Database.dataStream.Read(); // Read
                 // Turn the vehicleID to an int using Parse
-                latestVID = int.Parse(_291CarProject.Static.Database.dataStream["vehicleID"].ToString());
+                //MessageBox.Show(_291CarProject.Static.Database.dataStream["latest"].ToString());
+                latestVID = int.Parse(_291CarProject.Static.Database.dataStream["latest"].ToString());
+                _291CarProject.Static.Database.dataStream.Close();
 
                 // Check if we got a result for a "max" vID
                 // If there are no vehicles in the system, make this vehicle the very 1st
@@ -132,54 +186,12 @@ namespace _291CarProject
             // If any of our inputs are illegal, end the function immediately
             if (!InputCheck_Update()) { return; }
 
+            // Build the update SQL command here
+            StringBuilder updateSQLQuery = GenerateUpdateQuery();
+
             try
             {
-                bool cFlag = false; // The comma flag, used to tell when to add a comma , to the query
-                // Build the command text step-by-step here
-                _291CarProject.Static.Database.commandStream.CommandText = "Update Vehicle set";
-
-                // Check for an update to the car's model
-                if (TB_UpdateModel.Text != "")
-                {
-                    _291CarProject.Static.Database.commandStream.CommandText += "model = " + TB_UpdateModel.Text;
-                    cFlag = true; // Set the comma flag to true
-                }
-                // Check for an update to the car's size
-                if (DD_UpdateSize.Text != "")
-                {
-                    // If we added a change to the model, make sure to add a comma here
-                    if (cFlag) 
-                    { 
-                        _291CarProject.Static.Database.commandStream.CommandText += ",";
-                        cFlag = false;
-                    }
-                    _291CarProject.Static.Database.commandStream.CommandText += "size = " + DD_UpdateSize.Text;
-                    cFlag = true;
-                }
-                // Check for an update to the car's year
-                if (TB_UpdateYear.Text != "")
-                {
-                    if (cFlag)
-                    {
-                        _291CarProject.Static.Database.commandStream.CommandText += ",";
-                        cFlag = false;
-                    }
-                    int yearCheck = int.Parse(TB_UpdateYear.Text);
-                    _291CarProject.Static.Database.commandStream.CommandText += "size = " + DD_UpdateSize.Text;
-                    cFlag = true;
-                }
-                // Check for an update to the car's milage
-                if (TB_UpdateMilage.Text != "")
-                {
-                    // No point setting cFlag to false here cause it's the last field we check
-                    if (cFlag) { _291CarProject.Static.Database.commandStream.CommandText += ","; }
-                    int milageCheck = int.Parse(TB_UpdateMilage.Text);
-                    _291CarProject.Static.Database.commandStream.CommandText += "size = " + DD_UpdateSize.Text;
-                }
-
-                // Finally, add the Where statement
-                int vID = int.Parse(TB_UpdateID.Text);
-                _291CarProject.Static.Database.commandStream.CommandText += "where vehicleID = " + vID;
+                _291CarProject.Static.Database.commandStream.CommandText = updateSQLQuery.ToString();
                 _291CarProject.Static.Database.commandStream.ExecuteNonQuery(); // run the query and update the entry
             }
             // Error catching
@@ -187,6 +199,77 @@ namespace _291CarProject
             {
                 MessageBox.Show(e2.ToString(), "Error");
             }
+        }
+
+        private StringBuilder GenerateUpdateQuery()
+        {
+            bool cFlag = false; // The comma flag, used to tell when to add a comma , to the query
+            StringBuilder updateCommand = new StringBuilder("Update Vehicle set ");
+
+            // Size
+            if (DD_UpdateSize.Text != "")
+            {
+                updateCommand.Append("vehTypeID = '" + DD_UpdateSize.Text + "'");
+                cFlag = true;
+            }
+            // Milage
+            if (TB_UpdateMilage.Text != "")
+            {
+                // If we added a change to the model, make sure to add a comma here
+                if (cFlag)
+                {
+                    updateCommand.Append(",");
+                    cFlag = false;
+                }
+                updateCommand.Append("milage = " + TB_UpdateMilage.Text);
+                cFlag = true;
+            }
+            // Brand
+            if (TB_UpdateBrand.Text != "")
+            {
+                // If we added a change to the model, make sure to add a comma here
+                if (cFlag)
+                {
+                    updateCommand.Append(",");
+                    cFlag = false;
+                }
+                updateCommand.Append("brand = '" + TB_UpdateBrand.Text + "'");
+                cFlag = true;
+            }
+            // Model
+            if (TB_UpdateModel.Text != "")
+            {
+                // If we added a change to the model, make sure to add a comma here
+                if (cFlag)
+                {
+                    updateCommand.Append(",");
+                    cFlag = false;
+                }
+                updateCommand.Append("model = '" + TB_UpdateModel.Text + "'");
+                cFlag = true;
+            }
+            // Year
+            if (TB_UpdateYear.Text != "")
+            {
+                // If we added a change to the model, make sure to add a comma here
+                if (cFlag)
+                {
+                    updateCommand.Append(",");
+                    cFlag = false;
+                }
+                updateCommand.Append("year = " + TB_UpdateYear.Text);
+                cFlag = true;
+            }
+            // Branch
+            if (TB_UpdateYear.Text != "")
+            {
+                // If we added a change to the model, make sure to add a comma here
+                if (cFlag) { updateCommand.Append(","); }
+                updateCommand.Append("branchID = " + DD_UpdateBranch.Text);
+            }
+            updateCommand.Append(" where vehicleID = " + TB_UpdateID.Text);
+            MessageBox.Show(updateCommand.ToString());
+            return updateCommand;
         }
 
         private bool InputCheck_Update()
@@ -199,7 +282,9 @@ namespace _291CarProject
             if (TB_UpdateModel.Text == "" &
                 DD_UpdateSize.Text == "" &
                 TB_UpdateYear.Text == "" &
-                TB_UpdateMilage.Text == "")
+                TB_UpdateMilage.Text == "" &
+                TB_UpdateBrand.Text == "" &
+                DD_UpdateBranch.Text == "")
             {
                 // For this one, we just return false
                 return false; // End the function here.
@@ -219,16 +304,16 @@ namespace _291CarProject
                 }
             }
             if (TB_UpdateMilage.Text != "")
+            {
+                int yearCheck = int.Parse(TB_UpdateMilage.Text);
+                if (yearCheck == 0)
                 {
-                    int yearCheck = int.Parse(TB_UpdateMilage.Text);
-                    if (yearCheck == 0)
-                    {
-                        message = "Illegal value in the Milage field." +
-                            "\r\nPlease make sure this field is an integer.";
-                        MessageBox.Show(message);
-                        return false; // End the function here.
-                    }
+                    message = "Illegal value in the Milage field." +
+                        "\r\nPlease make sure this field is an integer.";
+                    MessageBox.Show(message);
+                    return false; // End the function here.
                 }
+            }
 
             // Else, return true
             return true;
@@ -246,10 +331,10 @@ namespace _291CarProject
 
             try
             {
-                // Finally, add the Where statement
-                int vID = int.Parse(TB_UpdateID.Text);
-                _291CarProject.Static.Database.commandStream.CommandText = "delete from Vehicle where vehicleID = " + vID;
-                _291CarProject.Static.Database.commandStream.ExecuteNonQuery(); // run the query and update the entry
+                _291CarProject.Static.Database.commandStream.CommandText = "delete from Vehicle where vehicleID = " + TB_RemoveVID.Text;
+                // Message box feat. our query
+                MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
+                _291CarProject.Static.Database.commandStream.ExecuteNonQuery(); // run the query and remove the entry
             }
             // Error catching
             catch (Exception e2)
@@ -266,21 +351,22 @@ namespace _291CarProject
         private bool VIDCheck(string vID)
         {
             // Get our sought-after ID as an int
-            int vIDCheck = int.Parse(vID);
+            int vIDCheck = 0;
             string message; // Used for error messages
 
             try
             {
-                // Check to see that we've been given an ID OR that the ID exists in the database
-                _291CarProject.Static.Database.commandStream.CommandText = "select * from Vehicle where vehicleID = " + vIDCheck;
+                _291CarProject.Static.Database.commandStream.CommandText = "select max(vehicleID) as latest from Vehicle";
                 // Run and grab the result from the dataStream
-                _291CarProject.Static.Database.commandStream.ExecuteNonQuery();
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
                 _291CarProject.Static.Database.dataStream.Read(); // Read
                 // Turn the vehicleID to an int using Parse
-                int readVID = int.Parse(_291CarProject.Static.Database.dataStream["vehicleID"].ToString());
+                //MessageBox.Show(_291CarProject.Static.Database.dataStream["latest"].ToString());
+                vIDCheck = int.Parse(_291CarProject.Static.Database.dataStream["latest"].ToString());
+                _291CarProject.Static.Database.dataStream.Close();
 
                 // Run the check here
-                if (TB_UpdateID.Text == "" || readVID == 0)
+                if (vID == "" || vIDCheck == 0)
                 {
                     message = "Vehicle ID either empty or not-existent." +
                         "\r\nPlease give an existing vehicle ID to update.";
@@ -290,6 +376,7 @@ namespace _291CarProject
 
                 // Else, return true
                 return true;
+
             }
             // Error catching
             catch (Exception e2)

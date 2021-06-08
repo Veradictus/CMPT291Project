@@ -12,9 +12,9 @@ namespace _291CarProject.Static
         public static SqlDataReader dataStream;
 
         public const string host = "localhost";
-        public const string database = "prj291";
+        public const string database = "291proDatabase";
 
-        public const string username = "user1";
+        public const string username = "user2";
         public const string password = "pass1";
 
         public const int timeout = 15; // Connection timeout duration

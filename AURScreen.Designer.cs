@@ -31,6 +31,11 @@ namespace _291CarProject
         {
             this.AURTabs = new System.Windows.Forms.TabControl();
             this.AddTab = new System.Windows.Forms.TabPage();
+            this.BranchText = new System.Windows.Forms.Label();
+            this.DD_AddBranch = new System.Windows.Forms.ComboBox();
+            this.VBrandText = new System.Windows.Forms.Label();
+            this.TB_AddBrand = new System.Windows.Forms.TextBox();
+            this.DD_AddSize = new System.Windows.Forms.ComboBox();
             this.TB_AddMilage = new System.Windows.Forms.TextBox();
             this.TB_AddYear = new System.Windows.Forms.TextBox();
             this.TB_AddModel = new System.Windows.Forms.TextBox();
@@ -40,6 +45,8 @@ namespace _291CarProject
             this.AddModelText = new System.Windows.Forms.Label();
             this.AddConfirm = new System.Windows.Forms.Button();
             this.UpdateTab = new System.Windows.Forms.TabPage();
+            this.TB_UpdateBrand = new System.Windows.Forms.TextBox();
+            this.DD_UpdateSize = new System.Windows.Forms.ComboBox();
             this.TB_UpdateMilage = new System.Windows.Forms.TextBox();
             this.TB_UpdateYear = new System.Windows.Forms.TextBox();
             this.TB_UpdateModel = new System.Windows.Forms.TextBox();
@@ -55,8 +62,9 @@ namespace _291CarProject
             this.RemoveVIDText = new System.Windows.Forms.Label();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.BackButton = new System.Windows.Forms.Button();
-            this.DD_AddSize = new System.Windows.Forms.ComboBox();
-            this.DD_UpdateSize = new System.Windows.Forms.ComboBox();
+            this.labelUpdateBrand = new System.Windows.Forms.Label();
+            this.DD_UpdateBranch = new System.Windows.Forms.ComboBox();
+            this.labelUpdateBranch = new System.Windows.Forms.Label();
             this.AURTabs.SuspendLayout();
             this.AddTab.SuspendLayout();
             this.UpdateTab.SuspendLayout();
@@ -76,6 +84,10 @@ namespace _291CarProject
             // 
             // AddTab
             // 
+            this.AddTab.Controls.Add(this.BranchText);
+            this.AddTab.Controls.Add(this.DD_AddBranch);
+            this.AddTab.Controls.Add(this.VBrandText);
+            this.AddTab.Controls.Add(this.TB_AddBrand);
             this.AddTab.Controls.Add(this.DD_AddSize);
             this.AddTab.Controls.Add(this.TB_AddMilage);
             this.AddTab.Controls.Add(this.TB_AddYear);
@@ -93,23 +105,70 @@ namespace _291CarProject
             this.AddTab.Text = "Add";
             this.AddTab.UseVisualStyleBackColor = true;
             // 
+            // BranchText
+            // 
+            this.BranchText.AutoSize = true;
+            this.BranchText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.BranchText.Location = new System.Drawing.Point(26, 179);
+            this.BranchText.Name = "BranchText";
+            this.BranchText.Size = new System.Drawing.Size(61, 18);
+            this.BranchText.TabIndex = 15;
+            this.BranchText.Text = "Branch";
+            // 
+            // DD_AddBranch
+            // 
+            this.DD_AddBranch.FormattingEnabled = true;
+            this.DD_AddBranch.Location = new System.Drawing.Point(185, 174);
+            this.DD_AddBranch.Name = "DD_AddBranch";
+            this.DD_AddBranch.Size = new System.Drawing.Size(150, 23);
+            this.DD_AddBranch.TabIndex = 14;
+            // 
+            // VBrandText
+            // 
+            this.VBrandText.AutoSize = true;
+            this.VBrandText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.VBrandText.Location = new System.Drawing.Point(25, 92);
+            this.VBrandText.Name = "VBrandText";
+            this.VBrandText.Size = new System.Drawing.Size(111, 18);
+            this.VBrandText.TabIndex = 13;
+            this.VBrandText.Text = "Vehicle Brand";
+            // 
+            // TB_AddBrand
+            // 
+            this.TB_AddBrand.Location = new System.Drawing.Point(185, 87);
+            this.TB_AddBrand.Name = "TB_AddBrand";
+            this.TB_AddBrand.Size = new System.Drawing.Size(150, 23);
+            this.TB_AddBrand.TabIndex = 12;
+            // 
+            // DD_AddSize
+            // 
+            this.DD_AddSize.FormattingEnabled = true;
+            this.DD_AddSize.Items.AddRange(new object[] {
+            "Small",
+            "Medium",
+            "Large"});
+            this.DD_AddSize.Location = new System.Drawing.Point(185, 29);
+            this.DD_AddSize.Name = "DD_AddSize";
+            this.DD_AddSize.Size = new System.Drawing.Size(150, 23);
+            this.DD_AddSize.TabIndex = 11;
+            // 
             // TB_AddMilage
             // 
-            this.TB_AddMilage.Location = new System.Drawing.Point(185, 102);
+            this.TB_AddMilage.Location = new System.Drawing.Point(185, 58);
             this.TB_AddMilage.Name = "TB_AddMilage";
             this.TB_AddMilage.Size = new System.Drawing.Size(150, 23);
             this.TB_AddMilage.TabIndex = 10;
             // 
             // TB_AddYear
             // 
-            this.TB_AddYear.Location = new System.Drawing.Point(185, 74);
+            this.TB_AddYear.Location = new System.Drawing.Point(185, 145);
             this.TB_AddYear.Name = "TB_AddYear";
             this.TB_AddYear.Size = new System.Drawing.Size(150, 23);
             this.TB_AddYear.TabIndex = 9;
             // 
             // TB_AddModel
             // 
-            this.TB_AddModel.Location = new System.Drawing.Point(185, 16);
+            this.TB_AddModel.Location = new System.Drawing.Point(185, 116);
             this.TB_AddModel.Name = "TB_AddModel";
             this.TB_AddModel.Size = new System.Drawing.Size(150, 23);
             this.TB_AddModel.TabIndex = 7;
@@ -118,7 +177,7 @@ namespace _291CarProject
             // 
             this.AddMilageText.AutoSize = true;
             this.AddMilageText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.AddMilageText.Location = new System.Drawing.Point(21, 107);
+            this.AddMilageText.Location = new System.Drawing.Point(25, 63);
             this.AddMilageText.Name = "AddMilageText";
             this.AddMilageText.Size = new System.Drawing.Size(158, 18);
             this.AddMilageText.TabIndex = 5;
@@ -128,7 +187,7 @@ namespace _291CarProject
             // 
             this.VehicleYearText.AutoSize = true;
             this.VehicleYearText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.VehicleYearText.Location = new System.Drawing.Point(24, 78);
+            this.VehicleYearText.Location = new System.Drawing.Point(26, 150);
             this.VehicleYearText.Name = "VehicleYearText";
             this.VehicleYearText.Size = new System.Drawing.Size(101, 18);
             this.VehicleYearText.TabIndex = 4;
@@ -138,7 +197,7 @@ namespace _291CarProject
             // 
             this.AddSizeText.AutoSize = true;
             this.AddSizeText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.AddSizeText.Location = new System.Drawing.Point(24, 47);
+            this.AddSizeText.Location = new System.Drawing.Point(26, 34);
             this.AddSizeText.Name = "AddSizeText";
             this.AddSizeText.Size = new System.Drawing.Size(100, 18);
             this.AddSizeText.TabIndex = 3;
@@ -148,7 +207,7 @@ namespace _291CarProject
             // 
             this.AddModelText.AutoSize = true;
             this.AddModelText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.AddModelText.Location = new System.Drawing.Point(24, 18);
+            this.AddModelText.Location = new System.Drawing.Point(26, 121);
             this.AddModelText.Name = "AddModelText";
             this.AddModelText.Size = new System.Drawing.Size(113, 18);
             this.AddModelText.TabIndex = 2;
@@ -166,6 +225,10 @@ namespace _291CarProject
             // 
             // UpdateTab
             // 
+            this.UpdateTab.Controls.Add(this.labelUpdateBranch);
+            this.UpdateTab.Controls.Add(this.DD_UpdateBranch);
+            this.UpdateTab.Controls.Add(this.labelUpdateBrand);
+            this.UpdateTab.Controls.Add(this.TB_UpdateBrand);
             this.UpdateTab.Controls.Add(this.DD_UpdateSize);
             this.UpdateTab.Controls.Add(this.TB_UpdateMilage);
             this.UpdateTab.Controls.Add(this.TB_UpdateYear);
@@ -185,23 +248,42 @@ namespace _291CarProject
             this.UpdateTab.Text = "Update";
             this.UpdateTab.UseVisualStyleBackColor = true;
             // 
+            // TB_UpdateBrand
+            // 
+            this.TB_UpdateBrand.Location = new System.Drawing.Point(181, 107);
+            this.TB_UpdateBrand.Name = "TB_UpdateBrand";
+            this.TB_UpdateBrand.Size = new System.Drawing.Size(150, 23);
+            this.TB_UpdateBrand.TabIndex = 23;
+            // 
+            // DD_UpdateSize
+            // 
+            this.DD_UpdateSize.FormattingEnabled = true;
+            this.DD_UpdateSize.Items.AddRange(new object[] {
+            "Small",
+            "Medium",
+            "Large"});
+            this.DD_UpdateSize.Location = new System.Drawing.Point(181, 49);
+            this.DD_UpdateSize.Name = "DD_UpdateSize";
+            this.DD_UpdateSize.Size = new System.Drawing.Size(150, 23);
+            this.DD_UpdateSize.TabIndex = 22;
+            // 
             // TB_UpdateMilage
             // 
-            this.TB_UpdateMilage.Location = new System.Drawing.Point(181, 133);
+            this.TB_UpdateMilage.Location = new System.Drawing.Point(181, 78);
             this.TB_UpdateMilage.Name = "TB_UpdateMilage";
             this.TB_UpdateMilage.Size = new System.Drawing.Size(150, 23);
             this.TB_UpdateMilage.TabIndex = 21;
             // 
             // TB_UpdateYear
             // 
-            this.TB_UpdateYear.Location = new System.Drawing.Point(181, 104);
+            this.TB_UpdateYear.Location = new System.Drawing.Point(181, 165);
             this.TB_UpdateYear.Name = "TB_UpdateYear";
             this.TB_UpdateYear.Size = new System.Drawing.Size(150, 23);
             this.TB_UpdateYear.TabIndex = 20;
             // 
             // TB_UpdateModel
             // 
-            this.TB_UpdateModel.Location = new System.Drawing.Point(181, 46);
+            this.TB_UpdateModel.Location = new System.Drawing.Point(181, 136);
             this.TB_UpdateModel.Name = "TB_UpdateModel";
             this.TB_UpdateModel.Size = new System.Drawing.Size(150, 23);
             this.TB_UpdateModel.TabIndex = 18;
@@ -217,7 +299,7 @@ namespace _291CarProject
             // 
             this.updateMilageText.AutoSize = true;
             this.updateMilageText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.updateMilageText.Location = new System.Drawing.Point(17, 138);
+            this.updateMilageText.Location = new System.Drawing.Point(17, 83);
             this.updateMilageText.Name = "updateMilageText";
             this.updateMilageText.Size = new System.Drawing.Size(158, 18);
             this.updateMilageText.TabIndex = 16;
@@ -227,7 +309,7 @@ namespace _291CarProject
             // 
             this.updateYearText.AutoSize = true;
             this.updateYearText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.updateYearText.Location = new System.Drawing.Point(20, 109);
+            this.updateYearText.Location = new System.Drawing.Point(20, 170);
             this.updateYearText.Name = "updateYearText";
             this.updateYearText.Size = new System.Drawing.Size(101, 18);
             this.updateYearText.TabIndex = 15;
@@ -237,7 +319,7 @@ namespace _291CarProject
             // 
             this.updateSizeText.AutoSize = true;
             this.updateSizeText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.updateSizeText.Location = new System.Drawing.Point(20, 78);
+            this.updateSizeText.Location = new System.Drawing.Point(20, 52);
             this.updateSizeText.Name = "updateSizeText";
             this.updateSizeText.Size = new System.Drawing.Size(100, 18);
             this.updateSizeText.TabIndex = 14;
@@ -247,7 +329,7 @@ namespace _291CarProject
             // 
             this.updateModelText.AutoSize = true;
             this.updateModelText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.updateModelText.Location = new System.Drawing.Point(20, 49);
+            this.updateModelText.Location = new System.Drawing.Point(20, 141);
             this.updateModelText.Name = "updateModelText";
             this.updateModelText.Size = new System.Drawing.Size(113, 18);
             this.updateModelText.TabIndex = 13;
@@ -322,29 +404,37 @@ namespace _291CarProject
             this.BackButton.UseVisualStyleBackColor = true;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
-            // DD_AddSize
+            // labelUpdateBrand
             // 
-            this.DD_AddSize.FormattingEnabled = true;
-            this.DD_AddSize.Items.AddRange(new object[] {
+            this.labelUpdateBrand.AutoSize = true;
+            this.labelUpdateBrand.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelUpdateBrand.Location = new System.Drawing.Point(20, 112);
+            this.labelUpdateBrand.Name = "labelUpdateBrand";
+            this.labelUpdateBrand.Size = new System.Drawing.Size(111, 18);
+            this.labelUpdateBrand.TabIndex = 24;
+            this.labelUpdateBrand.Text = "Vehicle Brand";
+            // 
+            // DD_UpdateBranch
+            // 
+            this.DD_UpdateBranch.FormattingEnabled = true;
+            this.DD_UpdateBranch.Items.AddRange(new object[] {
             "Small",
             "Medium",
             "Large"});
-            this.DD_AddSize.Location = new System.Drawing.Point(185, 45);
-            this.DD_AddSize.Name = "DD_AddSize";
-            this.DD_AddSize.Size = new System.Drawing.Size(150, 23);
-            this.DD_AddSize.TabIndex = 11;
+            this.DD_UpdateBranch.Location = new System.Drawing.Point(181, 194);
+            this.DD_UpdateBranch.Name = "DD_UpdateBranch";
+            this.DD_UpdateBranch.Size = new System.Drawing.Size(150, 23);
+            this.DD_UpdateBranch.TabIndex = 25;
             // 
-            // DD_UpdateSize
+            // labelUpdateBranch
             // 
-            this.DD_UpdateSize.FormattingEnabled = true;
-            this.DD_UpdateSize.Items.AddRange(new object[] {
-            "Small",
-            "Medium",
-            "Large"});
-            this.DD_UpdateSize.Location = new System.Drawing.Point(181, 75);
-            this.DD_UpdateSize.Name = "DD_UpdateSize";
-            this.DD_UpdateSize.Size = new System.Drawing.Size(150, 23);
-            this.DD_UpdateSize.TabIndex = 22;
+            this.labelUpdateBranch.AutoSize = true;
+            this.labelUpdateBranch.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelUpdateBranch.Location = new System.Drawing.Point(20, 199);
+            this.labelUpdateBranch.Name = "labelUpdateBranch";
+            this.labelUpdateBranch.Size = new System.Drawing.Size(61, 18);
+            this.labelUpdateBranch.TabIndex = 26;
+            this.labelUpdateBranch.Text = "Branch";
             // 
             // AURScreen
             // 
@@ -397,5 +487,13 @@ namespace _291CarProject
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.ComboBox DD_AddSize;
         private System.Windows.Forms.ComboBox DD_UpdateSize;
+        private System.Windows.Forms.Label VBrandText;
+        private System.Windows.Forms.TextBox TB_AddBrand;
+        private System.Windows.Forms.Label BranchText;
+        private System.Windows.Forms.ComboBox DD_AddBranch;
+        private System.Windows.Forms.TextBox TB_UpdateBrand;
+        private System.Windows.Forms.Label labelUpdateBrand;
+        private System.Windows.Forms.ComboBox DD_UpdateBranch;
+        private System.Windows.Forms.Label labelUpdateBranch;
     }
 }
