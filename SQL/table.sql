@@ -1,32 +1,32 @@
 USE prj291;
 
 --- Non foreign key related tables ---
-CREATE TABLE IF NOT EXISTS Agency ( agencyID INT PRIMARY KEY );
-CREATE TABLE IF NOT EXISTS VehicleEntry ( vEntryID INT PRIMARY KEY );
-CREATE TABLE IF NOT EXISTS Customer ( 
-    customerID INT PRIMARY KEY,
-    name varchar(32),
+CREATE TABLE Agency ( agencyID INT PRIMARY KEY );
+CREATE TABLE VehicleEntry ( vEntryID INT PRIMARY KEY );
+CREATE TABLE Customer ( 
+    customerID int NOT NULL PRIMARY KEY,
+    name varchar(32) NOT NULL,
     address varchar(32),
     membership varchar(4));
 
 --- Tables containnig foreign keys ---
-CREATE TABLE IF NOT EXISTS Branch (
-    branchID INT PRIMARY KEY, 
-    FOREIGN KEY (agencyID) REFERENCES Agency(agencyID));
+CREATE TABLE Branch (
+    branchID int NOT NULL PRIMARY KEY, 
+    agencyID int FOREIGN KEY REFERENCES Agency(agencyID));
 
-CREATE TABLE IF NOT EXISTS Employee (
-    employeeID INT PRIMARY KEY,
+CREATE TABLE Employee (
+    employeeID int NOT NULL PRIMARY KEY,
     name varchar(32),
     salary int,
-    FOREIGN KEY branchID REFERENCES Branch(branchID),
-    FOREIGN KEY agencyID REFERENCES Agency(agencyID)
+    branchID int FOREIGN KEY REFERENCES Branch(branchID),
+    agencyID int FOREIGN KEY REFERENCES Agency(agencyID)
 );
 
-CREATE TABLE IF NOT EXISTS Vehicle (
-    vehicleID INT PRIMARY KEY,
+CREATE TABLE Vehicle (
+    vehicleID int NOT NULL PRIMARY KEY,
     type varchar(16),
     size varchar(16),
-    FOREIGN KEY customerID REFERENCES Customer(customerID),
-    FOREIGN KEY branchID REFERENCES Branch(branchID),
-    FOREIGN KEY agencyID REFERENCES Agency(agencyID)
+    customerID int FOREIGN KEY REFERENCES Customer(customerID),
+    branchID int FOREIGN KEY REFERENCES Branch(branchID),
+    agencyID int FOREIGN KEY REFERENCES Agency(agencyID)
 );

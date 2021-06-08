@@ -5,11 +5,11 @@ using System.Data.SqlClient;
 
 namespace _291CarProject.Static
 {
-    class Database
+    public static class Database
     {
         private static SqlConnection connection;
-        private static SqlCommand commandStream = new SqlCommand();
-        private static SqlDataReader dataStream;
+        public static SqlCommand commandStream = new SqlCommand();
+        public static SqlDataReader dataStream;
 
         public const string host = "localhost";
         public const string database = "prj291";
