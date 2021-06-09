@@ -57,23 +57,23 @@ CREATE TABLE Employee(
 	ON UPDATE CASCADE
 );
 
-CREATE TABLE Vehicle(
-	vehicleID	INT IDENTITY(1,1) PRIMARY KEY,
-	size	CHAR(7)	NOT NULL,
-	milage	INT	NOT NULL,
-	brand	CHAR(15) NOT NULL,
-	model	CHAR(15) NOT NULL,
-	[year]	INT	NOT NULL,
-	branchID INT FOREIGN KEY REFERENCES Branch(branchID)
-);
-
 CREATE TABLE VehicleType(
-	vTypeID INT IDENTITY(1,1) PRIMARY KEY,
+	vTypeID VARCHAR(10) PRIMARY KEY, --Will represent sizes: small,medium,large
 	dRate	FLOAT	NOT NULL,
 	wRate	FLOAT	NOT NULL,
 	mRate	FLOAT	NOT NULL,
 	lateFee	FLOAT	NOT NULL,
 	changeCharge FLOAT NOT NULL
+);
+
+CREATE TABLE Vehicle(
+	vehicleID	INT IDENTITY(1,1) PRIMARY KEY,
+	milage	INT	NOT NULL,
+	brand	CHAR(15) NOT NULL,
+	model	CHAR(15) NOT NULL,
+	[year]	INT	NOT NULL,
+	branchID INT FOREIGN KEY REFERENCES Branch(branchID),
+	vTypeID VARCHAR(10) FOREIGN KEY REFERENCES VehicleType(vTypeID)
 );
 
 CREATE TABLE RentalTransaction(
@@ -86,6 +86,6 @@ CREATE TABLE RentalTransaction(
 	branchBorrow INT FOREIGN KEY REFERENCES Branch(branchID),
 	branchReturn INT FOREIGN KEY REFERENCES Branch(branchID),
 	rentedVID INT FOREIGN KEY REFERENCES Vehicle(vehicleID),
-	vTypeID INT FOREIGN KEY REFERENCES	VehicleType(vTypeID)
+	vTypeID VARCHAR(10) FOREIGN KEY REFERENCES	VehicleType(vTypeID)
 );
 
