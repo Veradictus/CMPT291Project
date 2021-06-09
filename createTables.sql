@@ -4,34 +4,42 @@ Group Members: Damion Shillinglaw, Kelly Flores, Gerardo Cea, Flavius Poenaru
 
 use [291proDatabase];
 
+DROP TABLE IF EXISTS RentalTransaction;
+DROP TABLE IF EXISTS Vehicle;
 DROP TABLE IF EXISTS Customer;
 DROP TABLE IF EXISTS Employee;
-DROP TABLE IF EXISTS Branch;
-DROP TABLE IF EXISTS Vehicle;
-DROP TABLE IF EXISTS RentalTransaction;
-DROP TABLE IF EXISTS VehicleType;
 DROP TABLE IF EXISTS [User];
+DROP TABLE IF EXISTS Branch;
+DROP TABLE IF EXISTS VehicleType;
+
 
 ---Create tables for car rental agency---
+
+-- Parent table of Customer and Employee tables
 CREATE TABLE [User](
 	[UID] INT IDENTITY(1,1),
-	userName	CHAR(20)	NOT NULL,
-	passw		CHAR(20)	NOT NULL,
-	userType	CHAR(8)		DEFAULT 'customer',
+	userName	CHAR(20)	NOT NULL UNIQUE,
+	passw		CHAR(20)	NOT NULL,	--password for userName
+	userType	CHAR(8)		DEFAULT 'Customer',
 	gender		CHAR(5)		NOT NULL,
 	firstName	CHAR(15)	NOT NULL,
 	lastName	CHAR(15)	NOT NULL,
 	street		CHAR(30)	NOT NULL,
 	city		CHAR(20)	NOT NULL,
 	prov		CHAR(20)	NOT NULL,
-	CONSTRAINT PKUser PRIMARY KEY ([UID])
+	CONSTRAINT PKUser PRIMARY KEY([UID]),
+	CONSTRAINT CheckType CHECK(userType IN ('Customer','Employee')),
+	CONSTRAINT GenderCheck CHECK(gender IN ('Male','Female')),
+	CONSTRAINT UniqueName UNIQUE(firstName,lastName)
 );
 
+--Is a child table of User table
 CREATE TABLE Customer(
 	customerID	INT,		--Is the UID from User table
-	driverLic	INT			NOT NULL,
+	driverLic	INT	NOT NULL UNIQUE,
 	membership	CHAR(7)	DEFAULT 'Regular',
 	CONSTRAINT PKCustUser PRIMARY KEY (customerID),
+	CONSTRAINT MemberCheck CHECK (membership IN ('Regular','Gold')),
 	CONSTRAINT	FKCustUser	FOREIGN KEY (customerID)
 	REFERENCES [User] ([UID])
 	ON DELETE CASCADE
@@ -40,16 +48,19 @@ CREATE TABLE Customer(
 
 CREATE TABLE Branch(
 	branchID INT IDENTITY(1,1) PRIMARY KEY,
-	street	CHAR(30)	NOT NULL,
+	street	CHAR(30)	NOT NULL UNIQUE,
 	city	CHAR(20)	NOT NULL,
 	prov	CHAR(20)	NOT NULL,
-	phoneNumber CHAR(20) NOT NULL
+	phoneNumber CHAR(20) NOT NULL UNIQUE
 );
 
+--Is a child table of User table
 CREATE TABLE Employee(
 	employID INT,		--Is the user ID from User table
-	salary		FLOAT		NOT NULL,
-	branchID INT FOREIGN KEY REFERENCES Branch(branchID) NOT NULL,
+	salary		FLOAT	NULL,
+	branchID INT,
+	CONSTRAINT FKWorkAtBranch FOREIGN KEY (branchID)
+	REFERENCES Branch(branchID), 
 	CONSTRAINT	PKEmpUser	PRIMARY KEY (employID),	
 	CONSTRAINT FKEmpUser FOREIGN KEY (employID)
 	REFERENCES [User]([UID])
@@ -63,7 +74,8 @@ CREATE TABLE VehicleType(
 	wRate	FLOAT	NOT NULL,
 	mRate	FLOAT	NOT NULL,
 	lateFee	FLOAT	NOT NULL,
-	changeCharge FLOAT NOT NULL
+	changeCharge FLOAT NOT NULL,
+	CONSTRAINT PkSizes CHECK (vTypeID IN ('Small','Medium','Large'))
 );
 
 CREATE TABLE Vehicle(
@@ -72,20 +84,30 @@ CREATE TABLE Vehicle(
 	brand	CHAR(15) NOT NULL,
 	model	CHAR(15) NOT NULL,
 	[year]	INT	NOT NULL,
-	branchID INT FOREIGN KEY REFERENCES Branch(branchID),
-	vTypeID VARCHAR(10) FOREIGN KEY REFERENCES VehicleType(vTypeID)
+	branchID INT,
+	vTypeID VARCHAR(10),
+	CONSTRAINT FKOwnByBranch FOREIGN KEY (branchID) 
+	REFERENCES Branch(branchID),
+	CONSTRAINT FKBelongVType FOREIGN KEY (vTypeID)
+	REFERENCES VehicleType(vTypeID)
 );
 
 CREATE TABLE RentalTransaction(
 	rentalID	INT	IDENTITY(1,1) PRIMARY KEY,
-	dateBooked	DATETIME,
+	dateBooked	DATETIME NOT NULL DEFAULT (GETDATE()),
 	expRetDate	DATETIME NOT NULL,
 	actRetDate	DATETIME NULL,
-	empBorrow INT FOREIGN KEY REFERENCES Employee(employID),
-	empRet INT FOREIGN KEY REFERENCES Employee(employID),
-	branchBorrow INT FOREIGN KEY REFERENCES Branch(branchID),
+	empBorrow INT,    --Employee who processes borrow transaction
+	empRet INT FOREIGN KEY REFERENCES Employee(employID),		--Employee who processes return transaction
+	branchBorrow INT, 
 	branchReturn INT FOREIGN KEY REFERENCES Branch(branchID),
 	rentedVID INT FOREIGN KEY REFERENCES Vehicle(vehicleID),
-	vTypeID VARCHAR(10) FOREIGN KEY REFERENCES	VehicleType(vTypeID)
+	vTypeID VARCHAR(10),   --Customer's requested vehicle type
+	CONSTRAINT FKReqVType FOREIGN KEY (vTypeID)
+	REFERENCES VehicleType(vTypeID),   
+	CONSTRAINT FKEmpBorrow FOREIGN KEY (empBorrow)
+	REFERENCES Employee(employID),
+	CONSTRAINT FKBranBorrow FOREIGN KEY (branchBorrow) 
+	REFERENCES Branch(branchID)
 );
 
