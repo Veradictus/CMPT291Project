@@ -1,3 +1,7 @@
+/*CMPT 291 Project, OP01, Spring Term 2021
+Group Members: Damion Shillinglaw, Kelly Flores, Gerardo Cea, Flavius Poenaru
+*/
+
 use [291proDatabase];
 
 DROP TABLE IF EXISTS Customer;
@@ -10,24 +14,26 @@ DROP TABLE IF EXISTS [User];
 
 ---Create tables for car rental agency---
 CREATE TABLE [User](
-	[UID] INT IDENTITY(1,1) PRIMARY KEY,
+	[UID] INT IDENTITY(1,1),
 	userName	CHAR(20)	NOT NULL,
 	passw		CHAR(20)	NOT NULL,
+	userType	CHAR(8)		DEFAULT 'customer',
 	gender		CHAR(5)		NOT NULL,
 	firstName	CHAR(15)	NOT NULL,
 	lastName	CHAR(15)	NOT NULL,
 	street		CHAR(30)	NOT NULL,
 	city		CHAR(20)	NOT NULL,
-	prov		CHAR(20)	NOT NULL
+	prov		CHAR(20)	NOT NULL,
+	CONSTRAINT PKUser PRIMARY KEY ([UID])
 );
 
 CREATE TABLE Customer(
-	customerID	INT	IDENTITY(1,1) PRIMARY KEY,
+	customerID	INT,		--Is the UID from User table
 	driverLic	INT			NOT NULL,
 	membership	CHAR(7)	DEFAULT 'Regular',
-	[UID]	INT		NOT NULL,
-	CONSTRAINT	fkCustomer	FOREIGN KEY ([UID])
-	REFERENCES [User]([UID])
+	CONSTRAINT PKCustUser PRIMARY KEY (customerID),
+	CONSTRAINT	FKCustUser	FOREIGN KEY (customerID)
+	REFERENCES [User] ([UID])
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 );
@@ -41,11 +47,11 @@ CREATE TABLE Branch(
 );
 
 CREATE TABLE Employee(
-	employID INT IDENTITY(1,1) PRIMARY KEY,
+	employID INT,		--Is the user ID from User table
 	salary		FLOAT		NOT NULL,
 	branchID INT FOREIGN KEY REFERENCES Branch(branchID) NOT NULL,
-	[UID]		INT		NOT NULL,	
-	CONSTRAINT fkEmployee FOREIGN KEY ([UID])
+	CONSTRAINT	PKEmpUser	PRIMARY KEY (employID),	
+	CONSTRAINT FKEmpUser FOREIGN KEY (employID)
 	REFERENCES [User]([UID])
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
