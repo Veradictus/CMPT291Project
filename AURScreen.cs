@@ -14,14 +14,15 @@ namespace _291CarProject
         {
             InitializeComponent();
 
-            // Clear the drop downs
-            DD_AddBranch.Items.Clear();
-            DD_AddSize.Items.Clear();
-            DD_UpdateBranch.Items.Clear();
-            DD_UpdateSize.Items.Clear();
+            // Clear then populate all dropdowns
+            DropDownClear();
+            DropDownPopulate();
+        }
 
-            // Adding branchIDs into our drop down
-            _291CarProject.Static.Database.commandStream.CommandText = "select branchID from Branch";
+        private void DropDownPopulate()
+        {
+            // Adding branchIDs + names into our drop down
+            _291CarProject.Static.Database.commandStream.CommandText = "select branchID, street from Branch";
             try
             {
                 // Run and grab the result from the dataStream
@@ -29,8 +30,10 @@ namespace _291CarProject
 
                 while (_291CarProject.Static.Database.dataStream.Read())
                 {
-                    DD_AddBranch.Items.Add(_291CarProject.Static.Database.dataStream["branchID"].ToString());
-                    DD_UpdateBranch.Items.Add(_291CarProject.Static.Database.dataStream["branchID"].ToString());
+                    string branch = _291CarProject.Static.Database.dataStream["branchID"].ToString()
+                        + " - Branch " + _291CarProject.Static.Database.dataStream["street"].ToString();
+                    DD_AddBranch.Items.Add(branch);
+                    DD_UpdateBranch.Items.Add(branch);
                 }
                 _291CarProject.Static.Database.dataStream.Close();
             }
@@ -41,7 +44,7 @@ namespace _291CarProject
             }
 
             // Adding Sizes/Types into our drop down
-            _291CarProject.Static.Database.commandStream.CommandText = "select vehTypeID from VehicleType";
+            _291CarProject.Static.Database.commandStream.CommandText = "select vTypeID from VehicleType";
             try
             {
                 // Run and grab the result from the dataStream
@@ -49,8 +52,8 @@ namespace _291CarProject
 
                 while (_291CarProject.Static.Database.dataStream.Read())
                 {
-                    DD_AddSize.Items.Add(_291CarProject.Static.Database.dataStream["vehTypeID"].ToString());
-                    DD_UpdateSize.Items.Add(_291CarProject.Static.Database.dataStream["vehTypeID"].ToString());
+                    DD_AddSize.Items.Add(_291CarProject.Static.Database.dataStream["vTypeID"].ToString());
+                    DD_UpdateSize.Items.Add(_291CarProject.Static.Database.dataStream["vTypeID"].ToString());
                 }
                 _291CarProject.Static.Database.dataStream.Close();
             }
@@ -59,7 +62,14 @@ namespace _291CarProject
             {
                 MessageBox.Show(e2.ToString(), "Error");
             }
+        }
 
+        private void DropDownClear()
+        {
+            DD_AddBranch.Items.Clear();
+            DD_AddSize.Items.Clear();
+            DD_UpdateBranch.Items.Clear();
+            DD_UpdateSize.Items.Clear();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -82,16 +92,12 @@ namespace _291CarProject
             // If any of our inputs are illegal, end the function immediately
             if (!InputCheck_Add()) { return; }
 
-            //int newID = FindNewID(); // Create an ID for our new vehicle
-            //int newYear = int.Parse(TB_AddYear.Text);
-            //int newMilage = int.Parse(TB_AddMilage.Text);
-            //int branchID = int.Parse(DD_AddBranch.Text);
-
             try
             {
                 // Build the command text here
-                _291CarProject.Static.Database.commandStream.CommandText = "insert into Vehicle (vehTypeID, milage, brand, model, [year], branchID) values " +
-                    "('" + DD_AddSize.Text + "'," + TB_AddMilage.Text + ",'" + TB_AddBrand.Text + "','" + TB_AddModel.Text + "'," + TB_AddYear.Text + "," + DD_AddBranch.Text + ")";
+                _291CarProject.Static.Database.commandStream.CommandText = "insert into Vehicle (vTypeID, milage, brand, model, [year], branchID) values " +
+                    "('" + DD_AddSize.Text + "'," + TB_AddMilage.Text + ",'" + TB_AddBrand.Text + "','" + TB_AddModel.Text + "'," + TB_AddYear.Text + "," +
+                    BranchReader(DD_AddBranch.Text) + ")";
                 // Message box feat. our query
                 MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
                 // Send it along to the server
@@ -140,41 +146,6 @@ namespace _291CarProject
             return true;
         }
 
-        private int FindNewID()
-        {
-            int newVID = 0; // Our new vehicle entry's ID
-            int latestVID; // the last VID we've given out
-
-            // Build the command text here
-            _291CarProject.Static.Database.commandStream.CommandText = "select max(vehicleID) as latest from Vehicle";
-
-            try
-            {
-                // Run and grab the result from the dataStream
-                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
-                _291CarProject.Static.Database.dataStream.Read(); // Read
-                // Turn the vehicleID to an int using Parse
-                //MessageBox.Show(_291CarProject.Static.Database.dataStream["latest"].ToString());
-                latestVID = int.Parse(_291CarProject.Static.Database.dataStream["latest"].ToString());
-                _291CarProject.Static.Database.dataStream.Close();
-
-                // Check if we got a result for a "max" vID
-                // If there are no vehicles in the system, make this vehicle the very 1st
-                if (latestVID.Equals(0)) { newVID = 0001; }
-                else { newVID = latestVID + 1; }
-
-                // Return
-                return newVID;
-            }
-            // Error catching
-            catch (Exception e2)
-            {
-                MessageBox.Show(e2.ToString(), "Error");
-            }
-
-            return newVID;
-        }
-
         /* ========================================================================================
          * Update Side
          * In Update, we can change values for a vehicle.
@@ -195,10 +166,7 @@ namespace _291CarProject
                 _291CarProject.Static.Database.commandStream.ExecuteNonQuery(); // run the query and update the entry
             }
             // Error catching
-            catch (Exception e2)
-            {
-                MessageBox.Show(e2.ToString(), "Error");
-            }
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
         }
 
         private StringBuilder GenerateUpdateQuery()
@@ -209,7 +177,7 @@ namespace _291CarProject
             // Size
             if (DD_UpdateSize.Text != "")
             {
-                updateCommand.Append("vehTypeID = '" + DD_UpdateSize.Text + "'");
+                updateCommand.Append("vTypeID = '" + DD_UpdateSize.Text + "'");
                 cFlag = true;
             }
             // Milage
@@ -261,12 +229,13 @@ namespace _291CarProject
                 cFlag = true;
             }
             // Branch
-            if (TB_UpdateYear.Text != "")
+            if (DD_UpdateBranch.Text != "")
             {
                 // If we added a change to the model, make sure to add a comma here
                 if (cFlag) { updateCommand.Append(","); }
-                updateCommand.Append("branchID = " + DD_UpdateBranch.Text);
+                updateCommand.Append("branchID = " + BranchReader(DD_UpdateBranch.Text));
             }
+            // Finally, add the Where
             updateCommand.Append(" where vehicleID = " + TB_UpdateID.Text);
             MessageBox.Show(updateCommand.ToString());
             return updateCommand;
@@ -387,9 +356,15 @@ namespace _291CarProject
             return false;
         }
 
-        private void AURScreen_Load(object sender, EventArgs e)
+        // BranchReader takes our fancy branch option from a drop down box and splits it,
+        // grabbing only the ID that we want.
+        private string BranchReader(string branchOption)
         {
-
+            string[] sections = branchOption.Split(' ');
+            return sections[0];
         }
+
+        // NOTE - DO NOT DELETE THIS OR IT'LL BREAKS
+        private void AURScreen_Load(object sender, EventArgs e) { }
     }
 }
