@@ -46,9 +46,19 @@ namespace _291CarProject
             this.labelDateFrom = new System.Windows.Forms.Label();
             this.labelDateTo = new System.Windows.Forms.Label();
             this.updateSearchButton = new System.Windows.Forms.Button();
-            this.GridView = new System.Windows.Forms.DataGridView();
+            this.SearchResultGrid = new System.Windows.Forms.DataGridView();
             this.vehicleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.GridView)).BeginInit();
+            this.vBrand = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vBranch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vDRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vWRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vMRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.brandSelector = new System.Windows.Forms.ComboBox();
+            this.labelBrand = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchResultGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // branchSelector
@@ -60,16 +70,15 @@ namespace _291CarProject
             "Branch 1",
             "Branch 2",
             "Branch 3"});
-            this.branchSelector.Location = new System.Drawing.Point(41, 77);
+            this.branchSelector.Location = new System.Drawing.Point(13, 34);
             this.branchSelector.Name = "branchSelector";
             this.branchSelector.Size = new System.Drawing.Size(100, 23);
             this.branchSelector.TabIndex = 0;
-            this.branchSelector.Text = "-";
             this.branchSelector.SelectedIndexChanged += new System.EventHandler(this.branchSelector_SelectedIndexChanged);
             // 
             // backButton
             // 
-            this.backButton.Location = new System.Drawing.Point(12, 415);
+            this.backButton.Location = new System.Drawing.Point(11, 371);
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(75, 23);
             this.backButton.TabIndex = 2;
@@ -86,11 +95,10 @@ namespace _291CarProject
             "Small",
             "Medium",
             "Large"});
-            this.sizeSelector.Location = new System.Drawing.Point(116, 164);
+            this.sizeSelector.Location = new System.Drawing.Point(88, 121);
             this.sizeSelector.Name = "sizeSelector";
             this.sizeSelector.Size = new System.Drawing.Size(84, 23);
             this.sizeSelector.TabIndex = 10;
-            this.sizeSelector.Text = "-";
             this.sizeSelector.SelectedIndexChanged += new System.EventHandler(this.sizeSelector_SelectedIndexChanged);
             // 
             // milageSelector
@@ -103,11 +111,10 @@ namespace _291CarProject
             "10k to 25k",
             "25k to 50k",
             "> 50k"});
-            this.milageSelector.Location = new System.Drawing.Point(116, 193);
+            this.milageSelector.Location = new System.Drawing.Point(88, 150);
             this.milageSelector.Name = "milageSelector";
             this.milageSelector.Size = new System.Drawing.Size(84, 23);
             this.milageSelector.TabIndex = 11;
-            this.milageSelector.Text = "-";
             this.milageSelector.SelectedIndexChanged += new System.EventHandler(this.milageSelector_SelectedIndexChanged);
             // 
             // yearSelector
@@ -137,11 +144,10 @@ namespace _291CarProject
             "2008",
             "2009",
             "2010"});
-            this.yearSelector.Location = new System.Drawing.Point(116, 251);
+            this.yearSelector.Location = new System.Drawing.Point(88, 239);
             this.yearSelector.Name = "yearSelector";
             this.yearSelector.Size = new System.Drawing.Size(84, 23);
             this.yearSelector.TabIndex = 12;
-            this.yearSelector.Text = "-";
             this.yearSelector.SelectedIndexChanged += new System.EventHandler(this.yearSelector_SelectedIndexChanged);
             // 
             // modelSelector
@@ -155,18 +161,17 @@ namespace _291CarProject
             "Subaru Outback",
             "Land Rover Defender",
             "Koenigsegg Gemera"});
-            this.modelSelector.Location = new System.Drawing.Point(116, 222);
+            this.modelSelector.Location = new System.Drawing.Point(88, 210);
             this.modelSelector.Name = "modelSelector";
             this.modelSelector.Size = new System.Drawing.Size(84, 23);
             this.modelSelector.TabIndex = 13;
-            this.modelSelector.Text = "-";
             this.modelSelector.SelectedIndexChanged += new System.EventHandler(this.modelSelector_SelectedIndexChanged);
             // 
             // labelSBranch
             // 
             this.labelSBranch.AutoSize = true;
             this.labelSBranch.Font = new System.Drawing.Font("Segoe UI", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point);
-            this.labelSBranch.Location = new System.Drawing.Point(41, 59);
+            this.labelSBranch.Location = new System.Drawing.Point(13, 16);
             this.labelSBranch.Name = "labelSBranch";
             this.labelSBranch.Size = new System.Drawing.Size(84, 15);
             this.labelSBranch.TabIndex = 15;
@@ -176,7 +181,7 @@ namespace _291CarProject
             // 
             this.labelSSize.AutoSize = true;
             this.labelSSize.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelSSize.Location = new System.Drawing.Point(41, 172);
+            this.labelSSize.Location = new System.Drawing.Point(13, 129);
             this.labelSSize.Name = "labelSSize";
             this.labelSSize.Size = new System.Drawing.Size(30, 15);
             this.labelSSize.TabIndex = 16;
@@ -186,7 +191,7 @@ namespace _291CarProject
             // 
             this.labelSMilage.AutoSize = true;
             this.labelSMilage.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelSMilage.Location = new System.Drawing.Point(41, 201);
+            this.labelSMilage.Location = new System.Drawing.Point(13, 158);
             this.labelSMilage.Name = "labelSMilage";
             this.labelSMilage.Size = new System.Drawing.Size(44, 15);
             this.labelSMilage.TabIndex = 17;
@@ -196,7 +201,7 @@ namespace _291CarProject
             // 
             this.labelSYear.AutoSize = true;
             this.labelSYear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelSYear.Location = new System.Drawing.Point(41, 259);
+            this.labelSYear.Location = new System.Drawing.Point(13, 247);
             this.labelSYear.Name = "labelSYear";
             this.labelSYear.Size = new System.Drawing.Size(31, 15);
             this.labelSYear.TabIndex = 18;
@@ -206,7 +211,7 @@ namespace _291CarProject
             // 
             this.labelSModel.AutoSize = true;
             this.labelSModel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelSModel.Location = new System.Drawing.Point(41, 230);
+            this.labelSModel.Location = new System.Drawing.Point(13, 218);
             this.labelSModel.Name = "labelSModel";
             this.labelSModel.Size = new System.Drawing.Size(42, 15);
             this.labelSModel.TabIndex = 19;
@@ -216,7 +221,7 @@ namespace _291CarProject
             // 
             this.labelAvailableV.AutoSize = true;
             this.labelAvailableV.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point);
-            this.labelAvailableV.Location = new System.Drawing.Point(264, 53);
+            this.labelAvailableV.Location = new System.Drawing.Point(263, 9);
             this.labelAvailableV.Name = "labelAvailableV";
             this.labelAvailableV.Size = new System.Drawing.Size(149, 21);
             this.labelAvailableV.TabIndex = 20;
@@ -224,14 +229,14 @@ namespace _291CarProject
             // 
             // dateFrom
             // 
-            this.dateFrom.Location = new System.Drawing.Point(116, 106);
+            this.dateFrom.Location = new System.Drawing.Point(88, 63);
             this.dateFrom.Name = "dateFrom";
             this.dateFrom.Size = new System.Drawing.Size(141, 23);
             this.dateFrom.TabIndex = 21;
             // 
             // dateTo
             // 
-            this.dateTo.Location = new System.Drawing.Point(116, 135);
+            this.dateTo.Location = new System.Drawing.Point(88, 92);
             this.dateTo.Name = "dateTo";
             this.dateTo.Size = new System.Drawing.Size(141, 23);
             this.dateTo.TabIndex = 22;
@@ -240,7 +245,7 @@ namespace _291CarProject
             // 
             this.labelDateFrom.AutoSize = true;
             this.labelDateFrom.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelDateFrom.Location = new System.Drawing.Point(41, 114);
+            this.labelDateFrom.Location = new System.Drawing.Point(13, 71);
             this.labelDateFrom.Name = "labelDateFrom";
             this.labelDateFrom.Size = new System.Drawing.Size(69, 15);
             this.labelDateFrom.TabIndex = 23;
@@ -250,7 +255,7 @@ namespace _291CarProject
             // 
             this.labelDateTo.AutoSize = true;
             this.labelDateTo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelDateTo.Location = new System.Drawing.Point(41, 143);
+            this.labelDateTo.Location = new System.Drawing.Point(13, 100);
             this.labelDateTo.Name = "labelDateTo";
             this.labelDateTo.Size = new System.Drawing.Size(53, 15);
             this.labelDateTo.TabIndex = 24;
@@ -258,7 +263,7 @@ namespace _291CarProject
             // 
             // updateSearchButton
             // 
-            this.updateSearchButton.Location = new System.Drawing.Point(41, 287);
+            this.updateSearchButton.Location = new System.Drawing.Point(13, 275);
             this.updateSearchButton.Name = "updateSearchButton";
             this.updateSearchButton.Size = new System.Drawing.Size(100, 23);
             this.updateSearchButton.TabIndex = 25;
@@ -266,29 +271,105 @@ namespace _291CarProject
             this.updateSearchButton.UseVisualStyleBackColor = true;
             this.updateSearchButton.Click += new System.EventHandler(this.updateSearchButton_Click);
             // 
-            // GridView
+            // SearchResultGrid
             // 
-            this.GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.vehicleID});
-            this.GridView.Location = new System.Drawing.Point(264, 77);
-            this.GridView.Name = "GridView";
-            this.GridView.RowTemplate.Height = 25;
-            this.GridView.Size = new System.Drawing.Size(435, 237);
-            this.GridView.TabIndex = 26;
+            this.SearchResultGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SearchResultGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.vehicleID,
+            this.vBrand,
+            this.vModel,
+            this.vYear,
+            this.vBranch,
+            this.vType,
+            this.vDRate,
+            this.vWRate,
+            this.vMRate});
+            this.SearchResultGrid.Location = new System.Drawing.Point(263, 33);
+            this.SearchResultGrid.Name = "SearchResultGrid";
+            this.SearchResultGrid.RowTemplate.Height = 25;
+            this.SearchResultGrid.Size = new System.Drawing.Size(943, 315);
+            this.SearchResultGrid.TabIndex = 26;
             // 
             // vehicleID
             // 
             this.vehicleID.HeaderText = "Vehicle ID";
             this.vehicleID.Name = "vehicleID";
             // 
+            // vBrand
+            // 
+            this.vBrand.HeaderText = "Brand";
+            this.vBrand.Name = "vBrand";
+            // 
+            // vModel
+            // 
+            this.vModel.HeaderText = "Model";
+            this.vModel.Name = "vModel";
+            // 
+            // vYear
+            // 
+            this.vYear.HeaderText = "Year";
+            this.vYear.Name = "vYear";
+            // 
+            // vBranch
+            // 
+            this.vBranch.HeaderText = "Branch";
+            this.vBranch.Name = "vBranch";
+            // 
+            // vType
+            // 
+            this.vType.HeaderText = "Type";
+            this.vType.Name = "vType";
+            // 
+            // vDRate
+            // 
+            this.vDRate.HeaderText = "Day Rate";
+            this.vDRate.Name = "vDRate";
+            // 
+            // vWRate
+            // 
+            this.vWRate.HeaderText = "Weekly Rate";
+            this.vWRate.Name = "vWRate";
+            // 
+            // vMRate
+            // 
+            this.vMRate.HeaderText = "Monthly Rate";
+            this.vMRate.Name = "vMRate";
+            // 
+            // brandSelector
+            // 
+            this.brandSelector.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.brandSelector.FormattingEnabled = true;
+            this.brandSelector.Items.AddRange(new object[] {
+            "-",
+            "Volkswagen Golf",
+            "Toyota Corola",
+            "Subaru Outback",
+            "Land Rover Defender",
+            "Koenigsegg Gemera"});
+            this.brandSelector.Location = new System.Drawing.Point(88, 179);
+            this.brandSelector.Name = "brandSelector";
+            this.brandSelector.Size = new System.Drawing.Size(84, 23);
+            this.brandSelector.TabIndex = 27;
+            // 
+            // labelBrand
+            // 
+            this.labelBrand.AutoSize = true;
+            this.labelBrand.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelBrand.Location = new System.Drawing.Point(12, 187);
+            this.labelBrand.Name = "labelBrand";
+            this.labelBrand.Size = new System.Drawing.Size(40, 15);
+            this.labelBrand.TabIndex = 28;
+            this.labelBrand.Text = "Brand";
+            // 
             // BranchSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.GridView);
+            this.ClientSize = new System.Drawing.Size(1222, 405);
+            this.Controls.Add(this.labelBrand);
+            this.Controls.Add(this.brandSelector);
+            this.Controls.Add(this.SearchResultGrid);
             this.Controls.Add(this.updateSearchButton);
             this.Controls.Add(this.labelDateTo);
             this.Controls.Add(this.labelDateFrom);
@@ -309,7 +390,7 @@ namespace _291CarProject
             this.Name = "BranchSearch";
             this.Text = "BranchSearch1";
             this.Load += new System.EventHandler(this.BranchSearch_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchResultGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -339,7 +420,17 @@ namespace _291CarProject
         private System.Windows.Forms.Label labelDateFrom;
         private System.Windows.Forms.Label labelDateTo;
         private System.Windows.Forms.Button updateSearchButton;
-        private System.Windows.Forms.DataGridView GridView;
+        private System.Windows.Forms.DataGridView SearchResultGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vBrand;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vModel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vBranch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vDRate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vWRate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vMRate;
+        private System.Windows.Forms.ComboBox brandSelector;
+        private System.Windows.Forms.Label labelBrand;
     }
 }
