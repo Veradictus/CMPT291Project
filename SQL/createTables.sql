@@ -13,26 +13,25 @@ DROP TABLE IF EXISTS VehicleType;
 -- Parent table of Customer and Employee tables
 CREATE TABLE [User](
 	[UID] INT IDENTITY(1,1),
-	userName	CHAR(20)	NOT NULL UNIQUE,
-	passw		CHAR(20)	NOT NULL,	--password for userName
-	userType	CHAR(8)		DEFAULT 'Customer',
-	gender		CHAR(5)		NOT NULL,
-	firstName	CHAR(15)	NOT NULL,
-	lastName	CHAR(15)	NOT NULL,
-	street		CHAR(30)	NOT NULL,
-	city		CHAR(20)	NOT NULL,
-	prov		CHAR(20)	NOT NULL,
+	userName	VARCHAR(20)	NOT NULL UNIQUE,
+	passw		VARCHAR(20)	NOT NULL,	--password for userName
+	userType	VARCHAR(8)	DEFAULT 'Customer',
+	gender		VARCHAR(5)	NOT NULL,
+	firstName	VARCHAR(15)	NOT NULL,
+	lastName	VARCHAR(15)	NOT NULL,
+	street		VARCHAR(30)	NOT NULL,
+	city		VARCHAR(20)	NOT NULL,
+	prov		VARCHAR(20)	NOT NULL,
 	CONSTRAINT PKUser PRIMARY KEY([UID]),
 	CONSTRAINT CheckType CHECK(userType IN ('Customer','Employee')),
-	CONSTRAINT GenderCheck CHECK(gender IN ('Male','Female')),
-	CONSTRAINT UniqueName UNIQUE(firstName,lastName)
+	CONSTRAINT GenderCheck CHECK(gender IN ('Male','Female'))
 );
 
 --Is a child table of User table
 CREATE TABLE Customer(
 	customerID	INT,		--Is the UID from User table
 	driverLic	INT	NOT NULL UNIQUE,
-	membership	CHAR(7)	DEFAULT 'Regular',
+	membership	VARCHAR(7)	DEFAULT 'Regular',
 	CONSTRAINT PKCustUser PRIMARY KEY (customerID),
 	CONSTRAINT MemberCheck CHECK (membership IN ('Regular','Gold')),
 	CONSTRAINT	FKCustUser	FOREIGN KEY (customerID)
@@ -43,10 +42,10 @@ CREATE TABLE Customer(
 
 CREATE TABLE Branch(
 	branchID INT IDENTITY(1,1) PRIMARY KEY,
-	street	CHAR(30)	NOT NULL UNIQUE,
-	city	CHAR(20)	NOT NULL,
-	prov	CHAR(20)	NOT NULL,
-	phoneNumber CHAR(20) NOT NULL UNIQUE
+	street	VARCHAR(30)	NOT NULL UNIQUE,
+	city	VARCHAR(20)	NOT NULL,
+	prov	VARCHAR(20)	NOT NULL,
+	phoneNumber VARCHAR(20) NOT NULL UNIQUE
 );
 
 --Is a child table of User table
@@ -76,8 +75,8 @@ CREATE TABLE VehicleType(
 CREATE TABLE Vehicle(
 	vehicleID	INT IDENTITY(1,1) PRIMARY KEY,
 	milage	INT	NOT NULL,
-	brand	CHAR(15) NOT NULL,
-	model	CHAR(15) NOT NULL,
+	brand	VARCHAR(15) NOT NULL,
+	model	VARCHAR(15) NOT NULL,
 	[year]	INT	NOT NULL,
 	branchID INT,
 	vTypeID VARCHAR(10),
