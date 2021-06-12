@@ -12,7 +12,7 @@ namespace _291CarProject.Static
         public static SqlCommand commandStream = new SqlCommand();
         public static SqlDataReader dataStream;
 
-        public const string host = "DESKTOP-GCF4I8G";
+        public const string host = "DESKTOP-T4FGG00";
         public const string database = "291proDatabase";
 
         public const string username = "user2";
@@ -59,17 +59,18 @@ namespace _291CarProject.Static
             try
             {
                 dataStream = commandStream.ExecuteReader();
+
                 status = true;
-                dataStream.Close();
-                //return true;
+
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
+
                 status = false;
-                //return false;
             }
 
+            dataStream.Close();
 
             return status;
         }
@@ -83,6 +84,7 @@ namespace _291CarProject.Static
             try
             {
                 dataStream = commandStream.ExecuteReader();
+
                 while (dataStream.Read())
                 {
                     string dataStreamUsername = dataStream["userName"].ToString();
@@ -90,13 +92,15 @@ namespace _291CarProject.Static
                     if (dataStream["userName"].ToString().Equals(username, StringComparison.OrdinalIgnoreCase))
                         status = true;
                 }
-                dataStream.Close();
+
             }
             catch (Exception e)
             {
                 Debug.WriteLine("[UserExists] An error has occurred");
                 Debug.WriteLine(e.ToString());
             }
+
+            dataStream.Close();
 
             return status;
         }
@@ -113,16 +117,14 @@ namespace _291CarProject.Static
 
                 while (dataStream.Read())
                 {
-                    MessageBox.Show("Given username = " + username + "\r\nGiven pass = " + password + "\r\nSaved username = " + dataStream["userName"].ToString() + "\r\nSaved password = " + dataStream["passw"].ToString());
-
                     if (!dataStream["userName"].ToString().Equals(username, StringComparison.OrdinalIgnoreCase))
                         break;
 
                     if (!dataStream["passw"].ToString().Equals(password))
                         break;
+
                     status = true;
                 }
-                dataStream.Close();
 
             }
             catch (Exception e)
@@ -131,6 +133,7 @@ namespace _291CarProject.Static
                 Debug.WriteLine(e.ToString());
             }
 
+            dataStream.Close();
 
             return status;
         }

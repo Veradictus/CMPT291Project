@@ -137,6 +137,8 @@ namespace _291CarProject
         private string SearchQueryGenerator()
         {
             bool andFlag = false; // The comma flag, used to tell when to add a comma , to the query
+            string displayString = "Searching for all vehicles";
+
             StringBuilder searchCommand = new StringBuilder("Select V.vehicleID, V.branchID, V.vTypeID, V.brand, V.model, V.year," +
                 "T.dRate, T.wRate, T.mRate from Vehicle as V, VehicleType as T where V.vTypeID = T.vTypeID");
 
@@ -150,7 +152,9 @@ namespace _291CarProject
             // Branch
             if (branchSelector.Text != "")
             {
-                searchCommand.Append("V.branchID = " + BranchReader(branchSelector.Text));
+                string fixedBranch = BranchReader(branchSelector.Text);
+                searchCommand.Append("V.branchID = " + fixedBranch);
+                displayString += " in Branch " + fixedBranch + ",";
                 andFlag = true;
             }
             // Size
@@ -163,6 +167,7 @@ namespace _291CarProject
                     andFlag = false;
                 }
                 searchCommand.Append("V.vTypeID = '" + sizeSelector.Text + "'");
+                displayString += " of size " + sizeSelector.Text + ",";
                 andFlag = true;
             }
             // Milage
@@ -174,8 +179,9 @@ namespace _291CarProject
                     searchCommand.Append(" and ");
                     andFlag = false;
                 }
-                string milageAmount = MilageReader();
+                string milageAmount = MilageReader(); // Prepare the milage for better SQL reading
                 searchCommand.Append(milageAmount);
+                displayString += " with milage " + milageSelector.Text + " KM,";
                 andFlag = true;
             }
             // Brand
@@ -188,6 +194,7 @@ namespace _291CarProject
                     andFlag = false;
                 }
                 searchCommand.Append("V.brand = '" + brandSelector.Text + "'");
+                displayString += " of brand " + brandSelector.Text + ",";
                 andFlag = true;
             }
             // Model
@@ -200,29 +207,53 @@ namespace _291CarProject
                     andFlag = false;
                 }
                 searchCommand.Append("V.model = '" + modelSelector.Text + "'");
+                displayString += " of model " + modelSelector.Text + ",";
                 andFlag = true;
             }
             // Year
             if (yearSelector.Text != "")
             {
                 // If we added a change to the model, make sure to add a comma here
-                if (andFlag) { searchCommand.Append(" and "); }
+                if (andFlag)
+                {
+                    searchCommand.Append(" and ");
+                    andFlag = false;
+                }
                 searchCommand.Append("V.year = " + yearSelector.Text);
+                displayString += " of year " + yearSelector.Text + ",";
                 andFlag = true;
             }
 
             // Not In check - we check vehicle NOT currently booked 
-            string timeFrom = dateFrom.Text;
-            string timeTo = dateTo.Text;
+            if (andFlag) // Just in case, check the and flag again to avoid errors
+            { searchCommand.Append(" and "); }
+            // Grab the given date from and to
+            displayString += " from " + dateFrom.Text + " to " + dateTo.Text + ".";
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString()); 
+            string timeTo = DateReorganizer(dateTo.Value.ToString());
 
-            searchCommand.Append(" and V.vehicleID not in " +
-                "(select rentedVID from RentalTransaction" +
-                "where dateBooked > convert(datetime,'" + timeFrom + "',5)" +
-                "and dateBooked > convert(datetime,'" + timeTo + "',5))");
+            // We look for 3 separate points to make sure we catch all posibilities among the rental transactions
+            searchCommand.Append("V.vehicleID not in " +
+                "(select rentedVID from RentalTransaction where " +
+                "(dateBooked between convert(datetime,'" + timeFrom + "',5) and convert(datetime,'" + timeTo + "',5)) or " +
+                "(expRetDate between convert(datetime,'" + timeFrom + "',5) and convert(datetime,'" + timeTo + "',5)) or " +
+                "(dateBooked > convert(datetime,'" + timeFrom + "',5) and expRetDate < convert(datetime,'" + timeTo + "',5)))");
 
             // Return
-            MessageBox.Show(searchCommand.ToString());
+            MessageBox.Show(displayString);
             return searchCommand.ToString();
+        }
+
+        private string DateReorganizer(string dateString)
+        {
+            string dateHalf = dateString.Substring(0,10);
+            string timeHalf = dateString.Substring(10);
+
+            string[] sections = dateHalf.Split('-');
+            sections[0] = sections[0].Substring(2);
+            
+            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
+            return fixedString;
         }
 
         private string MilageReader()
