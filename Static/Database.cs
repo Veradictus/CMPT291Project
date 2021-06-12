@@ -59,16 +59,15 @@ namespace _291CarProject.Static
             try
             {
                 dataStream = commandStream.ExecuteReader();
-
+                status = true;
                 dataStream.Close();
-
-                return true;
+                //return true;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
-
-                return false;
+                status = false;
+                //return false;
             }
 
 
@@ -124,7 +123,6 @@ namespace _291CarProject.Static
                     status = true;
                 }
                 dataStream.Close();
-                return true;
 
             }
             catch (Exception e)
