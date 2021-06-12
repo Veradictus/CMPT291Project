@@ -58,10 +58,7 @@ namespace _291CarProject
                 _291CarProject.Static.Database.dataStream.Close();
             }
             // Error catching
-            catch (Exception e2)
-            {
-                MessageBox.Show(e2.ToString(), "Error");
-            }
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
         }
 
         private void DropDownClear()

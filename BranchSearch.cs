@@ -65,7 +65,6 @@ namespace _291CarProject
         {
             // Create the command text
             _291CarProject.Static.Database.commandStream.CommandText = "select distinct " + dAttribute + " from Vehicle";
-            MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText);
 
             try
             {
@@ -151,7 +150,7 @@ namespace _291CarProject
             // Branch
             if (branchSelector.Text != "")
             {
-                searchCommand.Append("branchID = " + BranchReader(branchSelector.Text));
+                searchCommand.Append("V.branchID = " + BranchReader(branchSelector.Text));
                 andFlag = true;
             }
             // Size
@@ -166,6 +165,19 @@ namespace _291CarProject
                 searchCommand.Append("V.vTypeID = '" + sizeSelector.Text + "'");
                 andFlag = true;
             }
+            // Milage
+            if (milageSelector.Text != "")
+            {
+                // If we added a change to the model, make sure to add a comma here
+                if (andFlag)
+                {
+                    searchCommand.Append(" and ");
+                    andFlag = false;
+                }
+                string milageAmount = MilageReader();
+                searchCommand.Append(milageAmount);
+                andFlag = true;
+            }
             // Brand
             if (brandSelector.Text != "")
             {
@@ -175,7 +187,7 @@ namespace _291CarProject
                     searchCommand.Append(" and ");
                     andFlag = false;
                 }
-                searchCommand.Append("brand = '" + brandSelector.Text + "'");
+                searchCommand.Append("V.brand = '" + brandSelector.Text + "'");
                 andFlag = true;
             }
             // Model
@@ -187,7 +199,7 @@ namespace _291CarProject
                     searchCommand.Append(" and ");
                     andFlag = false;
                 }
-                searchCommand.Append("model = '" + modelSelector.Text + "'");
+                searchCommand.Append("V.model = '" + modelSelector.Text + "'");
                 andFlag = true;
             }
             // Year
@@ -195,14 +207,48 @@ namespace _291CarProject
             {
                 // If we added a change to the model, make sure to add a comma here
                 if (andFlag) { searchCommand.Append(" and "); }
-                searchCommand.Append("year = " + yearSelector.Text);
+                searchCommand.Append("V.year = " + yearSelector.Text);
                 andFlag = true;
             }
-            //int index = milageSelector.SelectedIndex;
 
-            // Branch
+            // Not In check - we check vehicle NOT currently booked 
+            string timeFrom = dateFrom.Text;
+            string timeTo = dateTo.Text;
+
+            searchCommand.Append(" and V.vehicleID not in " +
+                "(select rentedVID from RentalTransaction" +
+                "where dateBooked > convert(datetime,'" + timeFrom + "',5)" +
+                "and dateBooked > convert(datetime,'" + timeTo + "',5))");
+
+            // Return
             MessageBox.Show(searchCommand.ToString());
             return searchCommand.ToString();
+        }
+
+        private string MilageReader()
+        {
+            // Grab the selected milage here to use with the switch statement
+            string milageAmount = milageSelector.Text;
+
+            // Check the amount of KM the car's got
+            switch (milageAmount)
+            {
+                case "< 10k":
+                    milageAmount = "milage < 10000";
+                    break;
+                case "10k to 25k":
+                    milageAmount = "milage => 10000 and milage < 25000";
+                    break;
+                case "25k to 50k":
+                    milageAmount = "milage => 25000 and milage < 50000";
+                    break;
+                case "> 50k":
+                    milageAmount = "milage > 50000";
+                    break;
+            }
+
+            // Return the string
+            return milageAmount;
         }
 
         // BranchReader takes our fancy branch option from a drop down box and splits it,

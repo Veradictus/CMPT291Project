@@ -115,8 +115,3 @@ INSERT INTO VehicleType VALUES ('Large', 40, 240, 720, 25, 35);
 INSERT INTO Branch VALUES ('Elmwood Street', 'Edmonton', 'AB', '7804206969');
 INSERT INTO Branch VALUES ('Something Street', 'Edmonton', 'AB', '7804890000');
 
---TO_DATE('17/12/2015', 'DD/MM/YYYY');
---convert(datetime,'18-06-12 10:34:09 PM',5)
---select * from RentalTransaction
---insert into RentalTransaction (dateBooked, expRetDate) values (convert(datetime,'18-06-12 10:34:09 PM',5), convert(datetime,'20-06-12 10:34:09 PM',5))
---select * from RentalTransaction where dateBooked > convert(datetime,'1-06-12 10:34:09 PM',5) and dateBooked < convert(datetime,'01-01-13 10:34:09 PM',5)
