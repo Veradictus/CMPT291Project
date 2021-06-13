@@ -94,7 +94,8 @@ CREATE TABLE RentalTransaction(
 	empBorrow INT,    --Employee who processes borrow transaction
 	empRet INT FOREIGN KEY REFERENCES Employee(employID),		--Employee who processes return transaction
 	branchBorrow INT, 
-	branchReturn INT FOREIGN KEY REFERENCES Branch(branchID),
+	eBranchReturn INT FOREIGN KEY REFERENCES Branch(branchID),
+	aBranchReturn INT FOREIGN KEY REFERENCES Branch(branchID),
 	rentedVID INT FOREIGN KEY REFERENCES Vehicle(vehicleID),
 	vTypeID VARCHAR(10),   --Customer's requested vehicle type
 	CONSTRAINT FKReqVType FOREIGN KEY (vTypeID)

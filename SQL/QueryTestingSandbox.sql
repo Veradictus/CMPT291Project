@@ -42,5 +42,6 @@ select * from [User]
 select * from RentalTransaction
 select * from Customer
 
-INSERT INTO [User] VALUES 
-('test123', 'pass123', 'Customer', 'Male', 'Gerardo', 'Cea', 'Something', 'Edmonton', 'AB')
+select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
+where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
+group by branchID
