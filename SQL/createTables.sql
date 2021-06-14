@@ -30,7 +30,7 @@ CREATE TABLE [User](
 --Is a child table of User table
 CREATE TABLE Customer(
 	customerID	INT NOT NULL,		--Is the UID from User table
-	driverLic	INT	NOT NULL UNIQUE,
+	driverLicense	VARCHAR(12)	NOT NULL UNIQUE,
 	membership	VARCHAR(7)	DEFAULT 'Regular',
 	CONSTRAINT PKCustUser PRIMARY KEY (customerID),
 	CONSTRAINT MemberCheck CHECK (membership IN ('Regular','Gold')),
@@ -119,3 +119,5 @@ INSERT INTO VehicleType VALUES ('Large', 40, 240, 720, 25, 35);
 INSERT INTO Branch VALUES ('Elmwood Street', 'Edmonton', 'AB', '7804206969');
 INSERT INTO Branch VALUES ('Something Street', 'Edmonton', 'AB', '7804890000');
 
+INSERT INTO [User] VALUES ('admin', 'admin123', 'Employee', 'Male', 'Adam', 'Admin', 'Potato Road', 'Edmontonia', 'Alberto');
+INSERT INTO Employee VALUES (1, 420.69, 1);

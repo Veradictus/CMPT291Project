@@ -43,6 +43,10 @@ namespace _291CarProject
                 return;
             }
 
+            bool isGoldMember = _291CarProject.Static.Database.IsGoldMember(username_field.Text);
+
+            Debug.WriteLine("isGoldMember: " + isGoldMember);
+
             this.Hide();
 
             MainMenu mainMenuForm = new MainMenu();
