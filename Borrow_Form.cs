@@ -10,9 +10,13 @@ namespace _291CarProject
 {
     public partial class Borrow_Form : Form
     {
-        public Borrow_Form()
+        private Dictionary<string, string> userInfo;
+
+        public Borrow_Form(Dictionary<string, string> userInfo)
         {
             InitializeComponent();
+
+            this.userInfo = userInfo;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -59,7 +63,7 @@ namespace _291CarProject
         {
             this.Hide();
 
-            MainMenu mainMenuForm = new MainMenu();
+            MainMenu mainMenuForm = new MainMenu(userInfo);
 
             mainMenuForm.Show();
         }

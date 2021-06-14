@@ -10,9 +10,12 @@ namespace _291CarProject
 {
     public partial class Return_Form : Form
     {
-        public Return_Form()
+        private Dictionary<string, string> userInfo;
+        public Return_Form(Dictionary<string, string> userInfo)
         {
             InitializeComponent();
+
+            this.userInfo = userInfo;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -24,9 +27,14 @@ namespace _291CarProject
         {
             this.Hide();
 
-            MainMenu mainMenuForm = new MainMenu();
+            MainMenu mainMenuForm = new MainMenu(userInfo);
 
             mainMenuForm.Show();
+        }
+
+        private void Return_Form_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

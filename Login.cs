@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace _291CarProject
@@ -43,13 +43,11 @@ namespace _291CarProject
                 return;
             }
 
-            bool isGoldMember = _291CarProject.Static.Database.IsGoldMember(username_field.Text);
-
-            Debug.WriteLine("isGoldMember: " + isGoldMember);
+            Dictionary<string, string> userInfo = _291CarProject.Static.Database.GetUserInfo(username_field.Text);
 
             this.Hide();
 
-            MainMenu mainMenuForm = new MainMenu();
+            MainMenu mainMenuForm = new MainMenu(userInfo);
 
             mainMenuForm.Show();
         }

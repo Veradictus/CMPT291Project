@@ -126,6 +126,7 @@ namespace _291CarProject
             this.Controls.Add(this.return_label);
             this.Name = "Return_Form";
             this.Text = "Return_Form";
+            this.Load += new System.EventHandler(this.Return_Form_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
