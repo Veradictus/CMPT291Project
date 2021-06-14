@@ -41,6 +41,13 @@ select * from Branch
 select * from [User]
 select * from RentalTransaction
 select * from Customer
+
+
+select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
+where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
+group by branchID
+
+
 select * from Employee
 
 -- You can change the max to min if you want a specific 
@@ -60,9 +67,11 @@ select B.branchID, R.dateBooked, R.actRetDate, V.dRate, V.wRate, V.mRate from Br
 where B.branchID = R.branchBorrow and R.vTypeID = V.vTypeID
 -- Note, is the customer a regular or gold member?
 
+
 -- Use C# to find the amount of
 
 
 select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
 where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
 group by branchID
+
