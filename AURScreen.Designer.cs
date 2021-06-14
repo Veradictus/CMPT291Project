@@ -45,6 +45,7 @@ namespace _291CarProject
             this.AddModelText = new System.Windows.Forms.Label();
             this.AddConfirm = new System.Windows.Forms.Button();
             this.UpdateTab = new System.Windows.Forms.TabPage();
+            this.uSearchButton = new System.Windows.Forms.Button();
             this.labelUpdateBranch = new System.Windows.Forms.Label();
             this.DD_UpdateBranch = new System.Windows.Forms.ComboBox();
             this.labelUpdateBrand = new System.Windows.Forms.Label();
@@ -65,6 +66,7 @@ namespace _291CarProject
             this.RemoveVIDText = new System.Windows.Forms.Label();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.BackButton = new System.Windows.Forms.Button();
+            this.checkBoxConfirm = new System.Windows.Forms.CheckBox();
             this.AURTabs.SuspendLayout();
             this.AddTab.SuspendLayout();
             this.UpdateTab.SuspendLayout();
@@ -225,6 +227,7 @@ namespace _291CarProject
             // 
             // UpdateTab
             // 
+            this.UpdateTab.Controls.Add(this.uSearchButton);
             this.UpdateTab.Controls.Add(this.labelUpdateBranch);
             this.UpdateTab.Controls.Add(this.DD_UpdateBranch);
             this.UpdateTab.Controls.Add(this.labelUpdateBrand);
@@ -248,6 +251,16 @@ namespace _291CarProject
             this.UpdateTab.Text = "Update";
             this.UpdateTab.UseVisualStyleBackColor = true;
             // 
+            // uSearchButton
+            // 
+            this.uSearchButton.Location = new System.Drawing.Point(337, 16);
+            this.uSearchButton.Name = "uSearchButton";
+            this.uSearchButton.Size = new System.Drawing.Size(75, 23);
+            this.uSearchButton.TabIndex = 27;
+            this.uSearchButton.Text = "Search";
+            this.uSearchButton.UseVisualStyleBackColor = true;
+            this.uSearchButton.Click += new System.EventHandler(this.uSearchButton_Click);
+            // 
             // labelUpdateBranch
             // 
             this.labelUpdateBranch.AutoSize = true;
@@ -261,10 +274,6 @@ namespace _291CarProject
             // DD_UpdateBranch
             // 
             this.DD_UpdateBranch.FormattingEnabled = true;
-            this.DD_UpdateBranch.Items.AddRange(new object[] {
-            "Small",
-            "Medium",
-            "Large"});
             this.DD_UpdateBranch.Location = new System.Drawing.Point(181, 194);
             this.DD_UpdateBranch.Name = "DD_UpdateBranch";
             this.DD_UpdateBranch.Size = new System.Drawing.Size(150, 23);
@@ -290,10 +299,6 @@ namespace _291CarProject
             // DD_UpdateSize
             // 
             this.DD_UpdateSize.FormattingEnabled = true;
-            this.DD_UpdateSize.Items.AddRange(new object[] {
-            "Small",
-            "Medium",
-            "Large"});
             this.DD_UpdateSize.Location = new System.Drawing.Point(181, 49);
             this.DD_UpdateSize.Name = "DD_UpdateSize";
             this.DD_UpdateSize.Size = new System.Drawing.Size(150, 23);
@@ -389,6 +394,7 @@ namespace _291CarProject
             // 
             // RemoveTab
             // 
+            this.RemoveTab.Controls.Add(this.checkBoxConfirm);
             this.RemoveTab.Controls.Add(this.TB_RemoveVID);
             this.RemoveTab.Controls.Add(this.RemoveVIDText);
             this.RemoveTab.Controls.Add(this.RemoveButton);
@@ -435,6 +441,16 @@ namespace _291CarProject
             this.BackButton.Text = "Back";
             this.BackButton.UseVisualStyleBackColor = true;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
+            // 
+            // checkBoxConfirm
+            // 
+            this.checkBoxConfirm.AutoSize = true;
+            this.checkBoxConfirm.Location = new System.Drawing.Point(293, 170);
+            this.checkBoxConfirm.Name = "checkBoxConfirm";
+            this.checkBoxConfirm.Size = new System.Drawing.Size(97, 19);
+            this.checkBoxConfirm.TabIndex = 22;
+            this.checkBoxConfirm.Text = "Confirmation";
+            this.checkBoxConfirm.UseVisualStyleBackColor = true;
             // 
             // AURScreen
             // 
@@ -496,5 +512,7 @@ namespace _291CarProject
         private System.Windows.Forms.Label labelUpdateBrand;
         private System.Windows.Forms.ComboBox DD_UpdateBranch;
         private System.Windows.Forms.Label labelUpdateBranch;
+        private System.Windows.Forms.Button uSearchButton;
+        private System.Windows.Forms.CheckBox checkBoxConfirm;
     }
 }

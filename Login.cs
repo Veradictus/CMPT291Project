@@ -9,7 +9,6 @@ namespace _291CarProject
         public Login()
         {
             InitializeComponent();
-
         }
 
         private void username_field_TextChanged(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using System.Text;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace _291CarProject.Static
 {
@@ -11,7 +12,7 @@ namespace _291CarProject.Static
         public static SqlCommand commandStream = new SqlCommand();
         public static SqlDataReader dataStream;
 
-        public const string host = "DESKTOP-GCF4I8G";
+        public const string host = "DESKTOP-T4FGG00";
         public const string database = "291proDatabase";
 
         public const string username = "user2";

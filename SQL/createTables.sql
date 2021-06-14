@@ -29,7 +29,7 @@ CREATE TABLE [User](
 
 --Is a child table of User table
 CREATE TABLE Customer(
-	customerID	INT,		--Is the UID from User table
+	customerID	INT NOT NULL,		--Is the UID from User table
 	driverLic	INT	NOT NULL UNIQUE,
 	membership	VARCHAR(7)	DEFAULT 'Regular',
 	CONSTRAINT PKCustUser PRIMARY KEY (customerID),
@@ -50,9 +50,9 @@ CREATE TABLE Branch(
 
 --Is a child table of User table
 CREATE TABLE Employee(
-	employID INT,		--Is the user ID from User table
+	employID INT NOT NULL,		--Is the user ID from User table
 	salary		FLOAT	NULL,
-	branchID INT,
+	branchID INT NOT NULL,
 	CONSTRAINT FKWorkAtBranch FOREIGN KEY (branchID)
 	REFERENCES Branch(branchID), 
 	CONSTRAINT	PKEmpUser	PRIMARY KEY (employID),	
@@ -78,8 +78,8 @@ CREATE TABLE Vehicle(
 	brand	VARCHAR(15) NOT NULL,
 	model	VARCHAR(15) NOT NULL,
 	[year]	INT	NOT NULL,
-	branchID INT,
-	vTypeID VARCHAR(10),
+	branchID INT NOT NULL,
+	vTypeID VARCHAR(10) NOT NULL,
 	CONSTRAINT FKOwnByBranch FOREIGN KEY (branchID) 
 	REFERENCES Branch(branchID),
 	CONSTRAINT FKBelongVType FOREIGN KEY (vTypeID)
@@ -88,21 +88,25 @@ CREATE TABLE Vehicle(
 
 CREATE TABLE RentalTransaction(
 	rentalID	INT	IDENTITY(1,1) PRIMARY KEY,
+	userID		INT NOT NULL,
 	dateBooked	DATETIME NOT NULL DEFAULT (GETDATE()),
 	expRetDate	DATETIME NOT NULL,
 	actRetDate	DATETIME NULL,
-	empBorrow INT,    --Employee who processes borrow transaction
+	empBorrow INT NOT NULL,    --Employee who processes borrow transaction
 	empRet INT FOREIGN KEY REFERENCES Employee(employID),		--Employee who processes return transaction
-	branchBorrow INT, 
-	branchReturn INT FOREIGN KEY REFERENCES Branch(branchID),
+	branchBorrow INT NOT NULL, 
+	eBranchReturn INT FOREIGN KEY REFERENCES Branch(branchID), --The expected branch of return 
+	aBranchReturn INT FOREIGN KEY REFERENCES Branch(branchID), --Actual branch of return
 	rentedVID INT FOREIGN KEY REFERENCES Vehicle(vehicleID),
-	vTypeID VARCHAR(10),   --Customer's requested vehicle type
+	vTypeID VARCHAR(10) NOT NULL,   --Customer's requested vehicle type
 	CONSTRAINT FKReqVType FOREIGN KEY (vTypeID)
 	REFERENCES VehicleType(vTypeID),   
 	CONSTRAINT FKEmpBorrow FOREIGN KEY (empBorrow)
 	REFERENCES Employee(employID),
 	CONSTRAINT FKBranBorrow FOREIGN KEY (branchBorrow) 
-	REFERENCES Branch(branchID)
+	REFERENCES Branch(branchID),
+	CONSTRAINT FKUserID FOREIGN KEY (userID)
+	REFERENCES [User]([UID])
 );
 
 -- Some lines to create some branches and the vehicleTypes
@@ -115,8 +119,3 @@ INSERT INTO VehicleType VALUES ('Large', 40, 240, 720, 25, 35);
 INSERT INTO Branch VALUES ('Elmwood Street', 'Edmonton', 'AB', '7804206969');
 INSERT INTO Branch VALUES ('Something Street', 'Edmonton', 'AB', '7804890000');
 
---TO_DATE('17/12/2015', 'DD/MM/YYYY');
---convert(datetime,'18-06-12 10:34:09 PM',5)
---select * from RentalTransaction
---insert into RentalTransaction (dateBooked, expRetDate) values (convert(datetime,'18-06-12 10:34:09 PM',5), convert(datetime,'20-06-12 10:34:09 PM',5))
---select * from RentalTransaction where dateBooked > convert(datetime,'1-06-12 10:34:09 PM',5) and dateBooked < convert(datetime,'01-01-13 10:34:09 PM',5)

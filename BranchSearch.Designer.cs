@@ -65,11 +65,6 @@ namespace _291CarProject
             // 
             this.branchSelector.ForeColor = System.Drawing.SystemColors.WindowText;
             this.branchSelector.FormattingEnabled = true;
-            this.branchSelector.Items.AddRange(new object[] {
-            "-",
-            "Branch 1",
-            "Branch 2",
-            "Branch 3"});
             this.branchSelector.Location = new System.Drawing.Point(13, 34);
             this.branchSelector.Name = "branchSelector";
             this.branchSelector.Size = new System.Drawing.Size(100, 23);
@@ -90,11 +85,6 @@ namespace _291CarProject
             // 
             this.sizeSelector.ForeColor = System.Drawing.SystemColors.WindowText;
             this.sizeSelector.FormattingEnabled = true;
-            this.sizeSelector.Items.AddRange(new object[] {
-            "-",
-            "Small",
-            "Medium",
-            "Large"});
             this.sizeSelector.Location = new System.Drawing.Point(88, 121);
             this.sizeSelector.Name = "sizeSelector";
             this.sizeSelector.Size = new System.Drawing.Size(84, 23);
@@ -106,7 +96,6 @@ namespace _291CarProject
             this.milageSelector.ForeColor = System.Drawing.SystemColors.WindowText;
             this.milageSelector.FormattingEnabled = true;
             this.milageSelector.Items.AddRange(new object[] {
-            "-",
             "< 10k",
             "10k to 25k",
             "25k to 50k",
@@ -121,29 +110,6 @@ namespace _291CarProject
             // 
             this.yearSelector.ForeColor = System.Drawing.SystemColors.WindowText;
             this.yearSelector.FormattingEnabled = true;
-            this.yearSelector.Items.AddRange(new object[] {
-            "-",
-            "1990",
-            "1991",
-            "1992",
-            "1993",
-            "1994",
-            "1995",
-            "1996",
-            "1997",
-            "1998",
-            "1999",
-            "2000",
-            "2001",
-            "2002",
-            "2003",
-            "2004",
-            "2005",
-            "2006",
-            "2007",
-            "2008",
-            "2009",
-            "2010"});
             this.yearSelector.Location = new System.Drawing.Point(88, 239);
             this.yearSelector.Name = "yearSelector";
             this.yearSelector.Size = new System.Drawing.Size(84, 23);
@@ -154,13 +120,6 @@ namespace _291CarProject
             // 
             this.modelSelector.ForeColor = System.Drawing.SystemColors.WindowText;
             this.modelSelector.FormattingEnabled = true;
-            this.modelSelector.Items.AddRange(new object[] {
-            "-",
-            "Volkswagen Golf",
-            "Toyota Corola",
-            "Subaru Outback",
-            "Land Rover Defender",
-            "Koenigsegg Gemera"});
             this.modelSelector.Location = new System.Drawing.Point(88, 210);
             this.modelSelector.Name = "modelSelector";
             this.modelSelector.Size = new System.Drawing.Size(84, 23);
@@ -339,13 +298,6 @@ namespace _291CarProject
             // 
             this.brandSelector.ForeColor = System.Drawing.SystemColors.WindowText;
             this.brandSelector.FormattingEnabled = true;
-            this.brandSelector.Items.AddRange(new object[] {
-            "-",
-            "Volkswagen Golf",
-            "Toyota Corola",
-            "Subaru Outback",
-            "Land Rover Defender",
-            "Koenigsegg Gemera"});
             this.brandSelector.Location = new System.Drawing.Point(88, 179);
             this.brandSelector.Name = "brandSelector";
             this.brandSelector.Size = new System.Drawing.Size(84, 23);

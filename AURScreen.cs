@@ -58,10 +58,7 @@ namespace _291CarProject
                 _291CarProject.Static.Database.dataStream.Close();
             }
             // Error catching
-            catch (Exception e2)
-            {
-                MessageBox.Show(e2.ToString(), "Error");
-            }
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
         }
 
         private void DropDownClear()
@@ -288,6 +285,32 @@ namespace _291CarProject
             return true;
         }
 
+        private void uSearchButton_Click(object sender, EventArgs e)
+        {
+            // Check if the vehicle exists
+            if (!VIDCheck(TB_UpdateID.Text)) { return; }
+
+            try
+            {
+                _291CarProject.Static.Database.commandStream.CommandText = "select * from Vehicle where vehicleID = " + TB_UpdateID.Text;
+                // Run and grab the result from the dataStream
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                _291CarProject.Static.Database.dataStream.Read(); // Read
+
+                // Set the fields
+                DD_UpdateSize.Text = _291CarProject.Static.Database.dataStream["vTypeID"].ToString(); ;
+                TB_UpdateMilage.Text = _291CarProject.Static.Database.dataStream["milage"].ToString();
+                TB_UpdateBrand.Text = _291CarProject.Static.Database.dataStream["brand"].ToString();
+                TB_UpdateModel.Text = _291CarProject.Static.Database.dataStream["model"].ToString();
+                TB_UpdateYear.Text = _291CarProject.Static.Database.dataStream["year"].ToString();
+                DD_UpdateBranch.Text = _291CarProject.Static.Database.dataStream["branchID"].ToString();
+
+                _291CarProject.Static.Database.dataStream.Close(); // Close
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+        }
+
         /* ========================================================================================
          * Remove Side
          * In Update, we receive a vehicle ID and remove its entry from the Vehicle table
@@ -295,6 +318,13 @@ namespace _291CarProject
          ======================================================================================= */
         private void RemoveButton_Click(object sender, EventArgs e)
         {
+            // Make double sure we want to delete the vehicle
+            if (!checkBoxConfirm.Checked)
+            {
+                MessageBox.Show("Please check the confirmation check box before deleting a vehicle.");
+                return;
+            }
+
             // If any of our inputs are illegal, end the function immediately
             if (!InputCheck_Remove()) { return; }
 
@@ -304,6 +334,7 @@ namespace _291CarProject
                 // Message box feat. our query
                 MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
                 _291CarProject.Static.Database.commandStream.ExecuteNonQuery(); // run the query and remove the entry
+                checkBoxConfirm.Checked = false;
             }
             // Error catching
             catch (Exception e2)
@@ -319,31 +350,28 @@ namespace _291CarProject
 
         private bool VIDCheck(string vID)
         {
-            // Get our sought-after ID as an int
-            int vIDCheck = 0;
-            string message; // Used for error messages
+            // Check if we even got a vehicle ID to look for
+            if (vID == "" || int.Parse(vID) == 0)
+            {
+                MessageBox.Show("Please enter a valid vehicle ID to remove.");
+                return false;
+            }
 
             try
             {
-                _291CarProject.Static.Database.commandStream.CommandText = "select max(vehicleID) as latest from Vehicle";
+                _291CarProject.Static.Database.commandStream.CommandText = "select vehicleID as Found from Vehicle where vehicleID = " + vID;
                 // Run and grab the result from the dataStream
                 _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
-                _291CarProject.Static.Database.dataStream.Read(); // Read
-                // Turn the vehicleID to an int using Parse
-                //MessageBox.Show(_291CarProject.Static.Database.dataStream["latest"].ToString());
-                vIDCheck = int.Parse(_291CarProject.Static.Database.dataStream["latest"].ToString());
-                _291CarProject.Static.Database.dataStream.Close();
-
-                // Run the check here
-                if (vID == "" || vIDCheck == 0)
+                _291CarProject.Static.Database.dataStream.Read();
+                if (!_291CarProject.Static.Database.dataStream.HasRows)
                 {
-                    message = "Vehicle ID either empty or not-existent." +
-                        "\r\nPlease give an existing vehicle ID to update.";
-                    MessageBox.Show(message);
-                    return false; // End the function here.
+                    MessageBox.Show("Vehicle ID not-existent.\r\nPlease enter an existing vehicle ID.");
+                    _291CarProject.Static.Database.dataStream.Close(); // close
+                    return false;
                 }
 
-                // Else, return true
+                // Otherwise, it's real
+                _291CarProject.Static.Database.dataStream.Close(); // close
                 return true;
 
             }
