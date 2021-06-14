@@ -74,4 +74,3 @@ where B.branchID = R.branchBorrow and R.vTypeID = V.vTypeID
 select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
 where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
 group by branchID
-
