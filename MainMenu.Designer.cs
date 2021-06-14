@@ -32,9 +32,11 @@ namespace _291CarProject
             this.logout_button = new System.Windows.Forms.Button();
             this.ListingsMenu = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.rental_button = new System.Windows.Forms.Button();
             this.records_button = new System.Windows.Forms.Button();
             this.reports_button = new System.Windows.Forms.Button();
+            this.rental_button = new System.Windows.Forms.Button();
+            this.rentalLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // logout_button
@@ -61,26 +63,16 @@ namespace _291CarProject
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(302, 18);
+            this.label1.Location = new System.Drawing.Point(263, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(208, 50);
+            this.label1.Size = new System.Drawing.Size(286, 50);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Main Menu";
+            this.label1.Text = "Employee Menu";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // rental_button
-            // 
-            this.rental_button.Location = new System.Drawing.Point(263, 237);
-            this.rental_button.Name = "rental_button";
-            this.rental_button.Size = new System.Drawing.Size(280, 52);
-            this.rental_button.TabIndex = 4;
-            this.rental_button.Text = "Rental Transactions";
-            this.rental_button.UseVisualStyleBackColor = true;
-            this.rental_button.Click += new System.EventHandler(this.rental_button_Click);
             // 
             // records_button
             // 
-            this.records_button.Location = new System.Drawing.Point(263, 163);
+            this.records_button.Location = new System.Drawing.Point(264, 159);
             this.records_button.Name = "records_button";
             this.records_button.Size = new System.Drawing.Size(280, 52);
             this.records_button.TabIndex = 5;
@@ -90,7 +82,7 @@ namespace _291CarProject
             // 
             // reports_button
             // 
-            this.reports_button.Location = new System.Drawing.Point(263, 317);
+            this.reports_button.Location = new System.Drawing.Point(263, 231);
             this.reports_button.Name = "reports_button";
             this.reports_button.Size = new System.Drawing.Size(280, 52);
             this.reports_button.TabIndex = 6;
@@ -98,14 +90,46 @@ namespace _291CarProject
             this.reports_button.UseVisualStyleBackColor = true;
             this.reports_button.Click += new System.EventHandler(this.reports_button_Click);
             // 
+            // rental_button
+            // 
+            this.rental_button.Location = new System.Drawing.Point(416, 345);
+            this.rental_button.Name = "rental_button";
+            this.rental_button.Size = new System.Drawing.Size(90, 40);
+            this.rental_button.TabIndex = 4;
+            this.rental_button.Text = "Borrows";
+            this.rental_button.UseVisualStyleBackColor = true;
+            this.rental_button.Click += new System.EventHandler(this.rental_button_Click);
+            // 
+            // rentalLabel
+            // 
+            this.rentalLabel.AutoSize = true;
+            this.rentalLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.rentalLabel.Location = new System.Drawing.Point(264, 300);
+            this.rentalLabel.Name = "rentalLabel";
+            this.rentalLabel.Size = new System.Drawing.Size(279, 32);
+            this.rentalLabel.TabIndex = 7;
+            this.rentalLabel.Text = "Rental Transaction Forms";
+            this.rentalLabel.Click += new System.EventHandler(this.rentalLabel_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(284, 345);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(88, 39);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Returns";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(852, 450);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.rentalLabel);
+            this.Controls.Add(this.rental_button);
             this.Controls.Add(this.reports_button);
             this.Controls.Add(this.records_button);
-            this.Controls.Add(this.rental_button);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListingsMenu);
             this.Controls.Add(this.logout_button);
@@ -122,8 +146,10 @@ namespace _291CarProject
         private System.Windows.Forms.Button logout_button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ListingsMenu;
-        private System.Windows.Forms.Button rental_button;
         private System.Windows.Forms.Button records_button;
         private System.Windows.Forms.Button reports_button;
+        private System.Windows.Forms.Button rental_button;
+        private System.Windows.Forms.Label rentalLabel;
+        private System.Windows.Forms.Button button1;
     }
 }

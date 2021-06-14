@@ -16,7 +16,7 @@ CREATE TABLE [User](
 	userName	VARCHAR(20)	NOT NULL UNIQUE,
 	passw		VARCHAR(20)	NOT NULL,	--password for userName
 	userType	VARCHAR(8)	DEFAULT 'Customer',
-	gender		VARCHAR(5)	NOT NULL,
+	gender		VARCHAR(6)	NOT NULL,
 	firstName	VARCHAR(15)	NOT NULL,
 	lastName	VARCHAR(15)	NOT NULL,
 	street		VARCHAR(30)	NOT NULL,

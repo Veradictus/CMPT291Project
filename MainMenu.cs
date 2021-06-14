@@ -76,5 +76,10 @@ namespace _291CarProject
             Form1 temp_screen = new Form1();
             temp_screen.Show();
         }
+
+        private void rentalLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
