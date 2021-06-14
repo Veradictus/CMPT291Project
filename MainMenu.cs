@@ -138,7 +138,7 @@ namespace _291CarProject
         private void return_button_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Return_Form returnForm = new Return_Form();
+            Return_Form returnForm = new Return_Form(userInfo);
             returnForm.Show();
         }
 

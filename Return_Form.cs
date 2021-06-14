@@ -14,21 +14,13 @@ namespace _291CarProject
         public Return_Form(Dictionary<string, string> userInfo)
         {
             InitializeComponent();
-
             this.userInfo = userInfo;
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void BackButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-
             MainMenu mainMenuForm = new MainMenu(userInfo);
-
             mainMenuForm.Show();
         }
 

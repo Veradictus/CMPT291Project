@@ -88,7 +88,6 @@ namespace _291CarProject
             this.date_label.Size = new System.Drawing.Size(168, 32);
             this.date_label.TabIndex = 3;
             this.date_label.Text = "Date Returned";
-            this.date_label.Click += new System.EventHandler(this.label3_Click);
             // 
             // veh_tbox
             // 
@@ -199,7 +198,7 @@ namespace _291CarProject
             this.Controls.Add(this.return_label);
             this.Name = "Return_Form";
             this.Text = "Return_Form";
-            this.Load += new System.EventHandler(this.Return_Form_Load);
+            //this.Load += new System.EventHandler(this.Return_Form_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
