@@ -12,7 +12,7 @@ namespace _291CarProject.Static
         public static SqlCommand commandStream = new SqlCommand();
         public static SqlDataReader dataStream;
 
-        public const string host = "DESKTOP-T4FGG00";
+        public const string host = "localhost";
         public const string database = "291proDatabase";
 
         public const string username = "user2";
@@ -37,7 +37,9 @@ namespace _291CarProject.Static
             }
         }
 
-        public static bool CreateUser(string username, string password, string gender, string firstName, string lastName, string street, string city, string province)
+        public static bool CreateUser(string username, string password, 
+            string gender, string firstName, string lastName, 
+            string street, string city, string province, string driverLicense)
         {
             bool status = false;
 
@@ -60,19 +62,122 @@ namespace _291CarProject.Static
             {
                 dataStream = commandStream.ExecuteReader();
 
-                status = true;
+                dataStream.Close();
 
+                int userId = GetUserId(username);
+
+                if (userId != -1)
+                    CreateCustomer(userId, driverLicense);
+                else
+                    MessageBox.Show("[CreateUser]: An error has occurred :(");
+
+                status = true;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
+            }
 
-                status = false;
+            return status;
+        }
+
+        public static bool IsGoldMember(string username)
+        {
+            bool status = false;
+
+            int userId = GetUserId(username);
+
+            if (userId == -1) return false;
+
+            string currentYear = DateTime.Now.ToString("yyyy");
+            string currentMonth = DateTime.Now.ToString("MM");
+            string currentDay = DateTime.Now.ToString("dd");
+
+            StringBuilder lastYearFormat = new StringBuilder((int.Parse(currentYear) - 1).ToString());
+
+            lastYearFormat.Append("-" + currentMonth);
+            lastYearFormat.Append("-" + currentDay);
+
+            commandStream.CommandText = "SELECT COUNT(*) AS count FROM RentalTransaction WHERE dateBooked > " + lastYearFormat.ToString();
+
+            try
+            {
+
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    int count = int.Parse(dataStream["count"].ToString());
+
+                    Debug.WriteLine("User has had " + count.ToString() + " rental transaction in the past year.");
+
+                    if (count > 2)
+                        status = true;
+                }
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
             }
 
             dataStream.Close();
 
             return status;
+        }
+
+        public static bool CreateCustomer(int customerId, string driverLicense)
+        {
+            bool status = false;
+
+            StringBuilder createCustomerString = new StringBuilder("INSERT INTO Customer VALUES ('");
+
+            createCustomerString.Append(customerId.ToString() + "', '");
+            createCustomerString.Append(driverLicense + "', 'Regular')");
+
+            Debug.WriteLine("CreateCustomerString: " + createCustomerString);
+
+            commandStream.CommandText = createCustomerString.ToString();
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return status;
+        }
+        public static int GetUserId(string username)
+        {
+            int userId = -1;
+
+            commandStream.CommandText = "SELECT UID FROM [User] WHERE userName='" + username + "'";
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    string UID = dataStream["UID"].ToString();
+
+                    userId = int.Parse(UID);
+                }
+
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine("[GetUserId] An error has occurred");
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return userId;
         }
 
         public static bool UserExists(string username)

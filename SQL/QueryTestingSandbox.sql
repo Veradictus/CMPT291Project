@@ -61,3 +61,8 @@ where B.branchID = R.branchBorrow and R.vTypeID = V.vTypeID
 -- Note, is the customer a regular or gold member?
 
 -- Use C# to find the amount of
+
+
+select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
+where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
+group by branchID

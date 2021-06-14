@@ -40,6 +40,7 @@ namespace _291CarProject
             this.street = new System.Windows.Forms.TextBox();
             this.city = new System.Windows.Forms.TextBox();
             this.province = new System.Windows.Forms.TextBox();
+            this.driverLicense = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // register_username_text
@@ -136,6 +137,15 @@ namespace _291CarProject
             this.province.TabIndex = 10;
             this.province.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // driverLicense
+            // 
+            this.driverLicense.Location = new System.Drawing.Point(444, 226);
+            this.driverLicense.Name = "driverLicense";
+            this.driverLicense.PlaceholderText = "Driver License";
+            this.driverLicense.Size = new System.Drawing.Size(100, 23);
+            this.driverLicense.TabIndex = 11;
+            this.driverLicense.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -143,6 +153,7 @@ namespace _291CarProject
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 389);
+            this.Controls.Add(this.driverLicense);
             this.Controls.Add(this.province);
             this.Controls.Add(this.city);
             this.Controls.Add(this.street);
@@ -173,5 +184,6 @@ namespace _291CarProject
         private System.Windows.Forms.TextBox street;
         private System.Windows.Forms.TextBox city;
         private System.Windows.Forms.TextBox province;
+        private System.Windows.Forms.TextBox driverLicense;
     }
 }
