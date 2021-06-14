@@ -2,6 +2,7 @@
 using System.Text;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace _291CarProject.Static
@@ -79,6 +80,119 @@ namespace _291CarProject.Static
             }
 
             return status;
+        }
+
+        public static Dictionary<string, string> GetUserInfo(string username)
+        {
+            Dictionary<string, string> infoDictionary = new Dictionary<string, string>();
+
+            commandStream.CommandText = "SELECT * FROM [User] WHERE userName='" + username + "'";
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                 
+                    infoDictionary.Add("uid", dataStream["UID"].ToString());
+                    infoDictionary.Add("userName", dataStream["userName"].ToString());
+                    infoDictionary.Add("userType", dataStream["userType"].ToString());
+                    infoDictionary.Add("firstName", dataStream["firstName"].ToString());
+                    infoDictionary.Add("lastName", dataStream["lastName"].ToString());
+                    
+                    dataStream.Close();
+
+                    if (infoDictionary["userType"].Equals("Employee"))
+                    {
+                        Dictionary<string, string> branchInformation = GetEmployeeBranchInfo(infoDictionary["uid"]);
+
+                        infoDictionary.Add("branchId", branchInformation["branchId"]);
+                        infoDictionary.Add("street", branchInformation["street"]);
+                        infoDictionary.Add("city", branchInformation["city"]);
+                        infoDictionary.Add("prov", branchInformation["prov"]);
+                        infoDictionary.Add("phoneNumber", branchInformation["phoneNumber"]);
+                    }
+
+                    if (infoDictionary["userType"].Equals("Customer"))
+                    {
+                        bool isGoldMember = IsGoldMember(username);
+
+                        string goldMemberString = isGoldMember ? "Gold" : "Regular";
+
+                        infoDictionary.Add("goldMember", goldMemberString);
+                    }
+
+                    return infoDictionary;
+                }
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return infoDictionary;
+        }
+
+        public static Dictionary<string, string> GetEmployeeBranchInfo(string employeeId)
+        {
+            Dictionary<string, string> infoDictionary = new Dictionary<string, string>();
+
+            commandStream.CommandText = "SELECT * FROM Employee WHERE employID=" + employeeId;
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    string branchId = dataStream["branchID"].ToString();
+
+                    dataStream.Close();
+
+                    return GetBranchInfo(branchId);
+                }
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return infoDictionary;
+        }
+
+        public static Dictionary<string, string> GetBranchInfo(string branchId)
+        {
+            Dictionary<string, string> infoDictionary = new Dictionary<string, string>();
+
+            commandStream.CommandText = "SELECT * FROM Branch WHERE branchID=" + branchId;
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    infoDictionary.Add("branchId", dataStream["branchID"].ToString());
+                    infoDictionary.Add("street", dataStream["street"].ToString());
+                    infoDictionary.Add("city", dataStream["city"].ToString());
+                    infoDictionary.Add("prov", dataStream["prov"].ToString());
+                    infoDictionary.Add("phoneNumber", dataStream["phoneNumber"].ToString());
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return infoDictionary;
         }
 
         public static bool IsGoldMember(string username)

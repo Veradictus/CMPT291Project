@@ -10,16 +10,19 @@ namespace _291CarProject
 {
     public partial class Built_Reports : Form
     {
-        public Built_Reports()
+        private Dictionary<string, string> userInfo;
+        public Built_Reports(Dictionary<string, string> userInfo)
         {
             InitializeComponent();
+
+            this.userInfo = userInfo;
         }
 
         private void BackButton_Click(object sender, EventArgs e)
         {
             this.Hide();
 
-            MainMenu mainMenuForm = new MainMenu();
+            MainMenu mainMenuForm = new MainMenu(userInfo);
 
             mainMenuForm.Show();
         }

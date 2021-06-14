@@ -31,12 +31,12 @@ namespace _291CarProject
         {
             this.logout_button = new System.Windows.Forms.Button();
             this.ListingsMenu = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.mainMenuTitle = new System.Windows.Forms.Label();
             this.records_button = new System.Windows.Forms.Button();
             this.reports_button = new System.Windows.Forms.Button();
-            this.rental_button = new System.Windows.Forms.Button();
+            this.borrows_button = new System.Windows.Forms.Button();
             this.rentalLabel = new System.Windows.Forms.Label();
-            this.return_button = new System.Windows.Forms.Button();
+            this.returns_button = new System.Windows.Forms.Button();
             this.ENameLabel = new System.Windows.Forms.Label();
             this.BranchAddress = new System.Windows.Forms.Label();
             this.branchLabel = new System.Windows.Forms.Label();
@@ -53,7 +53,7 @@ namespace _291CarProject
             // 
             // logout_button
             // 
-            this.logout_button.Location = new System.Drawing.Point(742, 387);
+            this.logout_button.Location = new System.Drawing.Point(695, 358);
             this.logout_button.Name = "logout_button";
             this.logout_button.Size = new System.Drawing.Size(71, 39);
             this.logout_button.TabIndex = 0;
@@ -63,7 +63,7 @@ namespace _291CarProject
             // 
             // ListingsMenu
             // 
-            this.ListingsMenu.Location = new System.Drawing.Point(263, 88);
+            this.ListingsMenu.Location = new System.Drawing.Point(108, 100);
             this.ListingsMenu.Name = "ListingsMenu";
             this.ListingsMenu.Size = new System.Drawing.Size(280, 52);
             this.ListingsMenu.TabIndex = 3;
@@ -71,20 +71,20 @@ namespace _291CarProject
             this.ListingsMenu.UseVisualStyleBackColor = true;
             this.ListingsMenu.Click += new System.EventHandler(this.ListingsMenu_Click);
             // 
-            // label1
+            // mainMenuTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(263, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(286, 50);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Employee Menu";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.mainMenuTitle.AutoSize = true;
+            this.mainMenuTitle.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.mainMenuTitle.Location = new System.Drawing.Point(273, 30);
+            this.mainMenuTitle.Name = "mainMenuTitle";
+            this.mainMenuTitle.Size = new System.Drawing.Size(286, 50);
+            this.mainMenuTitle.TabIndex = 2;
+            this.mainMenuTitle.Text = "Employee Menu";
+            this.mainMenuTitle.Click += new System.EventHandler(this.label1_Click);
             // 
             // records_button
             // 
-            this.records_button.Location = new System.Drawing.Point(264, 159);
+            this.records_button.Location = new System.Drawing.Point(108, 175);
             this.records_button.Name = "records_button";
             this.records_button.Size = new System.Drawing.Size(280, 52);
             this.records_button.TabIndex = 5;
@@ -94,7 +94,7 @@ namespace _291CarProject
             // 
             // reports_button
             // 
-            this.reports_button.Location = new System.Drawing.Point(263, 231);
+            this.reports_button.Location = new System.Drawing.Point(108, 243);
             this.reports_button.Name = "reports_button";
             this.reports_button.Size = new System.Drawing.Size(280, 52);
             this.reports_button.TabIndex = 6;
@@ -102,36 +102,36 @@ namespace _291CarProject
             this.reports_button.UseVisualStyleBackColor = true;
             this.reports_button.Click += new System.EventHandler(this.reports_button_Click);
             // 
-            // rental_button
+            // borrows_button
             // 
-            this.rental_button.Location = new System.Drawing.Point(416, 345);
-            this.rental_button.Name = "rental_button";
-            this.rental_button.Size = new System.Drawing.Size(90, 40);
-            this.rental_button.TabIndex = 4;
-            this.rental_button.Text = "Borrows";
-            this.rental_button.UseVisualStyleBackColor = true;
-            this.rental_button.Click += new System.EventHandler(this.rental_button_Click);
+            this.borrows_button.Location = new System.Drawing.Point(297, 357);
+            this.borrows_button.Name = "borrows_button";
+            this.borrows_button.Size = new System.Drawing.Size(90, 40);
+            this.borrows_button.TabIndex = 4;
+            this.borrows_button.Text = "Borrows";
+            this.borrows_button.UseVisualStyleBackColor = true;
+            this.borrows_button.Click += new System.EventHandler(this.rental_button_Click);
             // 
             // rentalLabel
             // 
             this.rentalLabel.AutoSize = true;
             this.rentalLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.rentalLabel.Location = new System.Drawing.Point(264, 300);
+            this.rentalLabel.Location = new System.Drawing.Point(108, 311);
             this.rentalLabel.Name = "rentalLabel";
             this.rentalLabel.Size = new System.Drawing.Size(279, 32);
             this.rentalLabel.TabIndex = 7;
             this.rentalLabel.Text = "Rental Transaction Forms";
             this.rentalLabel.Click += new System.EventHandler(this.rentalLabel_Click);
             // 
-            // return_button
+            // returns_button
             // 
-            this.return_button.Location = new System.Drawing.Point(284, 345);
-            this.return_button.Name = "return_button";
-            this.return_button.Size = new System.Drawing.Size(88, 39);
-            this.return_button.TabIndex = 8;
-            this.return_button.Text = "Returns";
-            this.return_button.UseVisualStyleBackColor = true;
-            this.return_button.Click += new System.EventHandler(this.return_button_Click);
+            this.returns_button.Location = new System.Drawing.Point(108, 358);
+            this.returns_button.Name = "returns_button";
+            this.returns_button.Size = new System.Drawing.Size(88, 39);
+            this.returns_button.TabIndex = 8;
+            this.returns_button.Text = "Returns";
+            this.returns_button.UseVisualStyleBackColor = true;
+            this.returns_button.Click += new System.EventHandler(this.button1_Click);
             // 
             // ENameLabel
             // 
@@ -183,9 +183,9 @@ namespace _291CarProject
             this.employeeBox.Controls.Add(this.BranchAddress);
             this.employeeBox.Controls.Add(this.branchLabel);
             this.employeeBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.employeeBox.Location = new System.Drawing.Point(601, 88);
+            this.employeeBox.Location = new System.Drawing.Point(427, 100);
             this.employeeBox.Name = "employeeBox";
-            this.employeeBox.Size = new System.Drawing.Size(200, 195);
+            this.employeeBox.Size = new System.Drawing.Size(339, 216);
             this.employeeBox.TabIndex = 10;
             this.employeeBox.TabStop = false;
             this.employeeBox.Text = "Employee Info";
@@ -255,12 +255,12 @@ namespace _291CarProject
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(852, 450);
             this.Controls.Add(this.employeeBox);
-            this.Controls.Add(this.return_button);
+            this.Controls.Add(this.returns_button);
             this.Controls.Add(this.rentalLabel);
-            this.Controls.Add(this.rental_button);
+            this.Controls.Add(this.borrows_button);
             this.Controls.Add(this.reports_button);
             this.Controls.Add(this.records_button);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.mainMenuTitle);
             this.Controls.Add(this.ListingsMenu);
             this.Controls.Add(this.logout_button);
             this.Name = "MainMenu";
@@ -276,13 +276,13 @@ namespace _291CarProject
         #endregion
 
         private System.Windows.Forms.Button logout_button;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label mainMenuTitle;
         private System.Windows.Forms.Button ListingsMenu;
         private System.Windows.Forms.Button records_button;
         private System.Windows.Forms.Button reports_button;
-        private System.Windows.Forms.Button rental_button;
+        private System.Windows.Forms.Button borrows_button;
         private System.Windows.Forms.Label rentalLabel;
-        private System.Windows.Forms.Button return_button;
+        private System.Windows.Forms.Button returns_button;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label BranchAddress;
         private System.Windows.Forms.Label branchLabel;

@@ -10,13 +10,17 @@ namespace _291CarProject
 {
     public partial class AURScreen : Form
     {
-        public AURScreen()
+
+        private Dictionary<string, string> userInfo;
+        public AURScreen(Dictionary<string, string> userInfo)
         {
             InitializeComponent();
 
             // Clear then populate all dropdowns
             DropDownClear();
             DropDownPopulate();
+
+            this.userInfo = userInfo;
         }
 
         private void DropDownPopulate()
@@ -73,7 +77,7 @@ namespace _291CarProject
         {
             this.Hide();
 
-            MainMenu mainMenu = new MainMenu();
+            MainMenu mainMenu = new MainMenu(userInfo);
 
             mainMenu.Show();
         }

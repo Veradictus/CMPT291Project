@@ -199,7 +199,7 @@ namespace _291CarProject
             this.Controls.Add(this.return_label);
             this.Name = "Return_Form";
             this.Text = "Return_Form";
-            ((System.ComponentModel.ISupportInitialize)(this.SearchTransactionGrid)).EndInit();
+            this.Load += new System.EventHandler(this.Return_Form_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

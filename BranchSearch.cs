@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -10,13 +7,18 @@ namespace _291CarProject
 {
     public partial class BranchSearch : Form
     {
-        public BranchSearch()
+
+        private Dictionary<string, string> userInfo;
+
+        public BranchSearch(Dictionary<string, string> userInfo)
         {
             InitializeComponent();
 
             // Clear then populate all dropdowns
             DropDownClear();
             DropDownPopulate();
+
+            this.userInfo = userInfo;
         }
 
         private void DropDownPopulate()
@@ -95,7 +97,7 @@ namespace _291CarProject
         {
             this.Hide();
 
-            MainMenu mainMenuForm = new MainMenu();
+            MainMenu mainMenuForm = new MainMenu(userInfo);
 
             mainMenuForm.Show();
         }
