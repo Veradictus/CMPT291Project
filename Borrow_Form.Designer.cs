@@ -127,9 +127,9 @@ namespace _291CarProject
             this.cust_id_label.ForeColor = System.Drawing.Color.Black;
             this.cust_id_label.Location = new System.Drawing.Point(68, 281);
             this.cust_id_label.Name = "cust_id_label";
-            this.cust_id_label.Size = new System.Drawing.Size(147, 32);
+            this.cust_id_label.Size = new System.Drawing.Size(121, 32);
             this.cust_id_label.TabIndex = 8;
-            this.cust_id_label.Text = "Customer ID";
+            this.cust_id_label.Text = "Username";
             this.cust_id_label.Click += new System.EventHandler(this.label5_Click);
             // 
             // cust_tbox
