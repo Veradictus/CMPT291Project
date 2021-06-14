@@ -4,6 +4,9 @@
 --insert into RentalTransaction (dateBooked, expRetDate) values (convert(datetime,'18-06-12 10:34:09 PM',5), convert(datetime,'20-06-12 10:34:09 PM',5))
 --select * from RentalTransaction where dateBooked > convert(datetime,'1-06-12 10:34:09 PM',5) and dateBooked < convert(datetime,'01-01-13 10:34:09 PM',5)
 
+select R.rentalID, U.[UID], U.userName, R.rentedVID, V.brand, V.model, V.[year], R.dateBooked, R.expRetDate, R.branchBorrow, R.eBranchReturn
+                from RentalTransaction as R, [User] as U, Vehicle as V
+                where R.userID = U.[UID] and R.rentedVID = V.vehicleID and U.userName = 'admin' and R.aBranchReturn IS NULL
 
 select * from Vehicle as V, VehicleType as T  where V.vTypeID = T.vTypeID and V.vehicleID not in 
 (select rentedVID from RentalTransaction)

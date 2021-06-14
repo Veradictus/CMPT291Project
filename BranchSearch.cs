@@ -32,8 +32,8 @@ namespace _291CarProject
 
                 while (_291CarProject.Static.Database.dataStream.Read())
                 {
-                    string branch = _291CarProject.Static.Database.dataStream["branchID"].ToString()
-                        + " - Branch " + _291CarProject.Static.Database.dataStream["street"].ToString();
+                    string branch = "Branch " + _291CarProject.Static.Database.dataStream["branchID"].ToString().Trim()
+                        + " - " + _291CarProject.Static.Database.dataStream["street"].ToString().Trim();
                     branchSelector.Items.Add(branch);
                 }
                 _291CarProject.Static.Database.dataStream.Close();
@@ -289,7 +289,7 @@ namespace _291CarProject
         private string BranchReader(string branchOption)
         {
             string[] sections = branchOption.Split(' ');
-            return sections[0];
+            return sections[1];
         }
 
         private bool AndCheck()

@@ -405,6 +405,28 @@ namespace _291CarProject.Static
         /*
          * AUR/Search Screen/Borrow+Return stuff below
          */
+        public static bool CreateNewTransaction(string newQuery)
+        {
+            if (newQuery == "" || newQuery == null) { return false; }
+
+            try
+            {
+                // Build the command text here
+                commandStream.CommandText = newQuery;
+                // Message box feat. our query
+                MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
+                // Send it along to the server
+                _291CarProject.Static.Database.commandStream.ExecuteNonQuery();
+                // We added it
+                return true;
+            }
+            // Error catching
+            catch (Exception e2)
+            { MessageBox.Show(e2.ToString(), "Error"); }
+
+            return false;
+        }
+
         public static bool VIDCheck(string vID)
         {
             // Check if we even got a vehicle ID to look for
@@ -436,25 +458,34 @@ namespace _291CarProject.Static
             return false;
         }
 
-        public static bool CreateNewTransaction(string newQuery)
+        public static bool RentalIDCheck(string rentalID)
         {
-            if (newQuery == "" || newQuery == null) { return false; }
+            // Check if we even got a vehicle ID to look for
+            if (rentalID == "" || int.Parse(rentalID) == 0)
+            {
+                MessageBox.Show("Please enter a valid Rental Transaction ID.");
+                return false;
+            }
 
             try
             {
-                // Build the command text here
-                commandStream.CommandText = newQuery;
-                // Message box feat. our query
-                MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
-                // Send it along to the server
-                _291CarProject.Static.Database.commandStream.ExecuteNonQuery();
-                // We added it
+                commandStream.CommandText = "select rentalID as Found from RentalTransaction where rentalID = " + rentalID;
+                // Run and grab the result from the dataStream
+                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream.Read();
+                if (!dataStream.HasRows)
+                {
+                    MessageBox.Show("Rental Transaction ID not-existent.\r\nPlease enter a valid Rental Transaction ID.");
+                    dataStream.Close(); // close
+                    return false;
+                }
+                // Otherwise, it's real
+                dataStream.Close(); // close
                 return true;
             }
             // Error catching
-            catch (Exception e2)
-            { MessageBox.Show(e2.ToString(), "Error"); }
-
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+            // We have to return something out here
             return false;
         }
     }

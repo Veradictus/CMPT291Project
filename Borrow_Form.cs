@@ -88,6 +88,7 @@ namespace _291CarProject
             string newTransaction = "insert into RentalTransaction (userID, rentedVID, vTypeID, branchBorrow, eBranchReturn, dateBooked, expRetDate) " +
                 "values + (" + userInfo["uid"] + "," + veh_text_box.Text + ",'" + vTypeDropDown.Text + "'," + userInfo["branchID"] + "," + expReturnDD.Text + "," + timeFrom + "," + timeTo + ")";
 
+            // Hand it to the function in the database to add the transanction
             _291CarProject.Static.Database.CreateNewTransaction(newTransaction);
         }
 
