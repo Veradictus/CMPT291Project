@@ -244,7 +244,7 @@ namespace _291CarProject
 
         private bool InputCheck_Update()
         {
-            if (!VIDCheck(TB_UpdateID.Text)) { return false; }
+            if (!_291CarProject.Static.Database.VIDCheck(TB_UpdateID.Text)) { return false; }
 
             string message; // Used for error messages
 
@@ -292,7 +292,7 @@ namespace _291CarProject
         private void uSearchButton_Click(object sender, EventArgs e)
         {
             // Check if the vehicle exists
-            if (!VIDCheck(TB_UpdateID.Text)) { return; }
+            if (!_291CarProject.Static.Database.VIDCheck(TB_UpdateID.Text)) { return; }
 
             try
             {
@@ -341,51 +341,12 @@ namespace _291CarProject
                 checkBoxConfirm.Checked = false;
             }
             // Error catching
-            catch (Exception e2)
-            {
-                MessageBox.Show(e2.ToString(), "Error");
-            }
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
         }
 
         private bool InputCheck_Remove()
         {
-            return VIDCheck(TB_RemoveVID.Text);
-        }
-
-        private bool VIDCheck(string vID)
-        {
-            // Check if we even got a vehicle ID to look for
-            if (vID == "" || int.Parse(vID) == 0)
-            {
-                MessageBox.Show("Please enter a valid vehicle ID to remove.");
-                return false;
-            }
-
-            try
-            {
-                _291CarProject.Static.Database.commandStream.CommandText = "select vehicleID as Found from Vehicle where vehicleID = " + vID;
-                // Run and grab the result from the dataStream
-                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
-                _291CarProject.Static.Database.dataStream.Read();
-                if (!_291CarProject.Static.Database.dataStream.HasRows)
-                {
-                    MessageBox.Show("Vehicle ID not-existent.\r\nPlease enter an existing vehicle ID.");
-                    _291CarProject.Static.Database.dataStream.Close(); // close
-                    return false;
-                }
-
-                // Otherwise, it's real
-                _291CarProject.Static.Database.dataStream.Close(); // close
-                return true;
-
-            }
-            // Error catching
-            catch (Exception e2)
-            {
-                MessageBox.Show(e2.ToString(), "Error");
-            }
-            // We have to return something out here
-            return false;
+            return _291CarProject.Static.Database.VIDCheck(TB_RemoveVID.Text);
         }
 
         // BranchReader takes our fancy branch option from a drop down box and splits it,
@@ -396,7 +357,7 @@ namespace _291CarProject
             return sections[0];
         }
 
-        // NOTE - DO NOT DELETE THIS OR IT'LL BREAKS
+        // NOTE - DO NOT DELETE THIS OR IT'LL BREAK
         private void AURScreen_Load(object sender, EventArgs e) { }
     }
 }

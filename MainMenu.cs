@@ -131,8 +131,8 @@ namespace _291CarProject
         private void rental_button_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form1 temp_screen = new Form1(userInfo);
-            temp_screen.Show();
+            Borrow_Form borrowScreen = new Borrow_Form(userInfo);
+            borrowScreen.Show();
         }
 
         private void return_button_Click(object sender, EventArgs e)
