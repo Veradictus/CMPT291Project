@@ -73,16 +73,18 @@ namespace _291CarProject
         private void rental_button_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form1 temp_screen = new Form1();
-            temp_screen.Show();
+            Borrow_Form borrow = new Borrow_Form();
+            borrow.Show();
+        }
+
+        private void return_button_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Return_Form returnForm = new Return_Form();
+            returnForm.Show();
         }
 
         private void rentalLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
         {
 
         }

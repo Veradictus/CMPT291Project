@@ -36,18 +36,18 @@ namespace _291CarProject
             this.reports_button = new System.Windows.Forms.Button();
             this.rental_button = new System.Windows.Forms.Button();
             this.rentalLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.return_button = new System.Windows.Forms.Button();
             this.ENameLabel = new System.Windows.Forms.Label();
             this.BranchAddress = new System.Windows.Forms.Label();
             this.branchLabel = new System.Windows.Forms.Label();
             this.UIDLabel = new System.Windows.Forms.Label();
             this.employeeBox = new System.Windows.Forms.GroupBox();
+            this.bAddLabel = new System.Windows.Forms.Label();
+            this.bIDLabel = new System.Windows.Forms.Label();
             this.membershipLabel = new System.Windows.Forms.Label();
             this.IDLabel = new System.Windows.Forms.Label();
             this.userNameLabel = new System.Windows.Forms.Label();
             this.MemLabel = new System.Windows.Forms.Label();
-            this.bIDLabel = new System.Windows.Forms.Label();
-            this.bAddLabel = new System.Windows.Forms.Label();
             this.employeeBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,15 +123,15 @@ namespace _291CarProject
             this.rentalLabel.Text = "Rental Transaction Forms";
             this.rentalLabel.Click += new System.EventHandler(this.rentalLabel_Click);
             // 
-            // button1
+            // return_button
             // 
-            this.button1.Location = new System.Drawing.Point(284, 345);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 39);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Returns";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.return_button.Location = new System.Drawing.Point(284, 345);
+            this.return_button.Name = "return_button";
+            this.return_button.Size = new System.Drawing.Size(88, 39);
+            this.return_button.TabIndex = 8;
+            this.return_button.Text = "Returns";
+            this.return_button.UseVisualStyleBackColor = true;
+            this.return_button.Click += new System.EventHandler(this.return_button_Click);
             // 
             // ENameLabel
             // 
@@ -190,6 +190,26 @@ namespace _291CarProject
             this.employeeBox.TabStop = false;
             this.employeeBox.Text = "Employee Info";
             // 
+            // bAddLabel
+            // 
+            this.bAddLabel.AutoSize = true;
+            this.bAddLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.bAddLabel.Location = new System.Drawing.Point(108, 143);
+            this.bAddLabel.Name = "bAddLabel";
+            this.bAddLabel.Size = new System.Drawing.Size(49, 15);
+            this.bAddLabel.TabIndex = 11;
+            this.bAddLabel.Text = "Address";
+            // 
+            // bIDLabel
+            // 
+            this.bIDLabel.AutoSize = true;
+            this.bIDLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.bIDLabel.Location = new System.Drawing.Point(77, 108);
+            this.bIDLabel.Name = "bIDLabel";
+            this.bIDLabel.Size = new System.Drawing.Size(55, 15);
+            this.bIDLabel.TabIndex = 10;
+            this.bIDLabel.Text = "branchID";
+            // 
             // membershipLabel
             // 
             this.membershipLabel.AutoSize = true;
@@ -229,33 +249,13 @@ namespace _291CarProject
             this.MemLabel.TabIndex = 6;
             this.MemLabel.Text = "Membership Type:";
             // 
-            // bIDLabel
-            // 
-            this.bIDLabel.AutoSize = true;
-            this.bIDLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.bIDLabel.Location = new System.Drawing.Point(77, 108);
-            this.bIDLabel.Name = "bIDLabel";
-            this.bIDLabel.Size = new System.Drawing.Size(55, 15);
-            this.bIDLabel.TabIndex = 10;
-            this.bIDLabel.Text = "branchID";
-            // 
-            // bAddLabel
-            // 
-            this.bAddLabel.AutoSize = true;
-            this.bAddLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.bAddLabel.Location = new System.Drawing.Point(108, 143);
-            this.bAddLabel.Name = "bAddLabel";
-            this.bAddLabel.Size = new System.Drawing.Size(49, 15);
-            this.bAddLabel.TabIndex = 11;
-            this.bAddLabel.Text = "Address";
-            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(852, 450);
             this.Controls.Add(this.employeeBox);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.return_button);
             this.Controls.Add(this.rentalLabel);
             this.Controls.Add(this.rental_button);
             this.Controls.Add(this.reports_button);
@@ -282,7 +282,7 @@ namespace _291CarProject
         private System.Windows.Forms.Button reports_button;
         private System.Windows.Forms.Button rental_button;
         private System.Windows.Forms.Label rentalLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button return_button;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label BranchAddress;
         private System.Windows.Forms.Label branchLabel;
