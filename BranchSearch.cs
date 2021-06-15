@@ -23,6 +23,9 @@ namespace _291CarProject
 
         private void DropDownPopulate()
         {
+            branchSelector.Items.Add("");
+            sizeSelector.Items.Add("");
+
             // Adding branchIDs + names into our drop down ========================================
             _291CarProject.Static.Database.commandStream.CommandText = "select branchID, street from Branch";
             try
@@ -32,8 +35,8 @@ namespace _291CarProject
 
                 while (_291CarProject.Static.Database.dataStream.Read())
                 {
-                    string branch = _291CarProject.Static.Database.dataStream["branchID"].ToString()
-                        + " - Branch " + _291CarProject.Static.Database.dataStream["street"].ToString();
+                    string branch = "Branch " + _291CarProject.Static.Database.dataStream["branchID"].ToString().Trim()
+                        + " - " + _291CarProject.Static.Database.dataStream["street"].ToString().Trim();
                     branchSelector.Items.Add(branch);
                 }
                 _291CarProject.Static.Database.dataStream.Close();
@@ -65,6 +68,8 @@ namespace _291CarProject
 
         private void DDPopulate_Distinct(string dAttribute, ComboBox dropDownBox)
         {
+            dropDownBox.Items.Add("");
+
             // Create the command text
             _291CarProject.Static.Database.commandStream.CommandText = "select distinct " + dAttribute + " from Vehicle";
 
@@ -231,8 +236,8 @@ namespace _291CarProject
             { searchCommand.Append(" and "); }
             // Grab the given date from and to
             displayString += " from " + dateFrom.Text + " to " + dateTo.Text + ".";
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString()); 
-            string timeTo = DateReorganizer(dateTo.Value.ToString());
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("d")); 
+            string timeTo = DateReorganizer(dateTo.Value.ToString("d"));
 
             // We look for 3 separate points to make sure we catch all posibilities among the rental transactions
             searchCommand.Append("V.vehicleID not in " +
@@ -253,7 +258,7 @@ namespace _291CarProject
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
-            
+
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
             return fixedString;
         }
@@ -289,7 +294,7 @@ namespace _291CarProject
         private string BranchReader(string branchOption)
         {
             string[] sections = branchOption.Split(' ');
-            return sections[0];
+            return sections[1];
         }
 
         private bool AndCheck()

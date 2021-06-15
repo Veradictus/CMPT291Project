@@ -131,7 +131,7 @@ namespace _291CarProject
             this.returns_button.TabIndex = 8;
             this.returns_button.Text = "Returns";
             this.returns_button.UseVisualStyleBackColor = true;
-            this.returns_button.Click += new System.EventHandler(this.button1_Click);
+            this.returns_button.Click += new System.EventHandler(this.return_button_Click);
             // 
             // ENameLabel
             // 

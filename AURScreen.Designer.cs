@@ -62,11 +62,11 @@ namespace _291CarProject
             this.updateVIDText = new System.Windows.Forms.Label();
             this.UpdateButton = new System.Windows.Forms.Button();
             this.RemoveTab = new System.Windows.Forms.TabPage();
+            this.checkBoxConfirm = new System.Windows.Forms.CheckBox();
             this.TB_RemoveVID = new System.Windows.Forms.TextBox();
             this.RemoveVIDText = new System.Windows.Forms.Label();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.BackButton = new System.Windows.Forms.Button();
-            this.checkBoxConfirm = new System.Windows.Forms.CheckBox();
             this.AURTabs.SuspendLayout();
             this.AddTab.SuspendLayout();
             this.UpdateTab.SuspendLayout();
@@ -405,6 +405,16 @@ namespace _291CarProject
             this.RemoveTab.Text = "Remove";
             this.RemoveTab.UseVisualStyleBackColor = true;
             // 
+            // checkBoxConfirm
+            // 
+            this.checkBoxConfirm.AutoSize = true;
+            this.checkBoxConfirm.Location = new System.Drawing.Point(293, 170);
+            this.checkBoxConfirm.Name = "checkBoxConfirm";
+            this.checkBoxConfirm.Size = new System.Drawing.Size(97, 19);
+            this.checkBoxConfirm.TabIndex = 22;
+            this.checkBoxConfirm.Text = "Confirmation";
+            this.checkBoxConfirm.UseVisualStyleBackColor = true;
+            // 
             // TB_RemoveVID
             // 
             this.TB_RemoveVID.Location = new System.Drawing.Point(293, 141);
@@ -441,16 +451,6 @@ namespace _291CarProject
             this.BackButton.Text = "Back";
             this.BackButton.UseVisualStyleBackColor = true;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
-            // 
-            // checkBoxConfirm
-            // 
-            this.checkBoxConfirm.AutoSize = true;
-            this.checkBoxConfirm.Location = new System.Drawing.Point(293, 170);
-            this.checkBoxConfirm.Name = "checkBoxConfirm";
-            this.checkBoxConfirm.Size = new System.Drawing.Size(97, 19);
-            this.checkBoxConfirm.TabIndex = 22;
-            this.checkBoxConfirm.Text = "Confirmation";
-            this.checkBoxConfirm.UseVisualStyleBackColor = true;
             // 
             // AURScreen
             // 

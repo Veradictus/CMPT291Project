@@ -136,6 +136,38 @@ namespace _291CarProject.Static
             return infoDictionary;
         }
 
+        public static Dictionary<string, string> GetVehicleInfo(string vehicleID)
+        {
+            Dictionary<string, string> infoDictionary = new Dictionary<string, string>();
+            
+            commandStream.CommandText = "SELECT * FROM Vehicle WHERE vehicleID=" + vehicleID;
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+
+                    infoDictionary.Add("vid", dataStream["vehicleID"].ToString());
+                    infoDictionary.Add("milage", dataStream["milage"].ToString());
+                    infoDictionary.Add("brand", dataStream["brand"].ToString());
+                    infoDictionary.Add("model", dataStream["model"].ToString());
+                    infoDictionary.Add("year", dataStream["[year]"].ToString());
+                    infoDictionary.Add("branchID", dataStream["branchID"].ToString());
+                    infoDictionary.Add("vTypeID", dataStream["vTypeID"].ToString());
+
+                    dataStream.Close();
+                    return infoDictionary;
+                }
+
+            }
+            catch (Exception e) { Debug.WriteLine(e.ToString()); }
+
+            dataStream.Close();
+            return infoDictionary;
+        }
+
         public static Dictionary<string, string> GetEmployeeBranchInfo(string employeeId)
         {
             Dictionary<string, string> infoDictionary = new Dictionary<string, string>();
@@ -368,6 +400,120 @@ namespace _291CarProject.Static
             connectionString.Append(timeout);
 
             return connectionString.ToString();
+        }
+
+        /*
+         * AUR/Search Screen/Borrow+Return stuff below
+         */
+        public static bool CreateNewTransaction(string newQuery)
+        {
+            if (newQuery == "" || newQuery == null) { return false; }
+
+            try
+            {
+                // Build the command text here
+                commandStream.CommandText = newQuery;
+                // Message box feat. our query
+                MessageBox.Show(commandStream.CommandText.ToString());
+                // Send it along to the server
+                commandStream.ExecuteNonQuery();
+                // We added it
+                return true;
+            }
+            // Error catching
+            catch (Exception e2)
+            { MessageBox.Show(e2.ToString(), "Error"); }
+
+            return false;
+        }
+
+        internal static void GoldMembershipCheck(string userName)
+        {
+            // Check if the userID is real
+            if (userName == "" || int.Parse(userName) == 0) { return; }
+            // Check for gold status
+            if (IsGoldMember(userName))
+            {
+                UpdateGoldStatus(userName);
+            }
+
+        }
+
+        private static void UpdateGoldStatus(string userName)
+        {
+            // Get the user's ID
+            int userId = GetUserId(userName);
+            try
+            {
+                commandStream.CommandText = "update Customer set membership = 'Gold' where customerID = " + userId;
+                // Send it along to the server
+                commandStream.ExecuteNonQuery();
+            }
+            // Error catching
+            catch (Exception e2)
+            { MessageBox.Show(e2.ToString(), "Error"); }
+        }
+
+        public static bool VIDCheck(string vID)
+        {
+            // Check if we even got a vehicle ID to look for
+            if (vID == "" || int.Parse(vID) == 0)
+            {
+                MessageBox.Show("Please enter a valid vehicle ID.");
+                return false;
+            }
+
+            try
+            {
+                commandStream.CommandText = "select vehicleID as Found from Vehicle where vehicleID = " + vID;
+                // Run and grab the result from the dataStream
+                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream.Read();
+                if (!dataStream.HasRows)
+                {
+                    MessageBox.Show("Vehicle ID not-existent.\r\nPlease enter an existing vehicle ID.");
+                    dataStream.Close(); // close
+                    return false;
+                }
+                // Otherwise, it's real
+                dataStream.Close(); // close
+                return true;
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+            // We have to return something out here
+            return false;
+        }
+
+        public static bool RentalIDCheck(string rentalID)
+        {
+            // Check if we even got a vehicle ID to look for
+            if (rentalID == "" || int.Parse(rentalID) == 0)
+            {
+                MessageBox.Show("Please enter a valid Rental Transaction ID.");
+                return false;
+            }
+
+            try
+            {
+                commandStream.CommandText = "select rentalID as Found from RentalTransaction where rentalID = " + rentalID;
+                // Run and grab the result from the dataStream
+                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream.Read();
+                if (!dataStream.HasRows)
+                {
+                    MessageBox.Show("Rental Transaction ID not-existent.\r\nPlease enter a valid Rental Transaction ID.");
+                    dataStream.Close(); // close
+                    return false;
+                }
+                // Otherwise, it's real
+                dataStream.Close(); // close
+                return true;
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+            // We have to return something out here
+            return false;
         }
     }
 }
