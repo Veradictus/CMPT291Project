@@ -106,7 +106,7 @@ namespace _291CarProject
             // 
             this.cust_tbox.Location = new System.Drawing.Point(246, 123);
             this.cust_tbox.Name = "cust_tbox";
-            this.cust_tbox.Size = new System.Drawing.Size(238, 23);
+            this.cust_tbox.Size = new System.Drawing.Size(200, 23);
             this.cust_tbox.TabIndex = 5;
             // 
             // BackButton
@@ -128,7 +128,7 @@ namespace _291CarProject
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(409, 152);
+            this.searchButton.Location = new System.Drawing.Point(371, 152);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(75, 23);
             this.searchButton.TabIndex = 9;
@@ -150,7 +150,7 @@ namespace _291CarProject
             this.expReturn,
             this.bBranchID,
             this.expBranch});
-            this.SearchTransactionGrid.Location = new System.Drawing.Point(490, 21);
+            this.SearchTransactionGrid.Location = new System.Drawing.Point(452, 21);
             this.SearchTransactionGrid.Name = "SearchTransactionGrid";
             this.SearchTransactionGrid.RowTemplate.Height = 25;
             this.SearchTransactionGrid.Size = new System.Drawing.Size(717, 404);
@@ -226,7 +226,7 @@ namespace _291CarProject
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(349, 268);
+            this.confirmButton.Location = new System.Drawing.Point(346, 268);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 25);
             this.confirmButton.TabIndex = 30;
@@ -238,7 +238,7 @@ namespace _291CarProject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1219, 437);
+            this.ClientSize = new System.Drawing.Size(1180, 437);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.returnBranchDD);
             this.Controls.Add(this.label1);

@@ -81,8 +81,8 @@ namespace _291CarProject
             if (!_291CarProject.Static.Database.UserExists(cust_tbox.Text)) { return; }
 
             // Start filling the query out
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString());
-            string timeTo = DateReorganizer(dateTo.Value.ToString());
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("d"));
+            string timeTo = DateReorganizer(dateTo.Value.ToString("d"));
             Dictionary<string, string> userInfo = _291CarProject.Static.Database.GetUserInfo(cust_tbox.Text);
 
             string newTransaction = "insert into RentalTransaction (userID, rentedVID, vTypeID, branchBorrow, eBranchReturn, dateBooked, expRetDate) " +
@@ -90,6 +90,7 @@ namespace _291CarProject
 
             // Hand it to the function in the database to add the transanction
             _291CarProject.Static.Database.CreateNewTransaction(newTransaction);
+            _291CarProject.Static.Database.GoldMembershipCheck(userInfo["userName"]);
         }
 
         private bool EmptyFieldCheck()

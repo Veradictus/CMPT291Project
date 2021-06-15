@@ -414,9 +414,9 @@ namespace _291CarProject.Static
                 // Build the command text here
                 commandStream.CommandText = newQuery;
                 // Message box feat. our query
-                MessageBox.Show(_291CarProject.Static.Database.commandStream.CommandText.ToString());
+                MessageBox.Show(commandStream.CommandText.ToString());
                 // Send it along to the server
-                _291CarProject.Static.Database.commandStream.ExecuteNonQuery();
+                commandStream.ExecuteNonQuery();
                 // We added it
                 return true;
             }
@@ -425,6 +425,33 @@ namespace _291CarProject.Static
             { MessageBox.Show(e2.ToString(), "Error"); }
 
             return false;
+        }
+
+        internal static void GoldMembershipCheck(string userName)
+        {
+            // Check if the userID is real
+            if (userName == "" || int.Parse(userName) == 0) { return; }
+            // Check for gold status
+            if (IsGoldMember(userName))
+            {
+                UpdateGoldStatus(userName);
+            }
+
+        }
+
+        private static void UpdateGoldStatus(string userName)
+        {
+            // Get the user's ID
+            int userId = GetUserId(userName);
+            try
+            {
+                commandStream.CommandText = "update Customer set membership = 'Gold' where customerID = " + userId;
+                // Send it along to the server
+                commandStream.ExecuteNonQuery();
+            }
+            // Error catching
+            catch (Exception e2)
+            { MessageBox.Show(e2.ToString(), "Error"); }
         }
 
         public static bool VIDCheck(string vID)

@@ -127,7 +127,7 @@ namespace _291CarProject
             // 
             // BackButton
             // 
-            this.BackButton.Location = new System.Drawing.Point(586, 436);
+            this.BackButton.Location = new System.Drawing.Point(519, 407);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(75, 23);
             this.BackButton.TabIndex = 10;
@@ -157,7 +157,7 @@ namespace _291CarProject
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(586, 407);
+            this.confirmButton.Location = new System.Drawing.Point(519, 378);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(75, 23);
             this.confirmButton.TabIndex = 16;
@@ -210,7 +210,7 @@ namespace _291CarProject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(673, 471);
+            this.ClientSize = new System.Drawing.Size(610, 442);
             this.Controls.Add(this.expReturnDD);
             this.Controls.Add(this.vTypeDropDown);
             this.Controls.Add(this.vTypeLabel);

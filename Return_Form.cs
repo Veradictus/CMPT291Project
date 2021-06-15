@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 
@@ -96,20 +97,125 @@ namespace _291CarProject
             // Check if the rental transaction ID is real
             if (!_291CarProject.Static.Database.RentalIDCheck(transactionIDBox.Text)) { return; }
 
-            string dateReturned = DateReorganizer(transactionReturn.Value.ToString());
+            string dateReturned = DateReorganizer(transactionReturn.Value.ToString("d"));
             string branchID = BranchReader(returnBranchDD.Text);
+            string transactionID = transactionIDBox.Text;
 
+            float amountOwed = ReturnAmountPaid(transactionID, branchID, transactionReturn.Value.ToString("d"));
+            MessageBox.Show("The amount owed for this rental is =" + amountOwed);
+
+            // Create the query
             string updateTransaction = "update RentalTransaction " +
-                "set actRetDate = " + dateReturned + ", aBranchReturn = " + returnBranchDD.Text + 
-                "where rentalID = " + branchID;
+                "set actRetDate = " + dateReturned + ", aBranchReturn = " + branchID + ", amount paid = " + amountOwed + 
+                " where rentalID = " + transactionID;
+
+            // Update the transaction
+            _291CarProject.Static.Database.CreateNewTransaction(updateTransaction);
+
+        }
+
+        private float ReturnAmountPaid(string transactionID, string returnBranchID, string dateReturned)
+        {
+            // We need this for ParseExact
+            var canada = new CultureInfo("en-CA");
+
+            // Info on the transaction itself
+            Dictionary<string, string> transactionInfo = RentalPaymentDetails(transactionID);
+            // Info on the vehicle type
+            Dictionary<string, string> vTypeInfo = VehicleRateDetails(transactionInfo["vehicleType"]);
+
+            // Turn the strings to DateTime to get them in the correct format
+            DateTime dateBooked = DateTime.ParseExact(transactionInfo["dateBooked"], "d", canada);
+            DateTime expReturnDate = DateTime.ParseExact(transactionInfo["expRDate"], "d", canada);
+
+            // The amount we owe
+            float totalPayment = 0;
+
+            // Check if the vehicle was returned late
+            if (expReturnDate < DateTime.ParseExact(dateReturned, "d", canada)) { totalPayment += float.Parse(vTypeInfo["lateFee"]); }
+            // Check if the vehicle was returned to the correct branch
+            if (returnBranchID != transactionInfo["expBranch"]) { totalPayment += float.Parse(vTypeInfo["changeCharge"]); }
+
+            totalPayment += CalculateAmountOwed(dateBooked, DateTime.ParseExact(dateReturned, "d", canada), vTypeInfo);
+            return totalPayment; // Return the amount owed
+        }
+
+        private float CalculateAmountOwed(DateTime dateBooked, DateTime dateReturned, Dictionary<string, string> vTypeInfo)
+        {
+            float total = 0;
+
+            // Find the length of time in days 
+            TimeSpan time = dateReturned.Subtract(dateBooked);
+            int numberOfDays = time.Days;
+
+            // Months
+            int months = numberOfDays / 30;
+            int remainder = numberOfDays % 30;
+
+            total += months * float.Parse(vTypeInfo["monthlyRate"]);
+
+            // Weeks + days
+            int weeks = remainder / 4;
+            int days = remainder % 4;
+
+            total += weeks * float.Parse(vTypeInfo["weeklyRate"]);
+            total += days * float.Parse(vTypeInfo["dailyRate"]);
+
+            return total;
+        }
+
+        private Dictionary<string, string> RentalPaymentDetails(string rentalID)
+        {
+            Dictionary<string, string> newDict = new Dictionary<string, string>();
 
             try
             {
-                _291CarProject.Static.Database.commandStream.CommandText = updateTransaction;
-                _291CarProject.Static.Database.commandStream.ExecuteNonQuery(); // run the query and update the entry
+                _291CarProject.Static.Database.commandStream.CommandText = "select vTypeID, dateBooked, expRetDate, eBranchReturn " +
+                "from RentalTransaction where rentalID = " + rentalID; // Hand over the command
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader(); // run the query
+
+                while (_291CarProject.Static.Database.dataStream.Read())
+                {
+                    newDict.Add("vehicleType", _291CarProject.Static.Database.dataStream["vTypeID"].ToString());
+                    newDict.Add("expBranch", _291CarProject.Static.Database.dataStream["dateBooked"].ToString());
+                    newDict.Add("dateBooked", _291CarProject.Static.Database.dataStream["expRetDate"].ToString());
+                    newDict.Add("expRDate", _291CarProject.Static.Database.dataStream["eBranchReturn"].ToString());
+                }
+                _291CarProject.Static.Database.dataStream.Close();
+                return newDict;
+
             }
             // Error catching
             catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+
+            return newDict;
+        }
+
+        private Dictionary<string, string> VehicleRateDetails(string vehicleType)
+        {
+            Dictionary<string, string> newDict = new Dictionary<string, string>();
+
+            try
+            {
+                _291CarProject.Static.Database.commandStream.CommandText = "select dRate, wRate, mRate, lateFee, changeCharge " +
+                "from vehicleType where rentalID = " + vehicleType; // Hand over the command
+                _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader(); // run the query
+
+                while (_291CarProject.Static.Database.dataStream.Read())
+                {
+                    newDict.Add("dailyRate", _291CarProject.Static.Database.dataStream["dRate"].ToString());
+                    newDict.Add("weeklyRate", _291CarProject.Static.Database.dataStream["wRate"].ToString());
+                    newDict.Add("monthlyRate", _291CarProject.Static.Database.dataStream["mRate"].ToString());
+                    newDict.Add("lateFee", _291CarProject.Static.Database.dataStream["lateFee"].ToString());
+                    newDict.Add("changeFee", _291CarProject.Static.Database.dataStream["changeCharge"].ToString());
+                }
+                _291CarProject.Static.Database.dataStream.Close();
+                return newDict;
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+
+            return newDict;
         }
 
         private bool EmptyFieldCheck()
