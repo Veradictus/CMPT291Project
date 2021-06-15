@@ -122,7 +122,7 @@ namespace _291CarProject
             // 
             // city
             // 
-            this.city.Location = new System.Drawing.Point(444, 227);
+            this.city.Location = new System.Drawing.Point(286, 226);
             this.city.Name = "city";
             this.city.PlaceholderText = "City";
             this.city.Size = new System.Drawing.Size(100, 23);
@@ -131,7 +131,7 @@ namespace _291CarProject
             // 
             // province
             // 
-            this.province.Location = new System.Drawing.Point(286, 227);
+            this.province.Location = new System.Drawing.Point(392, 227);
             this.province.Name = "province";
             this.province.PlaceholderText = "Province";
             this.province.Size = new System.Drawing.Size(152, 23);
