@@ -53,6 +53,11 @@ namespace _291CarProject
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.query3GroupBox = new System.Windows.Forms.GroupBox();
+            this.q2ConfirmButton = new System.Windows.Forms.Button();
+            this.q4ConfirmButton = new System.Windows.Forms.Button();
+            this.q3ConfirmButton = new System.Windows.Forms.Button();
+            this.q1ConfirmButton = new System.Windows.Forms.Button();
+            this.outPutLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.query1GroupBox.SuspendLayout();
             this.query2GroupBox.SuspendLayout();
@@ -78,7 +83,7 @@ namespace _291CarProject
             "Vehicle Types Not Used Report",
             "Average Spending Report",
             "Count for Different-Branch-return Fee Report"});
-            this.queryCombox.Location = new System.Drawing.Point(149, 405);
+            this.queryCombox.Location = new System.Drawing.Point(262, 422);
             this.queryCombox.Name = "queryCombox";
             this.queryCombox.Size = new System.Drawing.Size(417, 23);
             this.queryCombox.TabIndex = 3;
@@ -86,7 +91,7 @@ namespace _291CarProject
             // 
             // BackButton
             // 
-            this.BackButton.Location = new System.Drawing.Point(713, 405);
+            this.BackButton.Location = new System.Drawing.Point(916, 404);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(75, 23);
             this.BackButton.TabIndex = 4;
@@ -97,7 +102,7 @@ namespace _291CarProject
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(581, 75);
+            this.dataGridView1.Location = new System.Drawing.Point(690, 81);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(310, 299);
@@ -186,7 +191,7 @@ namespace _291CarProject
             "Vehicle Types Not Used Report",
             "Average Spending Report",
             "Count for Different-Branch-return Fee Report"});
-            this.branchCombo.Location = new System.Drawing.Point(9, 110);
+            this.branchCombo.Location = new System.Drawing.Point(9, 78);
             this.branchCombo.Name = "branchCombo";
             this.branchCombo.Size = new System.Drawing.Size(181, 23);
             this.branchCombo.TabIndex = 13;
@@ -197,7 +202,7 @@ namespace _291CarProject
             this.query4CheckBox.Items.AddRange(new object[] {
             "City",
             "Province"});
-            this.query4CheckBox.Location = new System.Drawing.Point(9, 61);
+            this.query4CheckBox.Location = new System.Drawing.Point(9, 22);
             this.query4CheckBox.Name = "query4CheckBox";
             this.query4CheckBox.Size = new System.Drawing.Size(76, 40);
             this.query4CheckBox.TabIndex = 15;
@@ -208,7 +213,7 @@ namespace _291CarProject
             this.query4CheckBox2.Items.AddRange(new object[] {
             "Most",
             "Least"});
-            this.query4CheckBox2.Location = new System.Drawing.Point(107, 61);
+            this.query4CheckBox2.Location = new System.Drawing.Point(105, 22);
             this.query4CheckBox2.Name = "query4CheckBox2";
             this.query4CheckBox2.Size = new System.Drawing.Size(76, 40);
             this.query4CheckBox2.TabIndex = 16;
@@ -227,42 +232,44 @@ namespace _291CarProject
             // 
             // query1GroupBox
             // 
+            this.query1GroupBox.Controls.Add(this.q1ConfirmButton);
             this.query1GroupBox.Controls.Add(this.label1);
             this.query1GroupBox.Controls.Add(this.checkedListBox2);
             this.query1GroupBox.Controls.Add(this.nTransTbox);
             this.query1GroupBox.Controls.Add(this.returnRadio);
             this.query1GroupBox.Controls.Add(this.borrowRadio);
-            this.query1GroupBox.Location = new System.Drawing.Point(253, 264);
+            this.query1GroupBox.Location = new System.Drawing.Point(367, 255);
             this.query1GroupBox.Name = "query1GroupBox";
-            this.query1GroupBox.Size = new System.Drawing.Size(206, 110);
+            this.query1GroupBox.Size = new System.Drawing.Size(214, 161);
             this.query1GroupBox.TabIndex = 18;
             this.query1GroupBox.TabStop = false;
             this.query1GroupBox.Text = "q1GBox";
             // 
             // query2GroupBox
             // 
+            this.query2GroupBox.Controls.Add(this.q2ConfirmButton);
             this.query2GroupBox.Controls.Add(this.goldRadio);
             this.query2GroupBox.Controls.Add(this.radioButton2);
             this.query2GroupBox.Controls.Add(this.checkedListBox1);
             this.query2GroupBox.Location = new System.Drawing.Point(24, 12);
             this.query2GroupBox.Name = "query2GroupBox";
-            this.query2GroupBox.Size = new System.Drawing.Size(236, 77);
+            this.query2GroupBox.Size = new System.Drawing.Size(236, 126);
             this.query2GroupBox.TabIndex = 19;
             this.query2GroupBox.TabStop = false;
             this.query2GroupBox.Text = "q2GBox";
             // 
             // query4GroupBox
             // 
+            this.query4GroupBox.Controls.Add(this.q4ConfirmButton);
             this.query4GroupBox.Controls.Add(this.branchCombo);
             this.query4GroupBox.Controls.Add(this.query4CheckBox);
             this.query4GroupBox.Controls.Add(this.query4CheckBox2);
             this.query4GroupBox.Location = new System.Drawing.Point(30, 225);
             this.query4GroupBox.Name = "query4GroupBox";
-            this.query4GroupBox.Size = new System.Drawing.Size(196, 149);
+            this.query4GroupBox.Size = new System.Drawing.Size(282, 117);
             this.query4GroupBox.TabIndex = 20;
             this.query4GroupBox.TabStop = false;
             this.query4GroupBox.Text = "q4GBox";
-            this.query4GroupBox.Visible = false;
             // 
             // radioButton1
             // 
@@ -316,23 +323,71 @@ namespace _291CarProject
             // 
             // query3GroupBox
             // 
+            this.query3GroupBox.Controls.Add(this.q3ConfirmButton);
             this.query3GroupBox.Controls.Add(this.radioButton1);
             this.query3GroupBox.Controls.Add(this.comboBox1);
             this.query3GroupBox.Controls.Add(this.dateTimePicker2);
             this.query3GroupBox.Controls.Add(this.radioButton3);
             this.query3GroupBox.Controls.Add(this.dateTimePicker1);
-            this.query3GroupBox.Location = new System.Drawing.Point(311, 75);
+            this.query3GroupBox.Location = new System.Drawing.Point(318, 62);
             this.query3GroupBox.Name = "query3GroupBox";
-            this.query3GroupBox.Size = new System.Drawing.Size(240, 187);
+            this.query3GroupBox.Size = new System.Drawing.Size(324, 187);
             this.query3GroupBox.TabIndex = 26;
             this.query3GroupBox.TabStop = false;
             this.query3GroupBox.Text = "q3GBox";
+            // 
+            // q2ConfirmButton
+            // 
+            this.q2ConfirmButton.Location = new System.Drawing.Point(67, 82);
+            this.q2ConfirmButton.Name = "q2ConfirmButton";
+            this.q2ConfirmButton.Size = new System.Drawing.Size(75, 28);
+            this.q2ConfirmButton.TabIndex = 13;
+            this.q2ConfirmButton.Text = "Confirm";
+            this.q2ConfirmButton.UseVisualStyleBackColor = true;
+            // 
+            // q4ConfirmButton
+            // 
+            this.q4ConfirmButton.Location = new System.Drawing.Point(206, 41);
+            this.q4ConfirmButton.Name = "q4ConfirmButton";
+            this.q4ConfirmButton.Size = new System.Drawing.Size(70, 40);
+            this.q4ConfirmButton.TabIndex = 17;
+            this.q4ConfirmButton.Text = "Confirm";
+            this.q4ConfirmButton.UseVisualStyleBackColor = true;
+            // 
+            // q3ConfirmButton
+            // 
+            this.q3ConfirmButton.Location = new System.Drawing.Point(232, 79);
+            this.q3ConfirmButton.Name = "q3ConfirmButton";
+            this.q3ConfirmButton.Size = new System.Drawing.Size(61, 52);
+            this.q3ConfirmButton.TabIndex = 26;
+            this.q3ConfirmButton.Text = "Confirm";
+            this.q3ConfirmButton.UseVisualStyleBackColor = true;
+            // 
+            // q1ConfirmButton
+            // 
+            this.q1ConfirmButton.Location = new System.Drawing.Point(17, 106);
+            this.q1ConfirmButton.Name = "q1ConfirmButton";
+            this.q1ConfirmButton.Size = new System.Drawing.Size(75, 37);
+            this.q1ConfirmButton.TabIndex = 18;
+            this.q1ConfirmButton.Text = "Confirm";
+            this.q1ConfirmButton.UseVisualStyleBackColor = true;
+            // 
+            // outPutLabel
+            // 
+            this.outPutLabel.AutoSize = true;
+            this.outPutLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.outPutLabel.Location = new System.Drawing.Point(690, 44);
+            this.outPutLabel.Name = "outPutLabel";
+            this.outPutLabel.Size = new System.Drawing.Size(79, 30);
+            this.outPutLabel.TabIndex = 27;
+            this.outPutLabel.Text = "Output";
             // 
             // Built_Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 495);
+            this.ClientSize = new System.Drawing.Size(1012, 499);
+            this.Controls.Add(this.outPutLabel);
             this.Controls.Add(this.query3GroupBox);
             this.Controls.Add(this.query4GroupBox);
             this.Controls.Add(this.query2GroupBox);
@@ -382,5 +437,10 @@ namespace _291CarProject
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.GroupBox query3GroupBox;
+        private System.Windows.Forms.Button q1ConfirmButton;
+        private System.Windows.Forms.Button q2ConfirmButton;
+        private System.Windows.Forms.Button q4ConfirmButton;
+        private System.Windows.Forms.Button q3ConfirmButton;
+        private System.Windows.Forms.Label outPutLabel;
     }
 }

@@ -13,11 +13,11 @@ namespace _291CarProject.Static
         public static SqlCommand commandStream = new SqlCommand();
         public static SqlDataReader dataStream;
 
-        public const string host = "DESKTOP-RGBGUY";
+        public const string host = "localhost";
         public const string database = "291proDatabase";
 
-        public const string username = "damion";
-        public const string password = "1234";
+        public const string username = "user2";
+        public const string password = "pass1";
 
         public const int timeout = 15; // Connection timeout duration
 
@@ -80,6 +80,146 @@ namespace _291CarProject.Static
             }
 
             return status;
+        }
+
+        /**
+         
+        --1)
+    SELECT firstName +' '+lastName FROM [User]
+    WHERE [UID] in (
+            SELECT empBorrow FROM RentalTransaction 
+            WHERE vTypeID='small' -- Here User specifies (small,medium,Large)
+            GROUP BY empBorrow      --Here User specifies empRet or empBorrow
+            HAVING COUNT(*) > 1);   --Here user specifies the number for X
+
+         */
+
+        public static List<string> GetHighestTransactionReport(string minimumCount, bool isBorrowing, string vTypeSize)
+        {
+            List<string> highestTransactionReport = new List<string>();
+
+            string isBorrowingString = isBorrowing ? "empBorrow" : "empRet";
+
+            StringBuilder transactionString = new StringBuilder("SELECT firstName + ' ' + lastName FROM [User] ");
+
+            transactionString.Append(" WHERE [UID] IN ( SELECT " + isBorrowingString);
+            transactionString.Append(" FROM RentalTransaction WHERE vTypeID=" + vTypeSize);
+            transactionString.Append(" GROUP BY " + isBorrowingString);
+            transactionString.Append(" HAVING COUNT(*) > " + minimumCount + ")");
+
+            commandStream.CommandText = transactionString.ToString();
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    highestTransactionReport.Add(dataStream["userFullName"].ToString());
+                }
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return highestTransactionReport;
+        }
+
+        public static bool ArrayContains(string[] array, string item)
+        {
+            for (int i = 0; i < array.Length; i++)
+                if (array[i].Equals(item))
+                    return true;
+
+            return false;
+        }
+
+        public static List<string> SizesException(string[] sizesPicked)
+        {
+            List<string> newSizes = new List<string>();
+
+            string[] sizes = new string[3] { "small", "medium", "large" };
+
+            for (int i = 0; i < sizes.Length; i++)
+            {
+                if (ArrayContains(sizesPicked, sizes[i])) continue;
+
+                newSizes.Add(sizes[i]);
+            }
+
+            return newSizes;
+        }
+
+        /*
+ --2)
+SELECT * FROM [User] as U, Customer as C, RentalTransaction R1 
+WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify the type of member (Gold or Regular)
+                    (SELECT vTypeID FROM VehicleType WHERE vTypeID='Large' AND vTypeID='medium') --"haven't used large or medium
+                    EXCEPT
+                    (SELECT vTypeID FROM RentalTransaction as R
+                    WHERE R.userID=C.customerID)) AND U.[UID]=C.customerID;
+
+//picked small
+
+*/
+
+        public static Dictionary<string, string> GetVehicleTypesNotUsed(string membership, string[] sizesPicked)
+        {
+            Dictionary<string, string> vehiclesNotUsed = new Dictionary<string, string>();
+
+            StringBuilder vehicleUsageString = new StringBuilder("SELECT * FROM [User] as U, Customer as C, RentalTransaction R1 ");
+
+            vehicleUsageString.Append("WHERE membership='" + membership + "' AND ");
+            vehicleUsageString.Append("R1.vTypeID='" + sizesPicked[0] + "' ");
+
+            if (sizesPicked.Length > 1)
+            {
+                for (int i = 1; i < sizesPicked.Length; i++)
+                    vehicleUsageString.Append("AND R1.vTypeID='" + sizesPicked[i] + "' AND ");
+            }
+
+            vehicleUsageString.Append("exists((SELECT vTypeID FROM VehicleType WHERE ");
+
+            List<string> sizeException = SizesException(sizesPicked);
+
+            int index = 0;
+
+            foreach (string size in sizeException)
+            {
+                vehicleUsageString.Append("vTypeID='" + size + "'");
+
+                if (sizeException.Count > 1 && index < sizeException.Count)
+                    vehicleUsageString.Append(" AND ");
+
+                index++;
+            }
+
+            vehicleUsageString.Append(") EXCEPT (SELECT vTypeID FROM RentalTransaction as R WHERE R.userID=C.customerID)) ");
+            vehicleUsageString.Append("AND U.[UID]=C.customerID");
+
+            commandStream.CommandText = vehicleUsageString.ToString();
+
+            try
+            {
+
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+
+                }
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return vehiclesNotUsed;
         }
 
         public static Dictionary<string, string> GetUserInfo(string username)
@@ -430,12 +570,9 @@ namespace _291CarProject.Static
         internal static void GoldMembershipCheck(string userName)
         {
             // Check if the userID is real
-            if (userName == "" || int.Parse(userName) == 0) { return; }
+            //if (userName == "" || int.Parse(userName) == 0) { return; }
             // Check for gold status
-            if (IsGoldMember(userName))
-            {
-                UpdateGoldStatus(userName);
-            }
+            if (IsGoldMember(userName)) { UpdateGoldStatus(userName); }
 
         }
 

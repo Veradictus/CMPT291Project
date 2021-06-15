@@ -53,13 +53,7 @@ group by branchID
 
 select * from Employee
 
--- You can change the max to min if you want a specific 
-select B.branchID, max(temp.branchCount) as difBranchCount from Branch as B, 
-(select count(branchID) as branchCount, branchID as BID from Branch as B, RentalTransaction as R, Customer as C 
-where R.userID = C.customerID and B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
-and C.membership = 'Regular' group by branchID) as temp
-where B.branchID = temp.BID and B.prov = 'AB' -- Switch prov to city and vice versa depending on what you want
-group by B.branchID
+
 
 -- Find the avg spending of either customers vs employees OR gold vs regular members of all branches 
 
@@ -71,8 +65,8 @@ where B.branchID = R.branchBorrow and R.vTypeID = V.vTypeID
 -- Note, is the customer a regular or gold member?
 
 
--- Use C# to find the amount of
-
+delete from RentalTransaction
+select * from RentalTransaction
 
 select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
 where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
