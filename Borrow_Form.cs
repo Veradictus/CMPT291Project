@@ -101,8 +101,7 @@ namespace _291CarProject
 
             // Put it together
             string newTransaction = "insert into RentalTransaction (userID, rentedVID, vTypeID, empBorrow, branchBorrow, eBranchReturn, dateBooked, expRetDate) " +
-                "values (" + customerInfo["uid"] + "," + veh_text_box.Text + ",'" + vTypeDropDown.Text + "'," + userInfo["uid"] + "," + userInfo["branchId"] + "," + returnBranch + 
-                ", convert(datetime,'" + timeFrom + "',5), convert(datetime,'" + timeTo + "',5))";
+                "values (" + customerInfo["uid"] + "," + veh_text_box.Text + ",'" + vTypeDropDown.Text + "'," + userInfo["uid"] + "," + userInfo["branchId"] + "," + returnBranch + "," + timeFrom + "," + timeTo + ")";
 
             return newTransaction;
         }
@@ -136,7 +135,8 @@ namespace _291CarProject
             sections[0] = sections[0].Substring(2);
 
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
-            return fixedString;
+            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            return completeString;
         }
     }
 }

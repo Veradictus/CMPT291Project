@@ -111,7 +111,7 @@ namespace _291CarProject
 
         private string UpdateQuery(Dictionary<string, string> userInfo)
         {
-            string dateReturned = DateReorganizer(transactionReturn.Value.ToString("d"));
+            string dateReturned = DateReorganizer(transactionReturn.Value.ToString("G"));
             string branchID = BranchReader(returnBranchDD.Text);
             string transactionID = transactionIDBox.Text;
 
@@ -252,7 +252,8 @@ namespace _291CarProject
             sections[0] = sections[0].Substring(2);
 
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
-            return fixedString;
+            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            return completeString;
         }
 
         // BranchReader takes our fancy branch option from a drop down box and splits it,

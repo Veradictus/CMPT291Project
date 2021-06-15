@@ -237,15 +237,15 @@ namespace _291CarProject
             { searchCommand.Append(" and "); }
             // Grab the given date from and to
             displayString += " from " + dateFrom.Text + " to " + dateTo.Text + ".";
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString("d")); 
-            string timeTo = DateReorganizer(dateTo.Value.ToString("d"));
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("G")); 
+            string timeTo = DateReorganizer(dateTo.Value.ToString("G"));
 
             // We look for 3 separate points to make sure we catch all posibilities among the rental transactions
             searchCommand.Append("V.vehicleID not in " +
                 "(select rentedVID from RentalTransaction where " +
-                "(dateBooked between convert(datetime,'" + timeFrom + "',5) and convert(datetime,'" + timeTo + "',5)) or " +
-                "(expRetDate between convert(datetime,'" + timeFrom + "',5) and convert(datetime,'" + timeTo + "',5)) or " +
-                "(dateBooked > convert(datetime,'" + timeFrom + "',5) and expRetDate < convert(datetime,'" + timeTo + "',5)))");
+                "(dateBooked between " + timeFrom + " and " + timeTo + ") or " +
+                "(expRetDate between " + timeFrom + " and " + timeTo + ") or " +
+                "(dateBooked > " + timeFrom + " and expRetDate < " + timeTo + "))");
 
             // Return
             MessageBox.Show(displayString);
@@ -261,7 +261,8 @@ namespace _291CarProject
             sections[0] = sections[0].Substring(2);
 
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
-            return fixedString;
+            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            return completeString;
         }
 
         private string MilageReader()
