@@ -23,6 +23,9 @@ namespace _291CarProject
 
         private void DropDownPopulate()
         {
+            branchSelector.Items.Add("");
+            sizeSelector.Items.Add("");
+
             // Adding branchIDs + names into our drop down ========================================
             _291CarProject.Static.Database.commandStream.CommandText = "select branchID, street from Branch";
             try
@@ -65,6 +68,8 @@ namespace _291CarProject
 
         private void DDPopulate_Distinct(string dAttribute, ComboBox dropDownBox)
         {
+            dropDownBox.Items.Add("");
+
             // Create the command text
             _291CarProject.Static.Database.commandStream.CommandText = "select distinct " + dAttribute + " from Vehicle";
 
