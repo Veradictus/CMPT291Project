@@ -150,9 +150,6 @@ namespace _291CarProject
             StringBuilder searchCommand = new StringBuilder("Select V.vehicleID, V.branchID, V.vTypeID, V.brand, V.model, V.year," +
                 "T.dRate, T.wRate, T.mRate from Vehicle as V, VehicleType as T where V.vTypeID = T.vTypeID");
 
-            // The where flag, used to tell if we should add a Where to the query or not
-            // If there's no Where to specify, return what we got
-            if (!AndCheck()) { return searchCommand.ToString(); }
             // If we do have a where, let's add it
             searchCommand.Append(" and ");
 

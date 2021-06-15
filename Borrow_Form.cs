@@ -81,13 +81,32 @@ namespace _291CarProject
             // Check if the user exists
             if (!_291CarProject.Static.Database.UserExists(cust_tbox.Text)) { return; }
 
-
+            if (!CheckForCopies(userInfo)) { return; }
             // Fill the query out
             string newTransaction = CreateNewTransaction(userInfo);
 
             // Hand it to the function in the database to add the transanction
             _291CarProject.Static.Database.NewORUpdateQuery(newTransaction);
             _291CarProject.Static.Database.GoldMembershipCheck(cust_tbox.Text);
+        }
+
+        private bool CheckForCopies(Dictionary<string, string> userInfo)
+        {
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("G"));
+            string timeTo = DateReorganizer(dateTo.Value.ToString("G"));
+
+            string copyCheckQuery = "select rentedVID from RentalTransaction where rentedVID = " + veh_text_box.Text + " and rentedVID in " +
+                "((select rentedVID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null) " +
+                "intersect " +
+                "(select rentedVID from RentalTransaction where amountPaid is not null and " +
+                "(dateBooked between " + timeFrom + " and " + timeTo + ") or " +
+                "(expRetDate between " + timeFrom + " and " + timeTo + ") or " +
+                "(dateBooked > " + timeFrom + " and expRetDate < " + timeTo + ")))";
+
+            // Check here if it's TRUE (legal rental) or FALSE (car is unavailable)
+            bool check = _291CarProject.Static.Database.vIDTransaction(copyCheckQuery);
+            Debug.WriteLine("Result for legal rental is " + check);
+            return check;
         }
 
         private string CreateNewTransaction(Dictionary<string, string> userInfo)

@@ -613,6 +613,31 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
             return vehicleID;
         }
 
+        internal static bool vIDTransaction(string copyCheckQuery)
+        {
+            try
+            {
+                commandStream.CommandText = copyCheckQuery;
+                // Run and grab the result from the dataStream
+                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream.Read();
+                if (dataStream.HasRows)
+                {
+                    MessageBox.Show("Error: selected vehicle not available in this time frame.\r\nPlease enter a new time or a new vehicle ID.");
+                    dataStream.Close(); // close
+                    return false;
+                }
+                // Otherwise, it's a legal rental
+                dataStream.Close(); // close
+                return true;
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+            // We have to return something out here
+            
+            return false;
+        }
+
         public static bool VIDCheck(string vID)
         {
             // Check if we even got a vehicle ID to look for
