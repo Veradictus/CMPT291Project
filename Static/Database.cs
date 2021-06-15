@@ -570,12 +570,9 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
         internal static void GoldMembershipCheck(string userName)
         {
             // Check if the userID is real
-            if (userName == "" || int.Parse(userName) == 0) { return; }
+            //if (userName == "" || int.Parse(userName) == 0) { return; }
             // Check for gold status
-            if (IsGoldMember(userName))
-            {
-                UpdateGoldStatus(userName);
-            }
+            if (IsGoldMember(userName)) { UpdateGoldStatus(userName); }
 
         }
 
