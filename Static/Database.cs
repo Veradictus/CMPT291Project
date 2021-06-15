@@ -13,11 +13,11 @@ namespace _291CarProject.Static
         public static SqlCommand commandStream = new SqlCommand();
         public static SqlDataReader dataStream;
 
-        public const string host = "localhost";
+        public const string host = "DESKTOP-RGBGUY";
         public const string database = "291proDatabase";
 
-        public const string username = "user2";
-        public const string password = "pass1";
+        public const string username = "damion";
+        public const string password = "1234";
 
         public const int timeout = 15; // Connection timeout duration
 

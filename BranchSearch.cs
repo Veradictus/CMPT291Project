@@ -253,7 +253,6 @@ namespace _291CarProject
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
-            
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
             return fixedString;
         }

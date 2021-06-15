@@ -38,7 +38,7 @@ namespace _291CarProject
             // 
             // login_button
             // 
-            this.login_button.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+            this.login_button.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.login_button.Location = new System.Drawing.Point(193, 304);
             this.login_button.Name = "login_button";
             this.login_button.Size = new System.Drawing.Size(302, 34);
@@ -68,7 +68,7 @@ namespace _291CarProject
             // 
             // register_button
             // 
-            this.register_button.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+            this.register_button.Cursor = System.Windows.Forms.Cursors.Default;
             this.register_button.Location = new System.Drawing.Point(543, 305);
             this.register_button.Name = "register_button";
             this.register_button.Size = new System.Drawing.Size(74, 33);
