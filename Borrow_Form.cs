@@ -86,7 +86,7 @@ namespace _291CarProject
             string newTransaction = CreateNewTransaction(userInfo);
 
             // Hand it to the function in the database to add the transanction
-            _291CarProject.Static.Database.CreateNewTransaction(newTransaction);
+            _291CarProject.Static.Database.NewORUpdateQuery(newTransaction);
             _291CarProject.Static.Database.GoldMembershipCheck(cust_tbox.Text);
         }
 

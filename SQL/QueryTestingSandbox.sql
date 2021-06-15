@@ -22,12 +22,37 @@ insert into Vehicle (milage, brand, model, [year], branchID, vTypeID) values (50
 insert into RentalTransaction (userID, rentedVID, vTypeID, branchBorrow, eBranchReturn, aBranchReturn, dateBooked, expRetDate) values (1, 1, 'Large', 1, 1, 2, convert(datetime,'18-06-12 10:34:09 PM',5), convert(datetime,'25-06-12 10:34:09 PM',5))
 
 select * from RentalTransaction
+
+select * from Vehicle as V where V.vehicleID not in 
+(
+(select rentedVID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null)
+intersect
+(select rentedVID from RentalTransaction where 
+(dateBooked between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or 
+(expRetDate between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or
+(dateBooked > convert(datetime,'15-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'01-07-21 10:34:09 PM',5)))
+)
+
+select rentalID from RentalTransaction where 
+(dateBooked between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or 
+(expRetDate between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or
+(dateBooked > convert(datetime,'15-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'01-07-21 10:34:09 PM',5))
+and rentalID in 
+(
+select rentalID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null
+)
+
+select rentedVID, rentalID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null and
+(dateBooked between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or 
+(expRetDate between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or
+(dateBooked > convert(datetime,'15-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'01-07-21 10:34:09 PM',5))
+
 select * from Vehicle as V, VehicleType as T where V.vTypeID = T.vTypeID and V.vehicleID not in 
 (
-select rentedVID from RentalTransaction where 
-(dateBooked between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or 
-(expRetDate between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or
-(dateBooked > convert(datetime,'12-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'12-06-21 10:34:09 PM',5))
+select rentedVID, rentalID from RentalTransaction where amountPaid is null and actRetDate is null and
+(dateBooked between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or 
+(expRetDate between convert(datetime,'15-06-21 10:34:09 PM',5) and convert(datetime,'01-07-21 10:34:09 PM',5)) or
+(dateBooked > convert(datetime,'15-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'01-07-21 10:34:09 PM',5))
 )
 
 select * from Vehicle where branchID = 1 and vehicleID not in 

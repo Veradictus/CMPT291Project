@@ -242,10 +242,12 @@ namespace _291CarProject
 
             // We look for 3 separate points to make sure we catch all posibilities among the rental transactions
             searchCommand.Append("V.vehicleID not in " +
-                "(select rentedVID from RentalTransaction where " +
+                "((select rentedVID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null) " +
+                "intersect " +
+                "(select rentedVID from RentalTransaction where amountPaid is not null and " +
                 "(dateBooked between " + timeFrom + " and " + timeTo + ") or " +
                 "(expRetDate between " + timeFrom + " and " + timeTo + ") or " +
-                "(dateBooked > " + timeFrom + " and expRetDate < " + timeTo + "))");
+                "(dateBooked > " + timeFrom + " and expRetDate < " + timeTo + ")))");
 
             // Return
             MessageBox.Show(displayString);

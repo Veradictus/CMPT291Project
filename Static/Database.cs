@@ -545,7 +545,7 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
         /*
          * AUR/Search Screen/Borrow+Return stuff below
          */
-        public static bool CreateNewTransaction(string newQuery)
+        public static bool NewORUpdateQuery(string newQuery)
         {
             if (newQuery == "" || newQuery == null) { return false; }
 
@@ -589,6 +589,28 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
             // Error catching
             catch (Exception e2)
             { MessageBox.Show(e2.ToString(), "Error"); }
+        }
+
+        internal static string GetVIDfromTransaction(string transactionID)
+        {
+            string vehicleID = "";
+
+            try
+            {
+                commandStream.CommandText = "select rentedVID from RentalTransaction where rentalID = " + transactionID;
+                // Run and grab the result from the dataStream
+                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                while (dataStream.Read())
+                {
+                    vehicleID = dataStream["rentedVID"].ToString();
+                }
+                dataStream.Close(); // close
+                return vehicleID;
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+
+            return vehicleID;
         }
 
         public static bool VIDCheck(string vID)

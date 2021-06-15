@@ -102,14 +102,16 @@ namespace _291CarProject
             if (!_291CarProject.Static.Database.RentalIDCheck(transactionIDBox.Text)) { return; }
 
             // Create the transaction
-            string updateTransaction = UpdateQuery(userInfo);
+            string updateTransaction = UpdateTransactionQuery(userInfo);
+            string updateVehicleInfo = UpdateVehicleQuery(BranchReader(returnBranchDD.Text));
 
             // Update the transaction
-            _291CarProject.Static.Database.CreateNewTransaction(updateTransaction);
-
+            _291CarProject.Static.Database.NewORUpdateQuery(updateTransaction);
+            // Update vehicle information
+            _291CarProject.Static.Database.NewORUpdateQuery(updateVehicleInfo);
         }
 
-        private string UpdateQuery(Dictionary<string, string> userInfo)
+        private string UpdateTransactionQuery(Dictionary<string, string> userInfo)
         {
             string dateReturned = DateReorganizer(transactionReturn.Value.ToString("G"));
             string branchID = BranchReader(returnBranchDD.Text);
@@ -122,6 +124,20 @@ namespace _291CarProject
             string updateTransaction = "update RentalTransaction " +
                 "set empRet = " + userInfo["uid"] + ", actRetDate = " + dateReturned + ", aBranchReturn = " + branchID + ", amountPaid = " + amountOwed +
                 " where rentalID = " + transactionID;
+
+            return updateTransaction;
+        }
+
+        private string UpdateVehicleQuery(string branchID)
+        {
+            // Read the query for the vehicle ID
+            string transactionID = transactionIDBox.Text;
+            string vehicleID = _291CarProject.Static.Database.GetVIDfromTransaction(transactionID);
+
+            // Create the query
+            string updateTransaction = "update Vehicle " +
+                "set branchID = " + branchID +
+                " where vehicleID = " + vehicleID;
 
             return updateTransaction;
         }
