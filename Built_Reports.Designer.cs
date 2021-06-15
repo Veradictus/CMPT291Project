@@ -262,7 +262,6 @@ namespace _291CarProject
             this.query4GroupBox.TabIndex = 20;
             this.query4GroupBox.TabStop = false;
             this.query4GroupBox.Text = "q4GBox";
-            this.query4GroupBox.Visible = false;
             // 
             // radioButton1
             // 

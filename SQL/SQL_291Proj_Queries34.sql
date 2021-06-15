@@ -1,3 +1,20 @@
+--1)
+SELECT (firstName + ' ' + lastName) AS userFullName FROM [User]
+WHERE [UID] in (
+            SELECT empBorrow FROM RentalTransaction 
+            WHERE vTypeID='small' -- Here User specifies (small,medium,Large)
+            GROUP BY empBorrow      --Here User specifies empRet or empBorrow
+            HAVING COUNT(*) > 1);   --Here user specifies the number for X
+
+--2)
+SELECT * FROM [User] as U, Customer as C, RentalTransaction R1 
+WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify the type of member (Gold or Regular)
+                                                            (SELECT vTypeID FROM VehicleType WHERE vTypeID='Large' AND vTypeID='medium') --"haven't used large
+                                                            EXCEPT
+                                                            (SELECT vTypeID FROM RentalTransaction as R
+                                                             WHERE R.userID=C.customerID)) AND U.[UID]=C.customerID;
+
+
 -- QUERY 3
 -- You can change the max to min if you want a specific 
 select B.branchID, max(temp.branchCount) as difBranchCount from Branch as B, 
