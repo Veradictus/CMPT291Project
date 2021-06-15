@@ -103,7 +103,6 @@ namespace _291CarProject
             string newTransaction = "insert into RentalTransaction (userID, rentedVID, vTypeID, empBorrow, branchBorrow, eBranchReturn, dateBooked, expRetDate) " +
                 "values (" + customerInfo["uid"] + "," + veh_text_box.Text + ",'" + vTypeDropDown.Text + "'," + userInfo["uid"] + "," + userInfo["branchId"] + "," + returnBranch + 
                 ", convert(datetime,'" + timeFrom + "',5), convert(datetime,'" + timeTo + "',5))";
-            Debug.WriteLine(newTransaction);
 
             return newTransaction;
         }

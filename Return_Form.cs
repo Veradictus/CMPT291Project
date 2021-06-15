@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
@@ -58,6 +59,9 @@ namespace _291CarProject
 
         private void UpdateResultGrid(string userID)
         {
+            // Clear it for a new search query
+            SearchTransactionGrid.Rows.Clear();
+
             // Build the query
             string searchCommand = "select R.rentalID, U.[UID], U.userName, R.rentedVID, V.brand, V.model, V.[year], R.dateBooked, R.expRetDate, R.branchBorrow, R.eBranchReturn " +
                 "from RentalTransaction as R, [User] as U, Vehicle as V " +
@@ -97,21 +101,29 @@ namespace _291CarProject
             // Check if the rental transaction ID is real
             if (!_291CarProject.Static.Database.RentalIDCheck(transactionIDBox.Text)) { return; }
 
+            // Create the transaction
+            string updateTransaction = UpdateQuery(userInfo);
+
+            // Update the transaction
+            _291CarProject.Static.Database.CreateNewTransaction(updateTransaction);
+
+        }
+
+        private string UpdateQuery(Dictionary<string, string> userInfo)
+        {
             string dateReturned = DateReorganizer(transactionReturn.Value.ToString("d"));
             string branchID = BranchReader(returnBranchDD.Text);
             string transactionID = transactionIDBox.Text;
 
             float amountOwed = ReturnAmountPaid(transactionID, branchID, transactionReturn.Value.ToString("d"));
-            MessageBox.Show("The amount owed for this rental is =" + amountOwed);
+            MessageBox.Show("The amount owed for this rental is = $" + amountOwed);
 
             // Create the query
             string updateTransaction = "update RentalTransaction " +
-                "set actRetDate = " + dateReturned + ", aBranchReturn = " + branchID + ", amount paid = " + amountOwed + 
+                "set empRet = " + userInfo["uid"] + ", actRetDate = " + dateReturned + ", aBranchReturn = " + branchID + ", amountPaid = " + amountOwed +
                 " where rentalID = " + transactionID;
 
-            // Update the transaction
-            _291CarProject.Static.Database.CreateNewTransaction(updateTransaction);
-
+            return updateTransaction;
         }
 
         private float ReturnAmountPaid(string transactionID, string returnBranchID, string dateReturned)
@@ -123,10 +135,11 @@ namespace _291CarProject
             Dictionary<string, string> transactionInfo = RentalPaymentDetails(transactionID);
             // Info on the vehicle type
             Dictionary<string, string> vTypeInfo = VehicleRateDetails(transactionInfo["vehicleType"]);
+            Debug.Write(transactionInfo["dateBooked"]);
 
             // Turn the strings to DateTime to get them in the correct format
-            DateTime dateBooked = DateTime.ParseExact(transactionInfo["dateBooked"], "d", canada);
-            DateTime expReturnDate = DateTime.ParseExact(transactionInfo["expRDate"], "d", canada);
+            DateTime dateBooked = DateTime.ParseExact(transactionInfo["dateBooked"], "G", canada);
+            DateTime expReturnDate = DateTime.ParseExact(transactionInfo["expRDate"], "G", canada);
 
             // The amount we owe
             float totalPayment = 0;
@@ -177,9 +190,9 @@ namespace _291CarProject
                 while (_291CarProject.Static.Database.dataStream.Read())
                 {
                     newDict.Add("vehicleType", _291CarProject.Static.Database.dataStream["vTypeID"].ToString());
-                    newDict.Add("expBranch", _291CarProject.Static.Database.dataStream["dateBooked"].ToString());
-                    newDict.Add("dateBooked", _291CarProject.Static.Database.dataStream["expRetDate"].ToString());
-                    newDict.Add("expRDate", _291CarProject.Static.Database.dataStream["eBranchReturn"].ToString());
+                    newDict.Add("expBranch", _291CarProject.Static.Database.dataStream["eBranchReturn"].ToString());
+                    newDict.Add("dateBooked", _291CarProject.Static.Database.dataStream["dateBooked"].ToString());
+                    newDict.Add("expRDate", _291CarProject.Static.Database.dataStream["expRetDate"].ToString());
                 }
                 _291CarProject.Static.Database.dataStream.Close();
                 return newDict;
@@ -197,8 +210,8 @@ namespace _291CarProject
 
             try
             {
-                _291CarProject.Static.Database.commandStream.CommandText = "select dRate, wRate, mRate, lateFee, changeCharge " +
-                "from vehicleType where rentalID = " + vehicleType; // Hand over the command
+                _291CarProject.Static.Database.commandStream.CommandText = "select dRate, wRate, mRate, lateFee, changeCharge from vehicleType where vTypeID = '" + vehicleType + "'";
+                // Hand over the command
                 _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader(); // run the query
 
                 while (_291CarProject.Static.Database.dataStream.Read())
@@ -207,7 +220,7 @@ namespace _291CarProject
                     newDict.Add("weeklyRate", _291CarProject.Static.Database.dataStream["wRate"].ToString());
                     newDict.Add("monthlyRate", _291CarProject.Static.Database.dataStream["mRate"].ToString());
                     newDict.Add("lateFee", _291CarProject.Static.Database.dataStream["lateFee"].ToString());
-                    newDict.Add("changeFee", _291CarProject.Static.Database.dataStream["changeCharge"].ToString());
+                    newDict.Add("changeCharge", _291CarProject.Static.Database.dataStream["changeCharge"].ToString());
                 }
                 _291CarProject.Static.Database.dataStream.Close();
                 return newDict;
