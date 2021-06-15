@@ -1,4 +1,4 @@
-use [291proDatabase];
+	use [291proDatabase];
 
 DROP TABLE IF EXISTS RentalTransaction;
 DROP TABLE IF EXISTS Vehicle;
@@ -109,16 +109,3 @@ CREATE TABLE RentalTransaction(
 	CONSTRAINT FKUserID FOREIGN KEY (userID)
 	REFERENCES [User]([UID])
 );
-
--- Some lines to create some branches and the vehicleTypes
-
--- VehicleTypes
-INSERT INTO VehicleType VALUES ('Small', 25, 150, 450, 25, 25);
-INSERT INTO VehicleType VALUES ('Medium', 35, 210, 630, 25, 30);
-INSERT INTO VehicleType VALUES ('Large', 40, 240, 720, 25, 35);
--- Branches
-INSERT INTO Branch VALUES ('Elmwood Street', 'Edmonton', 'AB', '7804206969');
-INSERT INTO Branch VALUES ('Something Street', 'Edmonton', 'AB', '7804890000');
-
-INSERT INTO [User] VALUES ('admin', 'admin123', 'Employee', 'Male', 'Adam', 'Admin', 'Potato Road', 'Edmontonia', 'Alberto');
-INSERT INTO Employee VALUES (1, 420.69, 1);
