@@ -231,8 +231,8 @@ namespace _291CarProject
             { searchCommand.Append(" and "); }
             // Grab the given date from and to
             displayString += " from " + dateFrom.Text + " to " + dateTo.Text + ".";
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString()); 
-            string timeTo = DateReorganizer(dateTo.Value.ToString());
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("d")); 
+            string timeTo = DateReorganizer(dateTo.Value.ToString("d"));
 
             // We look for 3 separate points to make sure we catch all posibilities among the rental transactions
             searchCommand.Append("V.vehicleID not in " +
@@ -253,7 +253,7 @@ namespace _291CarProject
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
-            
+
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
             return fixedString;
         }

@@ -99,6 +99,7 @@ CREATE TABLE RentalTransaction(
 	aBranchReturn INT FOREIGN KEY REFERENCES Branch(branchID), --Actual branch of return
 	rentedVID INT FOREIGN KEY REFERENCES Vehicle(vehicleID),
 	vTypeID VARCHAR(10) NOT NULL,   --Customer's requested vehicle type
+	amountPaid FLOAT NULL, -- Amount owed by the customer upon return
 	CONSTRAINT FKReqVType FOREIGN KEY (vTypeID)
 	REFERENCES VehicleType(vTypeID),   
 	CONSTRAINT FKEmpBorrow FOREIGN KEY (empBorrow)
