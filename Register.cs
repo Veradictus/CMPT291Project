@@ -38,7 +38,7 @@ namespace _291CarProject
             }
 
             bool createUser = _291CarProject.Static.Database.CreateUser(register_username_text.Text, password_text.Text,
-                "Male", firstName.Text, lastName.Text, street.Text, 
+                genderTB.Text, firstName.Text, lastName.Text, street.Text, 
                 city.Text, province.Text, driverLicense.Text);
 
             if (!createUser)
