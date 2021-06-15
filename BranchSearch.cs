@@ -68,6 +68,7 @@ namespace _291CarProject
 
         private void DDPopulate_Distinct(string dAttribute, ComboBox dropDownBox)
         {
+            // Add an empty option to "deselect" something
             dropDownBox.Items.Add("");
 
             // Create the command text

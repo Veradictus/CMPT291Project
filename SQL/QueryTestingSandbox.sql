@@ -73,6 +73,11 @@ where B.branchID = R.branchBorrow and R.vTypeID = V.vTypeID
 
 -- Use C# to find the amount of
 
+select avg(R.amountPaid) as avgGoldPaid from RentalTransaction as R, Customer as U
+where R.userID = U.customerID and U.membership = 'Gold' and
+(dateBooked between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or 
+(expRetDate between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or
+(dateBooked > convert(datetime,'12-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'12-06-21 10:34:09 PM',5))
 
 select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
 where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
