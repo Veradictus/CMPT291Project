@@ -32,3 +32,11 @@ where R.userID = U.customerID and U.membership = 'Gold' and R.aBranchReturn = 1 
 (dateBooked between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or 
 (expRetDate between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or
 (dateBooked > convert(datetime,'12-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'12-06-21 10:34:09 PM',5))
+
+-- NOTE ON QUERY 4
+/*
+The convert() methods are very important to get SQL to read the the correct times.
+Preferably, in C#, when you're grabbing the date from a date-picker or whatever,
+it is best to grab the string from the object itself using dateFrom.Value.ToString("G").
+The G is the format that SQL seems to prefer.
+*/
