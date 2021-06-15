@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -80,17 +81,35 @@ namespace _291CarProject
             // Check if the user exists
             if (!_291CarProject.Static.Database.UserExists(cust_tbox.Text)) { return; }
 
-            // Start filling the query out
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString("d"));
-            string timeTo = DateReorganizer(dateTo.Value.ToString("d"));
-            Dictionary<string, string> userInfo = _291CarProject.Static.Database.GetUserInfo(cust_tbox.Text);
 
-            string newTransaction = "insert into RentalTransaction (userID, rentedVID, vTypeID, branchBorrow, eBranchReturn, dateBooked, expRetDate) " +
-                "values + (" + userInfo["uid"] + "," + veh_text_box.Text + ",'" + vTypeDropDown.Text + "'," + userInfo["branchID"] + "," + expReturnDD.Text + "," + timeFrom + "," + timeTo + ")";
+            // Fill the query out
+            string newTransaction = CreateNewTransaction(userInfo);
 
             // Hand it to the function in the database to add the transanction
             _291CarProject.Static.Database.CreateNewTransaction(newTransaction);
-            _291CarProject.Static.Database.GoldMembershipCheck(userInfo["userName"]);
+            _291CarProject.Static.Database.GoldMembershipCheck(cust_tbox.Text);
+        }
+
+        private string CreateNewTransaction(Dictionary<string, string> userInfo)
+        {
+            // Start filling the query out
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("G"));
+            string timeTo = DateReorganizer(dateTo.Value.ToString("G"));
+            string returnBranch = BranchReorganizer(expReturnDD.Text);
+            // Get the customer's info here
+            Dictionary<string, string> customerInfo = _291CarProject.Static.Database.GetUserInfo(cust_tbox.Text);
+
+            // Put it together
+            string newTransaction = "insert into RentalTransaction (userID, rentedVID, vTypeID, empBorrow, branchBorrow, eBranchReturn, dateBooked, expRetDate) " +
+                "values (" + customerInfo["uid"] + "," + veh_text_box.Text + ",'" + vTypeDropDown.Text + "'," + userInfo["uid"] + "," + userInfo["branchId"] + "," + returnBranch + "," + timeFrom + "," + timeTo + ")";
+
+            return newTransaction;
+        }
+
+        private string BranchReorganizer(string text)
+        {
+            string[] branchSplit = text.Split(" ");
+            return branchSplit[1];
         }
 
         private bool EmptyFieldCheck()
@@ -116,7 +135,8 @@ namespace _291CarProject
             sections[0] = sections[0].Substring(2);
 
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
-            return fixedString;
+            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            return completeString;
         }
     }
 }
