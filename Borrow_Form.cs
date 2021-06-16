@@ -86,6 +86,7 @@ namespace _291CarProject
             if (!CheckForCopies(userInfo)) { return; }
             // Fill the query out
             string newTransaction = CreateNewTransaction(userInfo);
+            Debug.WriteLine(newTransaction);
 
             // Hand it to the function in the database to add the transanction
             _291CarProject.Static.Database.NewORUpdateQuery(newTransaction);
@@ -98,7 +99,7 @@ namespace _291CarProject
 
             bool check = _291CarProject.Static.Database.VehicleBranchCheck(vCheckQuery);
 
-            return false;
+            return check;
         }
 
         private bool CheckForCopies(Dictionary<string, string> userInfo)
@@ -116,7 +117,6 @@ namespace _291CarProject
 
             // Check here if it's TRUE (legal rental) or FALSE (car is unavailable)
             bool check = _291CarProject.Static.Database.vIDTransaction(copyCheckQuery);
-            Debug.WriteLine("Result for legal rental is " + check);
             return check;
         }
 
