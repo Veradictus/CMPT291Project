@@ -113,11 +113,11 @@ namespace _291CarProject
 
         private string UpdateTransactionQuery(Dictionary<string, string> userInfo)
         {
-            string dateReturned = DateReorganizer(transactionReturn.Value.ToString("G"));
+            string dateReturned = DateReorganizer(transactionReturn.Value.ToString("dd-MM-yy"));
             string branchID = BranchReader(returnBranchDD.Text);
             string transactionID = transactionIDBox.Text;
 
-            float amountOwed = ReturnAmountPaid(transactionID, branchID, transactionReturn.Value.ToString("d"));
+            float amountOwed = ReturnAmountPaid(transactionID, branchID, transactionReturn.Value.ToString("dd-MM-yy"));
             MessageBox.Show("The amount owed for this rental is = $" + amountOwed);
 
             // Create the query
@@ -154,8 +154,8 @@ namespace _291CarProject
             Debug.Write(transactionInfo["dateBooked"]);
 
             // Turn the strings to DateTime to get them in the correct format
-            DateTime dateBooked = DateTime.ParseExact(transactionInfo["dateBooked"], "G", canada);
-            DateTime expReturnDate = DateTime.ParseExact(transactionInfo["expRDate"], "G", canada);
+            DateTime dateBooked = DateTime.ParseExact(transactionInfo["dateBooked"], "dd-MM-yy", canada);
+            DateTime expReturnDate = DateTime.ParseExact(transactionInfo["expRDate"], "dd-MM-yy", canada);
 
             // The amount we owe
             float totalPayment = 0;
@@ -261,14 +261,17 @@ namespace _291CarProject
 
         private string DateReorganizer(string dateString)
         {
-            string dateHalf = dateString.Substring(0, 10);
-            string timeHalf = dateString.Substring(10);
+            /*
+            string dateHalf = dateString.Substring(0,10);
+            string timeHalf = "11:59:59 PM";
+            //string timeHalf = dateString.Substring(10);
+            //Debug.WriteLine(timeHalf);
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
-
-            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
-            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0];
+            */
+            string completeString = "convert(date, '" + dateString + "', 5)";
             return completeString;
         }
 

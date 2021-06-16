@@ -150,18 +150,18 @@ namespace _291CarProject
             bool andFlag = false; // The comma flag, used to tell when to add a comma , to the query
             string displayString = "Searching for all vehicles";
 
-            StringBuilder searchCommand = new StringBuilder("Select V.vehicleID, V.branchID, V.vTypeID, V.brand, V.model, V.year," +
+            StringBuilder searchCommand = new StringBuilder("Select V.vehicleID, V.branchID, V.vTypeID, V.brand, V.model, V.[year]," +
                 "T.dRate, T.wRate, T.mRate from Vehicle as V, VehicleType as T where V.vTypeID = T.vTypeID");
 
             // If we do have a where, let's add it
-            searchCommand.Append(" and ");
+            //searchCommand.Append(" and ");
 
             // Now start adding each query option one by one
             // Branch
             if (branchSelector.Text != "")
             {
                 string fixedBranch = BranchReader(branchSelector.Text);
-                searchCommand.Append("V.branchID = " + fixedBranch);
+                searchCommand.Append(" and V.branchID = " + fixedBranch);
                 displayString += " in Branch " + fixedBranch + ",";
                 andFlag = true;
             }
@@ -233,29 +233,31 @@ namespace _291CarProject
             }
 
             // Not In check - we check vehicle NOT currently booked 
-            if (andFlag) // Just in case, check the and flag again to avoid errors
-            { searchCommand.Append(" and "); }
+            //if (andFlag) // Just in case, check the and flag again to avoid errors
+            //{ searchCommand.Append(" and "); }
             // Grab the given date from and to
             displayString += " from " + dateFrom.Text + " to " + dateTo.Text + ".";
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString("G")); 
-            string timeTo = DateReorganizer(dateTo.Value.ToString("G"));
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("dd-MM-yy")); 
+            string timeTo = DateReorganizer(dateTo.Value.ToString("dd-MM-yy"));
 
             // We look for 3 separate points to make sure we catch all posibilities among the rental transactions
-            searchCommand.Append("V.vehicleID not in " +
+            searchCommand.Append(" and V.vehicleID not in " +
                 "((select rentedVID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null) " +
                 "intersect " +
-                "(select rentedVID from RentalTransaction where amountPaid is not null and " +
-                "(dateBooked between " + timeFrom + " and " + timeTo + ") or " +
-                "(expRetDate between " + timeFrom + " and " + timeTo + ") or " +
-                "(dateBooked > " + timeFrom + " and expRetDate < " + timeTo + ")))");
+                "(select rentedVID from RentalTransaction where " +
+                "(convert(date,dateBooked) between " + timeFrom + " and " + timeTo + ") or " +
+                "(convert(date,expRetDate) between " + timeFrom + " and " + timeTo + ") or " +
+                "(convert(date,dateBooked) > " + timeFrom + " and expRetDate < " + timeTo + ")))");
 
             // Return
+            Debug.WriteLine(searchCommand.ToString());
             MessageBox.Show(displayString);
             return searchCommand.ToString();
         }
 
         private string DateReorganizer(string dateString)
         {
+            /*
             string dateHalf = dateString.Substring(0,10);
             string timeHalf = "11:59:59 PM";
             //string timeHalf = dateString.Substring(10);
@@ -263,9 +265,9 @@ namespace _291CarProject
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
-
             string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0];
-            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            */
+            string completeString = "convert(date, '" + dateString + "', 5)";
             return completeString;
         }
 

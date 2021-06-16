@@ -123,8 +123,8 @@ namespace _291CarProject
         private string CreateNewTransaction(Dictionary<string, string> userInfo)
         {
             // Start filling the query out
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString("G"));
-            string timeTo = DateReorganizer(dateTo.Value.ToString("G"));
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("dd-MM-yy"));
+            string timeTo = DateReorganizer(dateTo.Value.ToString("dd-MM-yy"));
             string returnBranch = BranchReorganizer(expReturnDD.Text);
             // Get the customer's info here
             Dictionary<string, string> customerInfo = _291CarProject.Static.Database.GetUserInfo(cust_tbox.Text);
@@ -158,14 +158,17 @@ namespace _291CarProject
 
         private string DateReorganizer(string dateString)
         {
-            string dateHalf = dateString.Substring(0, 10);
-            string timeHalf = dateString.Substring(10);
+            /*
+            string dateHalf = dateString.Substring(0,10);
+            string timeHalf = "11:59:59 PM";
+            //string timeHalf = dateString.Substring(10);
+            //Debug.WriteLine(timeHalf);
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
-
-            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
-            string completeString = "convert(datetime, '" + fixedString + "', 5)";
+            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0];
+            */
+            string completeString = "convert(date, '" + dateString + "', 5)";
             return completeString;
         }
     }
