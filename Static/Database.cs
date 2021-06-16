@@ -100,14 +100,16 @@ namespace _291CarProject.Static
 
             string isBorrowingString = isBorrowing ? "empBorrow" : "empRet";
 
-            StringBuilder transactionString = new StringBuilder("SELECT firstName + ' ' + lastName FROM [User] ");
+            StringBuilder transactionString = new StringBuilder("SELECT (firstName + ' ' + lastName) AS userFullName FROM [User] ");
 
-            transactionString.Append(" WHERE [UID] IN ( SELECT " + isBorrowingString);
-            transactionString.Append(" FROM RentalTransaction WHERE vTypeID=" + vTypeSize);
-            transactionString.Append(" GROUP BY " + isBorrowingString);
+            transactionString.Append("WHERE [UID] IN ( SELECT " + isBorrowingString);
+            transactionString.Append(" FROM RentalTransaction WHERE vTypeID='" + vTypeSize);
+            transactionString.Append("' GROUP BY " + isBorrowingString);
             transactionString.Append(" HAVING COUNT(*) > " + minimumCount + ")");
 
             commandStream.CommandText = transactionString.ToString();
+
+            Debug.WriteLine("[GetHighestTransactionReport] query: " + commandStream.CommandText);
 
             try
             {
@@ -128,16 +130,16 @@ namespace _291CarProject.Static
             return highestTransactionReport;
         }
 
-        public static bool ArrayContains(string[] array, string item)
+        public static bool ArrayContains(List<string> array, string item)
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Count; i++)
                 if (array[i].Equals(item))
                     return true;
 
             return false;
         }
 
-        public static List<string> SizesException(string[] sizesPicked)
+        public static List<string> SizesException(List<string> sizesPicked)
         {
             List<string> newSizes = new List<string>();
 
@@ -155,9 +157,9 @@ namespace _291CarProject.Static
 
         /*
  --2)
-SELECT * FROM [User] as U, Customer as C, RentalTransaction R1 
-WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify the type of member (Gold or Regular)
-                    (SELECT vTypeID FROM VehicleType WHERE vTypeID='Large' AND vTypeID='medium') --"haven't used large or medium
+SELECT (firstName + ' ' + lastName) AS userFullName FROM [User] as U, Customer as C, RentalTransaction R1 
+WHERE membership='Gold' AND R1.vTypeID='medium' AND R1.vTypeID='small' AND exists( --User will specify the type of member (Gold or Regular)
+                    (SELECT vTypeID FROM VehicleType WHERE vTypeID='large') --"haven't used large or medium
                     EXCEPT
                     (SELECT vTypeID FROM RentalTransaction as R
                     WHERE R.userID=C.customerID)) AND U.[UID]=C.customerID;
@@ -166,22 +168,22 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
 
 */
 
-        public static Dictionary<string, string> GetVehicleTypesNotUsed(string membership, string[] sizesPicked)
+        public static List<string> GetVehicleTypesNotUsed(string membership, List<string> sizesPicked)
         {
-            Dictionary<string, string> vehiclesNotUsed = new Dictionary<string, string>();
+            List<string> fullNames = new List<string>();
 
-            StringBuilder vehicleUsageString = new StringBuilder("SELECT * FROM [User] as U, Customer as C, RentalTransaction R1 ");
+            StringBuilder vehicleUsageString = new StringBuilder("SELECT DISTINCT  (U.firstName + ' ' + U.lastName) AS userFullName FROM [User] as U, Customer as C, RentalTransaction R1 ");
 
             vehicleUsageString.Append("WHERE membership='" + membership + "' AND ");
-            vehicleUsageString.Append("R1.vTypeID='" + sizesPicked[0] + "' ");
+            vehicleUsageString.Append("R1.vTypeID='" + sizesPicked[0] + "' AND ");
 
-            if (sizesPicked.Length > 1)
+            if (sizesPicked.Count > 1)
             {
-                for (int i = 1; i < sizesPicked.Length; i++)
-                    vehicleUsageString.Append("AND R1.vTypeID='" + sizesPicked[i] + "' AND ");
+                for (int i = 1; i < sizesPicked.Count; i++)
+                    vehicleUsageString.Append("R1.vTypeID='" + sizesPicked[i] + "' AND ");
             }
 
-            vehicleUsageString.Append("exists((SELECT vTypeID FROM VehicleType WHERE ");
+            vehicleUsageString.Append("exists((SELECT vTypeID FROM VehicleType ");
 
             List<string> sizeException = SizesException(sizesPicked);
 
@@ -189,27 +191,31 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
 
             foreach (string size in sizeException)
             {
+                if (index == 0)
+                    vehicleUsageString.Append("WHERE ");
+
                 vehicleUsageString.Append("vTypeID='" + size + "'");
 
-                if (sizeException.Count > 1 && index < sizeException.Count)
-                    vehicleUsageString.Append(" AND ");
+                if (sizeException.Count > 1 && index < sizeException.Count - 1)
+                    vehicleUsageString.Append(" OR ");
 
                 index++;
             }
 
-            vehicleUsageString.Append(") EXCEPT (SELECT vTypeID FROM RentalTransaction as R WHERE R.userID=C.customerID)) ");
-            vehicleUsageString.Append("AND U.[UID]=C.customerID");
+            vehicleUsageString.Append(") EXCEPT (SELECT vTypeID FROM RentalTransaction as R2 WHERE R2.userID=R1.userID)) ");
+            vehicleUsageString.Append("AND U.[UID]=R1.userID");
 
             commandStream.CommandText = vehicleUsageString.ToString();
 
+            Debug.WriteLine("[GetVehicleTypesNotUsed] query: " + commandStream.CommandText);
+
             try
             {
-
                 dataStream = commandStream.ExecuteReader();
 
                 while (dataStream.Read())
                 {
-
+                    fullNames.Add(dataStream["userFullName"].ToString());
                 }
 
             } catch (Exception e)
@@ -219,7 +225,102 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
 
             dataStream.Close();
 
-            return vehiclesNotUsed;
+            return fullNames;
+        }
+
+        /**
+         select B.branchID, max(temp.branchCount) as difBranchCount from Branch as B, 
+(select count(branchID) as branchCount, branchID as BID from Branch as B, RentalTransaction as R, Customer as C 
+where R.userID = C.customerID and B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
+and C.membership = 'Regular' group by branchID) as temp
+where B.branchID = temp.BID and B.prov = 'AB' -- Switch prov to city and vice versa depending on what you want
+group by B.branchID
+
+         */
+
+        public static Dictionary<string, string> GetBranchChangeFee(bool most, bool isCity, string value)
+        {
+            Dictionary<string, string> changeFees = new Dictionary<string, string>();
+
+            StringBuilder branchFeeString = new StringBuilder("SELECT B.branchID, ");
+
+            branchFeeString.Append((most ? "max" : "min") + "(temp.branchCount) AS difBranchCount ");
+            branchFeeString.Append("FROM Branch as B, (SELECT COUNT(branchID) as branchCount, branchID ");
+            branchFeeString.Append("AS BID FROM Branch AS B, RentalTransaction as R, Customer as C WHERE R.userID");
+            branchFeeString.Append("=C.customerId AND B.branchID");
+            branchFeeString.Append("= R.aBranchReturn AND B.branchID != R.eBranchReturn AND C.membership=");
+            branchFeeString.Append("'Regular' GROUP BY branchID) AS temp WHERE B.branchId = temp.BID AND B.");
+            branchFeeString.Append((isCity ? "city" : "prov") + "='" + value + "' GROUP BY B.branchID");
+
+            commandStream.CommandText = branchFeeString.ToString();
+
+            Debug.WriteLine("[BranchChangeFee] query: " + commandStream.CommandText);
+
+            try
+            {
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    changeFees.Add(dataStream["branchID"].ToString(), dataStream["difBranchCount"].ToString());
+                }
+
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return changeFees;
+        }
+
+        /*
+         
+        select avg(R.amountPaid) as avgSpent from RentalTransaction as R, Customer as U
+        where R.userID = U.customerID and U.membership = 'Gold' and R.aBranchReturn = 1 and
+        (dateBooked between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or 
+        (expRetDate between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or
+        (dateBooked > convert(datetime,'12-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'12-06-21 10:34:09 PM',5))
+
+         */
+
+        public static List<string> GetAverageSpending(bool isGold, string startDate, string endDate)
+        {
+            List<string> averageSpending = new List<string>();
+
+            StringBuilder averageSpendingString = new StringBuilder("SELECT AVG(R.amountPaid) AS avgSpent FROM RentalTransaction as R, ");
+
+            averageSpendingString.Append("Customer AS U WHERE R.userID = U.customerId AND U.membership = '");
+            averageSpendingString.Append((isGold ? "Gold" : "Regular") + "' AND R.aBranchReturn = 1 AND (dateBooked between convert(");
+            averageSpendingString.Append("datetime, '" + startDate + "', 5) and convert(datetime, '" + endDate + "',5)) or ");
+            averageSpendingString.Append("(expRetDate between convert(datetime, '" + startDate + "',5) and convert(datetime, '");
+            averageSpendingString.Append(endDate + "',5)) or (dateBooked > convert(datetime, '" + startDate + "',5) and expRetDate <");
+            averageSpendingString.Append("convert(datetime, '" + endDate + "',5))");
+
+            commandStream.CommandText = averageSpendingString.ToString();
+
+            Debug.WriteLine("[GetAverageSpending] query: " + commandStream.CommandText);
+
+            try
+            {
+
+                dataStream = commandStream.ExecuteReader();
+
+                while (dataStream.Read())
+                {
+                    averageSpending.Add(dataStream["avgSpent"].ToString());
+                }
+
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            dataStream.Close();
+
+            return averageSpending;
         }
 
         public static Dictionary<string, string> GetUserInfo(string username)

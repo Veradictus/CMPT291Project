@@ -38,38 +38,37 @@ namespace _291CarProject
             this.returnRadio = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.goldRadio = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.regularMemberRadio = new System.Windows.Forms.RadioButton();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.branchCombo = new System.Windows.Forms.ComboBox();
             this.query4CheckBox = new System.Windows.Forms.CheckedListBox();
             this.query4CheckBox2 = new System.Windows.Forms.CheckedListBox();
             this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
             this.query1GroupBox = new System.Windows.Forms.GroupBox();
-            this.query2GroupBox = new System.Windows.Forms.GroupBox();
-            this.query4GroupBox = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.query3GroupBox = new System.Windows.Forms.GroupBox();
-            this.q2ConfirmButton = new System.Windows.Forms.Button();
-            this.q4ConfirmButton = new System.Windows.Forms.Button();
-            this.q3ConfirmButton = new System.Windows.Forms.Button();
             this.q1ConfirmButton = new System.Windows.Forms.Button();
+            this.query2GroupBox = new System.Windows.Forms.GroupBox();
+            this.q2ConfirmButton = new System.Windows.Forms.Button();
+            this.query3GroupBox = new System.Windows.Forms.GroupBox();
+            this.q3Value = new System.Windows.Forms.TextBox();
+            this.query4GroupBox = new System.Windows.Forms.GroupBox();
+            this.q3ConfirmButton = new System.Windows.Forms.Button();
+            this.q4GoldRadio = new System.Windows.Forms.RadioButton();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.q4RegularRadio = new System.Windows.Forms.RadioButton();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.q4ConfirmButton = new System.Windows.Forms.Button();
             this.outPutLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.query1GroupBox.SuspendLayout();
             this.query2GroupBox.SuspendLayout();
-            this.query4GroupBox.SuspendLayout();
             this.query3GroupBox.SuspendLayout();
+            this.query4GroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // reports_label
             // 
             this.reports_label.AutoSize = true;
             this.reports_label.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.reports_label.Location = new System.Drawing.Point(311, 9);
+            this.reports_label.Location = new System.Drawing.Point(330, 18);
             this.reports_label.Name = "reports_label";
             this.reports_label.Size = new System.Drawing.Size(148, 50);
             this.reports_label.TabIndex = 1;
@@ -81,9 +80,9 @@ namespace _291CarProject
             this.queryCombox.Items.AddRange(new object[] {
             "Highest Rental Transaction Report",
             "Vehicle Types Not Used Report",
-            "Average Spending Report",
-            "Count for Different-Branch-return Fee Report"});
-            this.queryCombox.Location = new System.Drawing.Point(262, 422);
+            "Count for Different-Branch-return Fee Report",
+            "Average Spending Report"});
+            this.queryCombox.Location = new System.Drawing.Point(143, 81);
             this.queryCombox.Name = "queryCombox";
             this.queryCombox.Size = new System.Drawing.Size(417, 23);
             this.queryCombox.TabIndex = 3;
@@ -160,16 +159,16 @@ namespace _291CarProject
             this.goldRadio.Text = "Gold Members";
             this.goldRadio.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // regularMemberRadio
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(11, 48);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(118, 19);
-            this.radioButton2.TabIndex = 11;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Regular Members";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.regularMemberRadio.AutoSize = true;
+            this.regularMemberRadio.Location = new System.Drawing.Point(11, 48);
+            this.regularMemberRadio.Name = "regularMemberRadio";
+            this.regularMemberRadio.Size = new System.Drawing.Size(118, 19);
+            this.regularMemberRadio.TabIndex = 11;
+            this.regularMemberRadio.TabStop = true;
+            this.regularMemberRadio.Text = "Regular Members";
+            this.regularMemberRadio.UseVisualStyleBackColor = true;
             // 
             // checkedListBox1
             // 
@@ -182,22 +181,11 @@ namespace _291CarProject
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(69, 58);
             this.checkedListBox1.TabIndex = 12;
-            // 
-            // branchCombo
-            // 
-            this.branchCombo.FormattingEnabled = true;
-            this.branchCombo.Items.AddRange(new object[] {
-            "Highest Rental Transaction Report",
-            "Vehicle Types Not Used Report",
-            "Average Spending Report",
-            "Count for Different-Branch-return Fee Report"});
-            this.branchCombo.Location = new System.Drawing.Point(9, 78);
-            this.branchCombo.Name = "branchCombo";
-            this.branchCombo.Size = new System.Drawing.Size(181, 23);
-            this.branchCombo.TabIndex = 13;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // query4CheckBox
             // 
+            this.query4CheckBox.CheckOnClick = true;
             this.query4CheckBox.FormattingEnabled = true;
             this.query4CheckBox.Items.AddRange(new object[] {
             "City",
@@ -206,9 +194,12 @@ namespace _291CarProject
             this.query4CheckBox.Name = "query4CheckBox";
             this.query4CheckBox.Size = new System.Drawing.Size(76, 40);
             this.query4CheckBox.TabIndex = 15;
+            this.query4CheckBox.ThreeDCheckBoxes = true;
+            this.query4CheckBox.SelectedIndexChanged += new System.EventHandler(this.query4CheckBox_SelectedIndexChanged);
             // 
             // query4CheckBox2
             // 
+            this.query4CheckBox2.CheckOnClick = true;
             this.query4CheckBox2.FormattingEnabled = true;
             this.query4CheckBox2.Items.AddRange(new object[] {
             "Most",
@@ -217,9 +208,12 @@ namespace _291CarProject
             this.query4CheckBox2.Name = "query4CheckBox2";
             this.query4CheckBox2.Size = new System.Drawing.Size(76, 40);
             this.query4CheckBox2.TabIndex = 16;
+            this.query4CheckBox2.ThreeDCheckBoxes = true;
+            this.query4CheckBox2.SelectedIndexChanged += new System.EventHandler(this.query4CheckBox2_SelectedIndexChanged);
             // 
             // checkedListBox2
             // 
+            this.checkedListBox2.CheckOnClick = true;
             this.checkedListBox2.FormattingEnabled = true;
             this.checkedListBox2.Items.AddRange(new object[] {
             "Small",
@@ -229,6 +223,8 @@ namespace _291CarProject
             this.checkedListBox2.Name = "checkedListBox2";
             this.checkedListBox2.Size = new System.Drawing.Size(69, 58);
             this.checkedListBox2.TabIndex = 17;
+            this.checkedListBox2.ThreeDCheckBoxes = true;
+            this.checkedListBox2.SelectedIndexChanged += new System.EventHandler(this.checkedListBox2_SelectedIndexChanged);
             // 
             // query1GroupBox
             // 
@@ -238,130 +234,13 @@ namespace _291CarProject
             this.query1GroupBox.Controls.Add(this.nTransTbox);
             this.query1GroupBox.Controls.Add(this.returnRadio);
             this.query1GroupBox.Controls.Add(this.borrowRadio);
-            this.query1GroupBox.Location = new System.Drawing.Point(367, 255);
+            this.query1GroupBox.Location = new System.Drawing.Point(143, 186);
             this.query1GroupBox.Name = "query1GroupBox";
             this.query1GroupBox.Size = new System.Drawing.Size(214, 161);
             this.query1GroupBox.TabIndex = 18;
             this.query1GroupBox.TabStop = false;
             this.query1GroupBox.Text = "q1GBox";
-            // 
-            // query2GroupBox
-            // 
-            this.query2GroupBox.Controls.Add(this.q2ConfirmButton);
-            this.query2GroupBox.Controls.Add(this.goldRadio);
-            this.query2GroupBox.Controls.Add(this.radioButton2);
-            this.query2GroupBox.Controls.Add(this.checkedListBox1);
-            this.query2GroupBox.Location = new System.Drawing.Point(24, 12);
-            this.query2GroupBox.Name = "query2GroupBox";
-            this.query2GroupBox.Size = new System.Drawing.Size(236, 126);
-            this.query2GroupBox.TabIndex = 19;
-            this.query2GroupBox.TabStop = false;
-            this.query2GroupBox.Text = "q2GBox";
-            // 
-            // query4GroupBox
-            // 
-            this.query4GroupBox.Controls.Add(this.q4ConfirmButton);
-            this.query4GroupBox.Controls.Add(this.branchCombo);
-            this.query4GroupBox.Controls.Add(this.query4CheckBox);
-            this.query4GroupBox.Controls.Add(this.query4CheckBox2);
-            this.query4GroupBox.Location = new System.Drawing.Point(30, 225);
-            this.query4GroupBox.Name = "query4GroupBox";
-            this.query4GroupBox.Size = new System.Drawing.Size(282, 117);
-            this.query4GroupBox.TabIndex = 20;
-            this.query4GroupBox.TabStop = false;
-            this.query4GroupBox.Text = "q4GBox";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(103, 19);
-            this.radioButton1.TabIndex = 21;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Gold Members";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(6, 44);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(118, 19);
-            this.radioButton3.TabIndex = 22;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Regular Members";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Highest Rental Transaction Report",
-            "Vehicle Types Not Used Report",
-            "Average Spending Report",
-            "Count for Different-Branch-return Fee Report"});
-            this.comboBox1.Location = new System.Drawing.Point(7, 138);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(200, 23);
-            this.comboBox1.TabIndex = 23;
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(7, 69);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker1.TabIndex = 24;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(7, 98);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker2.TabIndex = 25;
-            // 
-            // query3GroupBox
-            // 
-            this.query3GroupBox.Controls.Add(this.q3ConfirmButton);
-            this.query3GroupBox.Controls.Add(this.radioButton1);
-            this.query3GroupBox.Controls.Add(this.comboBox1);
-            this.query3GroupBox.Controls.Add(this.dateTimePicker2);
-            this.query3GroupBox.Controls.Add(this.radioButton3);
-            this.query3GroupBox.Controls.Add(this.dateTimePicker1);
-            this.query3GroupBox.Location = new System.Drawing.Point(318, 62);
-            this.query3GroupBox.Name = "query3GroupBox";
-            this.query3GroupBox.Size = new System.Drawing.Size(324, 187);
-            this.query3GroupBox.TabIndex = 26;
-            this.query3GroupBox.TabStop = false;
-            this.query3GroupBox.Text = "q3GBox";
-            // 
-            // q2ConfirmButton
-            // 
-            this.q2ConfirmButton.Location = new System.Drawing.Point(67, 82);
-            this.q2ConfirmButton.Name = "q2ConfirmButton";
-            this.q2ConfirmButton.Size = new System.Drawing.Size(75, 28);
-            this.q2ConfirmButton.TabIndex = 13;
-            this.q2ConfirmButton.Text = "Confirm";
-            this.q2ConfirmButton.UseVisualStyleBackColor = true;
-            // 
-            // q4ConfirmButton
-            // 
-            this.q4ConfirmButton.Location = new System.Drawing.Point(206, 41);
-            this.q4ConfirmButton.Name = "q4ConfirmButton";
-            this.q4ConfirmButton.Size = new System.Drawing.Size(70, 40);
-            this.q4ConfirmButton.TabIndex = 17;
-            this.q4ConfirmButton.Text = "Confirm";
-            this.q4ConfirmButton.UseVisualStyleBackColor = true;
-            // 
-            // q3ConfirmButton
-            // 
-            this.q3ConfirmButton.Location = new System.Drawing.Point(232, 79);
-            this.q3ConfirmButton.Name = "q3ConfirmButton";
-            this.q3ConfirmButton.Size = new System.Drawing.Size(61, 52);
-            this.q3ConfirmButton.TabIndex = 26;
-            this.q3ConfirmButton.Text = "Confirm";
-            this.q3ConfirmButton.UseVisualStyleBackColor = true;
+            this.query1GroupBox.Visible = false;
             // 
             // q1ConfirmButton
             // 
@@ -371,6 +250,125 @@ namespace _291CarProject
             this.q1ConfirmButton.TabIndex = 18;
             this.q1ConfirmButton.Text = "Confirm";
             this.q1ConfirmButton.UseVisualStyleBackColor = true;
+            this.q1ConfirmButton.Click += new System.EventHandler(this.q1ConfirmButton_Click);
+            // 
+            // query2GroupBox
+            // 
+            this.query2GroupBox.Controls.Add(this.q2ConfirmButton);
+            this.query2GroupBox.Controls.Add(this.goldRadio);
+            this.query2GroupBox.Controls.Add(this.regularMemberRadio);
+            this.query2GroupBox.Controls.Add(this.checkedListBox1);
+            this.query2GroupBox.Location = new System.Drawing.Point(164, 164);
+            this.query2GroupBox.Name = "query2GroupBox";
+            this.query2GroupBox.Size = new System.Drawing.Size(236, 126);
+            this.query2GroupBox.TabIndex = 19;
+            this.query2GroupBox.TabStop = false;
+            this.query2GroupBox.Text = "q2GBox";
+            this.query2GroupBox.Visible = false;
+            // 
+            // q2ConfirmButton
+            // 
+            this.q2ConfirmButton.Location = new System.Drawing.Point(67, 82);
+            this.q2ConfirmButton.Name = "q2ConfirmButton";
+            this.q2ConfirmButton.Size = new System.Drawing.Size(75, 28);
+            this.q2ConfirmButton.TabIndex = 13;
+            this.q2ConfirmButton.Text = "Confirm";
+            this.q2ConfirmButton.UseVisualStyleBackColor = true;
+            this.q2ConfirmButton.Click += new System.EventHandler(this.q2ConfirmButton_Click);
+            // 
+            // query3GroupBox
+            // 
+            this.query3GroupBox.Controls.Add(this.q3Value);
+            this.query3GroupBox.Controls.Add(this.q4ConfirmButton);
+            this.query3GroupBox.Controls.Add(this.query4CheckBox);
+            this.query3GroupBox.Controls.Add(this.query4CheckBox2);
+            this.query3GroupBox.Location = new System.Drawing.Point(235, 158);
+            this.query3GroupBox.Name = "query3GroupBox";
+            this.query3GroupBox.Size = new System.Drawing.Size(282, 117);
+            this.query3GroupBox.TabIndex = 20;
+            this.query3GroupBox.TabStop = false;
+            this.query3GroupBox.Text = "q3GBox";
+            this.query3GroupBox.Visible = false;
+            // 
+            // q3Value
+            // 
+            this.q3Value.Location = new System.Drawing.Point(9, 76);
+            this.q3Value.Name = "q3Value";
+            this.q3Value.Size = new System.Drawing.Size(172, 23);
+            this.q3Value.TabIndex = 18;
+            // 
+            // query4GroupBox
+            // 
+            this.query4GroupBox.Controls.Add(this.q3ConfirmButton);
+            this.query4GroupBox.Controls.Add(this.q4GoldRadio);
+            this.query4GroupBox.Controls.Add(this.dateTimePicker2);
+            this.query4GroupBox.Controls.Add(this.q4RegularRadio);
+            this.query4GroupBox.Controls.Add(this.dateTimePicker1);
+            this.query4GroupBox.Location = new System.Drawing.Point(291, 154);
+            this.query4GroupBox.Name = "query4GroupBox";
+            this.query4GroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.query4GroupBox.Size = new System.Drawing.Size(324, 187);
+            this.query4GroupBox.TabIndex = 26;
+            this.query4GroupBox.TabStop = false;
+            this.query4GroupBox.Text = "q4GBox";
+            this.query4GroupBox.Visible = false;
+            // 
+            // q3ConfirmButton
+            // 
+            this.q3ConfirmButton.Location = new System.Drawing.Point(232, 79);
+            this.q3ConfirmButton.Name = "q3ConfirmButton";
+            this.q3ConfirmButton.Size = new System.Drawing.Size(61, 52);
+            this.q3ConfirmButton.TabIndex = 26;
+            this.q3ConfirmButton.Text = "Confirm";
+            this.q3ConfirmButton.UseVisualStyleBackColor = true;
+            this.q3ConfirmButton.Click += new System.EventHandler(this.q3ConfirmButton_Click);
+            // 
+            // q4GoldRadio
+            // 
+            this.q4GoldRadio.AutoSize = true;
+            this.q4GoldRadio.Location = new System.Drawing.Point(6, 19);
+            this.q4GoldRadio.Name = "q4GoldRadio";
+            this.q4GoldRadio.Size = new System.Drawing.Size(103, 19);
+            this.q4GoldRadio.TabIndex = 21;
+            this.q4GoldRadio.TabStop = true;
+            this.q4GoldRadio.Text = "Gold Members";
+            this.q4GoldRadio.UseVisualStyleBackColor = true;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(7, 98);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(200, 23);
+            this.dateTimePicker2.TabIndex = 25;
+            // 
+            // q4RegularRadio
+            // 
+            this.q4RegularRadio.AutoSize = true;
+            this.q4RegularRadio.Location = new System.Drawing.Point(6, 44);
+            this.q4RegularRadio.Name = "q4RegularRadio";
+            this.q4RegularRadio.Size = new System.Drawing.Size(118, 19);
+            this.q4RegularRadio.TabIndex = 22;
+            this.q4RegularRadio.TabStop = true;
+            this.q4RegularRadio.Text = "Regular Members";
+            this.q4RegularRadio.UseVisualStyleBackColor = true;
+            this.q4RegularRadio.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(7, 69);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 23);
+            this.dateTimePicker1.TabIndex = 24;
+            // 
+            // q4ConfirmButton
+            // 
+            this.q4ConfirmButton.Location = new System.Drawing.Point(206, 41);
+            this.q4ConfirmButton.Name = "q4ConfirmButton";
+            this.q4ConfirmButton.Size = new System.Drawing.Size(70, 40);
+            this.q4ConfirmButton.TabIndex = 17;
+            this.q4ConfirmButton.Text = "Confirm";
+            this.q4ConfirmButton.UseVisualStyleBackColor = true;
+            this.q4ConfirmButton.Click += new System.EventHandler(this.q4ConfirmButton_Click);
             // 
             // outPutLabel
             // 
@@ -388,8 +386,8 @@ namespace _291CarProject
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 499);
             this.Controls.Add(this.outPutLabel);
-            this.Controls.Add(this.query3GroupBox);
             this.Controls.Add(this.query4GroupBox);
+            this.Controls.Add(this.query3GroupBox);
             this.Controls.Add(this.query2GroupBox);
             this.Controls.Add(this.query1GroupBox);
             this.Controls.Add(this.dataGridView1);
@@ -403,9 +401,10 @@ namespace _291CarProject
             this.query1GroupBox.PerformLayout();
             this.query2GroupBox.ResumeLayout(false);
             this.query2GroupBox.PerformLayout();
-            this.query4GroupBox.ResumeLayout(false);
             this.query3GroupBox.ResumeLayout(false);
             this.query3GroupBox.PerformLayout();
+            this.query4GroupBox.ResumeLayout(false);
+            this.query4GroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,7 +413,6 @@ namespace _291CarProject
         #endregion
 
         private System.Windows.Forms.Label reports_label;
-        private System.Windows.Forms.ComboBox branchCombo;
         private System.Windows.Forms.Button BackButton;
         private System.Windows.Forms.ComboBox queryCombox;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -430,17 +428,21 @@ namespace _291CarProject
         private System.Windows.Forms.CheckedListBox checkedListBox2;
         private System.Windows.Forms.GroupBox query1GroupBox;
         private System.Windows.Forms.GroupBox query2GroupBox;
-        private System.Windows.Forms.GroupBox query4GroupBox;
+        private System.Windows.Forms.GroupBox query3GroupBox;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.GroupBox query3GroupBox;
         private System.Windows.Forms.Button q1ConfirmButton;
         private System.Windows.Forms.Button q2ConfirmButton;
         private System.Windows.Forms.Button q4ConfirmButton;
         private System.Windows.Forms.Button q3ConfirmButton;
         private System.Windows.Forms.Label outPutLabel;
+        private System.Windows.Forms.RadioButton regularMemberRadio;
+        public System.Windows.Forms.GroupBox query4GroupBox;
+        private System.Windows.Forms.TextBox q3Value;
+        private System.Windows.Forms.RadioButton q4GoldRadio;
+        private System.Windows.Forms.RadioButton q4RegularRadio;
     }
 }
