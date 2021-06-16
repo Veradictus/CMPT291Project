@@ -528,6 +528,7 @@ group by B.branchID
             try
             {
                 dataStream = commandStream.ExecuteReader();
+                MessageBox.Show("Customer (ID + " + customerId + ") successfully created in our system.");
 
             } catch (Exception e)
             {

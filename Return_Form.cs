@@ -117,7 +117,7 @@ namespace _291CarProject
             string branchID = BranchReader(returnBranchDD.Text);
             string transactionID = transactionIDBox.Text;
 
-            float amountOwed = ReturnAmountPaid(transactionID, branchID, transactionReturn.Value.ToString("dd-MM-yy"));
+            float amountOwed = ReturnAmountPaid(transactionID, branchID, transactionReturn.Value.ToString("d"));
             MessageBox.Show("The amount owed for this rental is = $" + amountOwed);
 
             // Create the query
@@ -144,28 +144,30 @@ namespace _291CarProject
 
         private float ReturnAmountPaid(string transactionID, string returnBranchID, string dateReturned)
         {
-            // We need this for ParseExact
-            var canada = new CultureInfo("en-CA");
-
             // Info on the transaction itself
             Dictionary<string, string> transactionInfo = RentalPaymentDetails(transactionID);
             // Info on the vehicle type
             Dictionary<string, string> vTypeInfo = VehicleRateDetails(transactionInfo["vehicleType"]);
-            Debug.Write(transactionInfo["dateBooked"]);
+            Debug.WriteLine(transactionInfo["dateBooked"]);
+
+            string dateBookedText = transactionInfo["dateBooked"].Split(" ")[0];
+            string expRDateText = transactionInfo["expRDate"].Split(" ")[0];
 
             // Turn the strings to DateTime to get them in the correct format
-            DateTime dateBooked = DateTime.ParseExact(transactionInfo["dateBooked"], "dd-MM-yy", canada);
-            DateTime expReturnDate = DateTime.ParseExact(transactionInfo["expRDate"], "dd-MM-yy", canada);
+            DateTime dateBooked = DateTime.ParseExact(dateBookedText, "d", null);
+            DateTime expReturnDate = DateTime.ParseExact(expRDateText, "d", null);
 
             // The amount we owe
             float totalPayment = 0;
 
             // Check if the vehicle was returned late
-            if (expReturnDate < DateTime.ParseExact(dateReturned, "d", canada)) { totalPayment += float.Parse(vTypeInfo["lateFee"]); }
+            int result = DateTime.Compare(expReturnDate, DateTime.ParseExact(dateReturned, "d", null));
+            if (result > 0) { totalPayment += float.Parse(vTypeInfo["lateFee"]); }
+            //if (expReturnDate < DateTime.ParseExact(dateReturned, "d", canada)) { totalPayment += float.Parse(vTypeInfo["lateFee"]); }
             // Check if the vehicle was returned to the correct branch
             if (returnBranchID != transactionInfo["expBranch"]) { totalPayment += float.Parse(vTypeInfo["changeCharge"]); }
 
-            totalPayment += CalculateAmountOwed(dateBooked, DateTime.ParseExact(dateReturned, "d", canada), vTypeInfo);
+            totalPayment += CalculateAmountOwed(dateBooked, DateTime.ParseExact(dateReturned, "d", null), vTypeInfo);
             return totalPayment; // Return the amount owed
         }
 
@@ -199,7 +201,7 @@ namespace _291CarProject
 
             try
             {
-                _291CarProject.Static.Database.commandStream.CommandText = "select vTypeID, dateBooked, expRetDate, eBranchReturn " +
+                _291CarProject.Static.Database.commandStream.CommandText = "select vTypeID, convert(date,dateBooked) as dateBooked, convert(date,expRetDate) as expRetDate, eBranchReturn " +
                 "from RentalTransaction where rentalID = " + rentalID; // Hand over the command
                 _291CarProject.Static.Database.dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader(); // run the query
 

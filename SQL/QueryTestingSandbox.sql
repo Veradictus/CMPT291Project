@@ -83,6 +83,8 @@ select * from Vehicle
 select * from RentalTransaction
 select * from Customer
 
+select convert(date,dateBooked) as dateBooked from RentalTransaction
+
 
 select count(branchID) as branchCount from Branch as B, RentalTransaction as R 
 where B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
