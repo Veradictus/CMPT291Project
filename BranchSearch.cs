@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 
@@ -254,7 +255,9 @@ namespace _291CarProject
         private string DateReorganizer(string dateString)
         {
             string dateHalf = dateString.Substring(0,10);
-            string timeHalf = dateString.Substring(10);
+            string timeHalf = "11:59:59 PM";
+            //string timeHalf = dateString.Substring(10);
+            //Debug.WriteLine(timeHalf);
 
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);

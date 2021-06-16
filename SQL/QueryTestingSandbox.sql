@@ -67,6 +67,7 @@ and dateBooked > convert(datetime,'01-06-21 10:34:09 PM',5) or expRetDate < conv
 
 select * from Branch
 select * from [User]
+select * from Vehicle
 select * from RentalTransaction
 select * from Customer
 
