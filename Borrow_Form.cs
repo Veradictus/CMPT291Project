@@ -110,10 +110,10 @@ namespace _291CarProject
             string copyCheckQuery = "select rentedVID from RentalTransaction where rentedVID = " + veh_text_box.Text + " and rentedVID in " +
                 "((select rentedVID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null) " +
                 "intersect " +
-                "(select rentedVID from RentalTransaction where amountPaid is not null and " +
-                "(dateBooked between " + timeFrom + " and " + timeTo + ") or " +
-                "(expRetDate between " + timeFrom + " and " + timeTo + ") or " +
-                "(dateBooked > " + timeFrom + " and expRetDate < " + timeTo + ")))";
+                "(select rentedVID from RentalTransaction where " +
+                "(convert(date,dateBooked) between " + timeFrom + " and " + timeTo + ") or " +
+                "(convert(date,expRetDate) between " + timeFrom + " and " + timeTo + ") or " +
+                "(convert(date,dateBooked) > " + timeFrom + " and expRetDate < " + timeTo + ")))";
 
             // Check here if it's TRUE (legal rental) or FALSE (car is unavailable)
             bool check = _291CarProject.Static.Database.vIDTransaction(copyCheckQuery);

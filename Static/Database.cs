@@ -293,11 +293,11 @@ group by B.branchID
             StringBuilder averageSpendingString = new StringBuilder("SELECT AVG(R.amountPaid) AS avgSpent FROM RentalTransaction as R, ");
 
             averageSpendingString.Append("Customer AS U WHERE R.userID = U.customerId AND U.membership = '");
-            averageSpendingString.Append((isGold ? "Gold" : "Regular") + "' AND R.aBranchReturn = 1 AND (dateBooked between convert(");
-            averageSpendingString.Append("datetime, '" + startDate + "', 5) and convert(datetime, '" + endDate + "',5)) or ");
-            averageSpendingString.Append("(expRetDate between convert(datetime, '" + startDate + "',5) and convert(datetime, '");
-            averageSpendingString.Append(endDate + "',5)) or (dateBooked > convert(datetime, '" + startDate + "',5) and expRetDate <");
-            averageSpendingString.Append("convert(datetime, '" + endDate + "',5))");
+            averageSpendingString.Append((isGold ? "Gold" : "Regular") + "' AND R.aBranchReturn = 1 AND ((convert(date,dateBooked) between convert(");
+            averageSpendingString.Append("date, '" + startDate + "', 5) and convert(date, '" + endDate + "',5)) or ");
+            averageSpendingString.Append("((convert(date,expRetDate) between convert(date, '" + startDate + "',5) and convert(date, '");
+            averageSpendingString.Append(endDate + "',5)) or ((convert(date,dateBooked) > convert(date, '" + startDate + "',5) and (convert(date,expRetDate) <");
+            averageSpendingString.Append("convert(date, '" + endDate + "',5))");
 
             commandStream.CommandText = averageSpendingString.ToString();
 
