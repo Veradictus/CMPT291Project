@@ -290,6 +290,17 @@ group by B.branchID
         {
             List<string> averageSpending = new List<string>();
 
+            string workingSQLQuery = "select avg(amountPaid) as avgSpent from " +
+                "((select amountPaid from RentalTransaction as R, Customer as C " +
+                "where R.userID = C.customerID and C.membership = '" + (isGold ? "Gold" : "Regular") + "' and amountPaid is not null) " +
+                "intersect " +
+                "(select amountPaid from RentalTransaction where " +
+                "(convert(date,dateBooked) between convert(date,'" + startDate + "',5) and convert(date,'" + endDate + "',5)) or " +
+                "(convert(date,expRetDate) between convert(date,'" + startDate + "',5) and convert(date,'" + endDate + "',5)) or " +
+                "(convert(date,dateBooked) > convert(date,'" + startDate + "',5) and convert(date,expRetDate) < convert(date,'" + endDate + "',5)))) " +
+                "as temp";
+
+            /*
             StringBuilder averageSpendingString = new StringBuilder("SELECT AVG(R.amountPaid) AS avgSpent FROM RentalTransaction as R, ");
 
             averageSpendingString.Append("Customer AS U WHERE R.userID = U.customerId AND U.membership = '");
@@ -298,8 +309,10 @@ group by B.branchID
             averageSpendingString.Append("((convert(date,expRetDate) between convert(date, '" + startDate + "',5) and convert(date, '");
             averageSpendingString.Append(endDate + "',5)) or ((convert(date,dateBooked) > convert(date, '" + startDate + "',5) and (convert(date,expRetDate) <");
             averageSpendingString.Append("convert(date, '" + endDate + "',5))");
+            */
 
-            commandStream.CommandText = averageSpendingString.ToString();
+            //commandStream.CommandText = averageSpendingString.ToString();
+            commandStream.CommandText = workingSQLQuery; // This one should work now
 
             Debug.WriteLine("[GetAverageSpending] query: " + commandStream.CommandText);
 
@@ -485,7 +498,7 @@ group by B.branchID
             lastYearFormat.Append("-" + currentMonth);
             lastYearFormat.Append("-" + currentDay);
 
-            commandStream.CommandText = "SELECT COUNT(*) AS count FROM RentalTransaction WHERE dateBooked > " + lastYearFormat.ToString();
+            commandStream.CommandText = "SELECT COUNT(*) AS count FROM RentalTransaction WHERE userID = " + userId + " and dateBooked > " + lastYearFormat.ToString();
 
             try
             {
@@ -543,7 +556,7 @@ group by B.branchID
         {
             int userId = -1;
 
-            commandStream.CommandText = "SELECT UID FROM [User] WHERE userName='" + username + "'";
+            commandStream.CommandText = "SELECT [UID] FROM [User] WHERE userName='" + username + "'";
 
             try
             {

@@ -26,16 +26,26 @@ group by B.branchID
 
 select branchID from Branch
 where prov = 'AB'
-select count(B.branchID) as branchCount
+
 
 -- QUERY 4
 select avg(R.amountPaid) as avgSpent from RentalTransaction as R, Customer as U
 -- Change the membership and the aBranchReturn ID depending on the user's choice
-where R.userID = U.customerID and U.membership = 'Gold' and R.aBranchReturn = 1 and
+where R.userID = U.customerID and U.membership = 'Gold' and R.aBranchReturn = 1;
+
+select amountPaid from RentalTransaction where amountPaid is not null;
 -- For each of these 3 date checks, the former is the FROM DATE and the latter is the TO DATE
-(dateBooked between convert(datetime,'12-06-21',5) and convert(datetime,'12-06-21',5)) or 
-(expRetDate between convert(datetime,'12-06-21',5) and convert(datetime,'12-06-21',5)) or
-(dateBooked > convert(datetime,'12-06-21',5) and expRetDate < convert(datetime,'12-06-21',5))
+
+--select avg(amountPaid) as avgSpent from RentalTransaction where 
+select avg(amountPaid) as avgSpent from
+((select amountPaid from RentalTransaction as R, Customer as C 
+where R.userID = C.customerID and R.aBranchReturn = 1 and
+C.membership = 'Gold' and amountPaid is not null)
+intersect
+(select amountPaid from RentalTransaction where
+(convert(date,dateBooked) between convert(date,'1-06-21',5) and convert(date,'30-06-21',5)) or 
+(convert(date,expRetDate) between convert(date,'1-06-21',5) and convert(date,'30-06-21',5)) or
+(convert(date,dateBooked) > convert(date,'1-06-21',5) and convert(date,expRetDate) < convert(date,'30-06-21',5)))) as temp
 
 -- NOTE ON QUERY 4
 /*
