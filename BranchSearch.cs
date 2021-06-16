@@ -125,6 +125,8 @@ namespace _291CarProject
 
                 while (_291CarProject.Static.Database.dataStream.Read())
                 {
+                    
+
                     SearchResultGrid.Rows.Add(_291CarProject.Static.Database.dataStream["vehicleID"].ToString(),
                         _291CarProject.Static.Database.dataStream["brand"].ToString(),
                         _291CarProject.Static.Database.dataStream["model"].ToString(),
@@ -262,7 +264,7 @@ namespace _291CarProject
             string[] sections = dateHalf.Split('-');
             sections[0] = sections[0].Substring(2);
 
-            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0] + " " + timeHalf;
+            string fixedString = sections[2] + "-" + sections[1] + "-" + sections[0];
             string completeString = "convert(datetime, '" + fixedString + "', 5)";
             return completeString;
         }

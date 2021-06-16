@@ -39,19 +39,20 @@ namespace _291CarProject
             this.transactionReturn = new System.Windows.Forms.DateTimePicker();
             this.searchButton = new System.Windows.Forms.Button();
             this.SearchTransactionGrid = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.returnBranchDD = new System.Windows.Forms.ComboBox();
+            this.confirmButton = new System.Windows.Forms.Button();
             this.rentalID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vehicleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vBrand = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VehicleYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateBooked = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.expReturn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bBranchID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.expBranch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.returnBranchDD = new System.Windows.Forms.ComboBox();
-            this.confirmButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SearchTransactionGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -146,6 +147,7 @@ namespace _291CarProject
             this.vehicleID,
             this.vBrand,
             this.vModel,
+            this.VehicleYear,
             this.dateBooked,
             this.expReturn,
             this.bBranchID,
@@ -155,6 +157,34 @@ namespace _291CarProject
             this.SearchTransactionGrid.RowTemplate.Height = 25;
             this.SearchTransactionGrid.Size = new System.Drawing.Size(717, 404);
             this.SearchTransactionGrid.TabIndex = 27;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(28, 230);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(191, 32);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Branch Returned";
+            // 
+            // returnBranchDD
+            // 
+            this.returnBranchDD.FormattingEnabled = true;
+            this.returnBranchDD.Location = new System.Drawing.Point(246, 239);
+            this.returnBranchDD.Name = "returnBranchDD";
+            this.returnBranchDD.Size = new System.Drawing.Size(200, 23);
+            this.returnBranchDD.TabIndex = 29;
+            // 
+            // confirmButton
+            // 
+            this.confirmButton.Location = new System.Drawing.Point(346, 268);
+            this.confirmButton.Name = "confirmButton";
+            this.confirmButton.Size = new System.Drawing.Size(100, 25);
+            this.confirmButton.TabIndex = 30;
+            this.confirmButton.Text = "Confirm Return";
+            this.confirmButton.UseVisualStyleBackColor = true;
+            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
             // rentalID
             // 
@@ -186,6 +216,11 @@ namespace _291CarProject
             this.vModel.HeaderText = "Vehicle Model";
             this.vModel.Name = "vModel";
             // 
+            // VehicleYear
+            // 
+            this.VehicleYear.HeaderText = "Vehicle Year";
+            this.VehicleYear.Name = "VehicleYear";
+            // 
             // dateBooked
             // 
             this.dateBooked.HeaderText = "Date Booked";
@@ -205,34 +240,6 @@ namespace _291CarProject
             // 
             this.expBranch.HeaderText = "Expected Return Branch";
             this.expBranch.Name = "expBranch";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(28, 230);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(191, 32);
-            this.label1.TabIndex = 28;
-            this.label1.Text = "Branch Returned";
-            // 
-            // returnBranchDD
-            // 
-            this.returnBranchDD.FormattingEnabled = true;
-            this.returnBranchDD.Location = new System.Drawing.Point(246, 239);
-            this.returnBranchDD.Name = "returnBranchDD";
-            this.returnBranchDD.Size = new System.Drawing.Size(200, 23);
-            this.returnBranchDD.TabIndex = 29;
-            // 
-            // confirmButton
-            // 
-            this.confirmButton.Location = new System.Drawing.Point(346, 268);
-            this.confirmButton.Name = "confirmButton";
-            this.confirmButton.Size = new System.Drawing.Size(100, 25);
-            this.confirmButton.TabIndex = 30;
-            this.confirmButton.Text = "Confirm Return";
-            this.confirmButton.UseVisualStyleBackColor = true;
-            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
             // Return_Form
             // 
@@ -274,18 +281,19 @@ namespace _291CarProject
         private System.Windows.Forms.DataGridView SearchTransactionGrid;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox returnBranchDD;
+        private System.Windows.Forms.TextBox tIDTBox;
+        private System.Windows.Forms.TextBox transactionIDBox;
+        private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn rentalID;
         private System.Windows.Forms.DataGridViewTextBoxColumn userID;
         private System.Windows.Forms.DataGridViewTextBoxColumn userName;
         private System.Windows.Forms.DataGridViewTextBoxColumn vehicleID;
         private System.Windows.Forms.DataGridViewTextBoxColumn vBrand;
         private System.Windows.Forms.DataGridViewTextBoxColumn vModel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VehicleYear;
         private System.Windows.Forms.DataGridViewTextBoxColumn dateBooked;
         private System.Windows.Forms.DataGridViewTextBoxColumn expReturn;
         private System.Windows.Forms.DataGridViewTextBoxColumn bBranchID;
         private System.Windows.Forms.DataGridViewTextBoxColumn expBranch;
-        private System.Windows.Forms.TextBox tIDTBox;
-        private System.Windows.Forms.TextBox transactionIDBox;
-        private System.Windows.Forms.Button confirmButton;
     }
 }

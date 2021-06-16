@@ -33,9 +33,9 @@ select avg(R.amountPaid) as avgSpent from RentalTransaction as R, Customer as U
 -- Change the membership and the aBranchReturn ID depending on the user's choice
 where R.userID = U.customerID and U.membership = 'Gold' and R.aBranchReturn = 1 and
 -- For each of these 3 date checks, the former is the FROM DATE and the latter is the TO DATE
-(dateBooked between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or 
-(expRetDate between convert(datetime,'12-06-21 10:34:09 PM',5) and convert(datetime,'12-06-21 10:34:09 PM',5)) or
-(dateBooked > convert(datetime,'12-06-21 10:34:09 PM',5) and expRetDate < convert(datetime,'12-06-21 10:34:09 PM',5))
+(dateBooked between convert(datetime,'12-06-21',5) and convert(datetime,'12-06-21',5)) or 
+(expRetDate between convert(datetime,'12-06-21',5) and convert(datetime,'12-06-21',5)) or
+(dateBooked > convert(datetime,'12-06-21',5) and expRetDate < convert(datetime,'12-06-21',5))
 
 -- NOTE ON QUERY 4
 /*
