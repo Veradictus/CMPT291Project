@@ -18,11 +18,15 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
 -- QUERY 3
 -- You can change the max to min if you want a specific 
 select B.branchID, max(temp.branchCount) as difBranchCount from Branch as B, 
-(select count(branchID) as branchCount, branchID as BID from Branch as B, RentalTransaction as R, Customer as C 
+(select count(B.branchID) as branchCount, B.branchID as BID from Branch as B, RentalTransaction as R, Customer as C 
 where R.userID = C.customerID and B.branchID = R.aBranchReturn and B.branchID != R.eBranchReturn
 and C.membership = 'Regular' group by branchID) as temp
 where B.branchID = temp.BID and B.prov = 'AB' -- Switch prov to city and vice versa depending on what you want
 group by B.branchID
+
+select branchID from Branch
+where prov = 'AB'
+select count(B.branchID) as branchCount
 
 -- QUERY 4
 select avg(R.amountPaid) as avgSpent from RentalTransaction as R, Customer as U

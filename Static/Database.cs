@@ -128,6 +128,7 @@ namespace _291CarProject.Static
             return highestTransactionReport;
         }
 
+
         public static bool ArrayContains(string[] array, string item)
         {
             for (int i = 0; i < array.Length; i++)
@@ -599,7 +600,7 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
             {
                 commandStream.CommandText = "select rentedVID from RentalTransaction where rentalID = " + transactionID;
                 // Run and grab the result from the dataStream
-                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream = commandStream.ExecuteReader();
                 while (dataStream.Read())
                 {
                     vehicleID = dataStream["rentedVID"].ToString();
@@ -613,13 +614,38 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
             return vehicleID;
         }
 
+        internal static bool VehicleBranchCheck(string vCheckQuery)
+        {
+            try
+            {
+                commandStream.CommandText = vCheckQuery;
+                // Run and grab the result from the dataStream
+                dataStream = commandStream.ExecuteReader();
+                dataStream.Read();
+                if (!dataStream.HasRows)
+                {
+                    MessageBox.Show("Error: selected vehicle not available at this branch.\r\nPlease enter a new vehicle ID.");
+                    dataStream.Close(); // close
+                    return false;
+                }
+                // Otherwise, it's a legal rental
+                dataStream.Close(); // close
+                return true;
+            }
+            // Error catching
+            catch (Exception e2) { MessageBox.Show(e2.ToString(), "Error"); }
+            // We have to return something out here
+
+            return false;
+        }
+
         internal static bool vIDTransaction(string copyCheckQuery)
         {
             try
             {
                 commandStream.CommandText = copyCheckQuery;
                 // Run and grab the result from the dataStream
-                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream = commandStream.ExecuteReader();
                 dataStream.Read();
                 if (dataStream.HasRows)
                 {
@@ -651,7 +677,7 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
             {
                 commandStream.CommandText = "select vehicleID as Found from Vehicle where vehicleID = " + vID;
                 // Run and grab the result from the dataStream
-                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream = commandStream.ExecuteReader();
                 dataStream.Read();
                 if (!dataStream.HasRows)
                 {
@@ -682,7 +708,7 @@ WHERE membership='Gold' AND R1.vTypeID='small' AND exists( --User will specify t
             {
                 commandStream.CommandText = "select rentalID as Found from RentalTransaction where rentalID = " + rentalID;
                 // Run and grab the result from the dataStream
-                dataStream = _291CarProject.Static.Database.commandStream.ExecuteReader();
+                dataStream = commandStream.ExecuteReader();
                 dataStream.Read();
                 if (!dataStream.HasRows)
                 {

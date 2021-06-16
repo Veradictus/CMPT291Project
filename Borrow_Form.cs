@@ -81,6 +81,8 @@ namespace _291CarProject
             // Check if the user exists
             if (!_291CarProject.Static.Database.UserExists(cust_tbox.Text)) { return; }
 
+            if (!CheckVehicleBranch(userInfo)) { return; }
+
             if (!CheckForCopies(userInfo)) { return; }
             // Fill the query out
             string newTransaction = CreateNewTransaction(userInfo);
@@ -88,6 +90,15 @@ namespace _291CarProject
             // Hand it to the function in the database to add the transanction
             _291CarProject.Static.Database.NewORUpdateQuery(newTransaction);
             _291CarProject.Static.Database.GoldMembershipCheck(cust_tbox.Text);
+        }
+
+        private bool CheckVehicleBranch(Dictionary<string, string> userInfo)
+        {
+            string vCheckQuery = "select vehicleID from Vehicle where vehicleID = " + veh_text_box.Text + " and branchID = " + userInfo["branchId"];
+
+            bool check = _291CarProject.Static.Database.VehicleBranchCheck(vCheckQuery);
+
+            return false;
         }
 
         private bool CheckForCopies(Dictionary<string, string> userInfo)
