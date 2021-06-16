@@ -130,12 +130,7 @@ namespace _291CarProject.Static
             return highestTransactionReport;
         }
 
-<<<<<<< HEAD
-
-        public static bool ArrayContains(string[] array, string item)
-=======
         public static bool ArrayContains(List<string> array, string item)
->>>>>>> 1cd913542912c4d9ebe26f853bf3e28237bf53af
         {
             for (int i = 0; i < array.Count; i++)
                 if (array[i].Equals(item))
