@@ -104,8 +104,8 @@ namespace _291CarProject
 
         private bool CheckForCopies(Dictionary<string, string> userInfo)
         {
-            string timeFrom = DateReorganizer(dateFrom.Value.ToString("G"));
-            string timeTo = DateReorganizer(dateTo.Value.ToString("G"));
+            string timeFrom = DateReorganizer(dateFrom.Value.ToString("dd-MM-yy"));
+            string timeTo = DateReorganizer(dateTo.Value.ToString("dd-MM-yy"));
 
             string copyCheckQuery = "select rentedVID from RentalTransaction where rentedVID = " + veh_text_box.Text + " and rentedVID in " +
                 "((select rentedVID from RentalTransaction where amountPaid is null and actRetDate is null and empRet is null and aBranchReturn is null) " +
